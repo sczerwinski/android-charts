@@ -1,0 +1,19 @@
+# Java target
+target/
+*/target/
+*.class
+
+# Gradle
+.gradle/
+build/
+/local.properties
+
+# IntelliJ IDEA
+*.iml
+.idea/
+classes/
+
+# Other
+.DS_Store
+/captures
+.externalNativeBuild

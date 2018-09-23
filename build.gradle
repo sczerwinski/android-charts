@@ -1,0 +1,28 @@
+buildscript {
+
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.2.0-rc03'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+
+}
+
+allprojects {
+
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+    }
+
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
