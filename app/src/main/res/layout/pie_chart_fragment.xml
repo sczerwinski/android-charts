@@ -19,16 +19,27 @@
             android:layout_width="match_parent"
             android:layout_height="196dp" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/generateDataButton"
+            android:text="@string/action_generate_data"
+            android:onClickListener="@{() -> viewModel.generateRandomData()}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_margin="8dp" />
+
         <TextView
             android:text="@string/label_chart_data"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp" />
 
         <TextView
             android:id="@+id/dataListText"
             android:text="@{viewModel.dataSet.toString()}"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp" />
 
     </LinearLayout>
 

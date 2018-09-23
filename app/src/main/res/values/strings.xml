@@ -5,4 +5,6 @@
 
     <string name="label_chart_data">Data:</string>
 
+    <string name="action_generate_data">Generate new data</string>
+
 </resources>
