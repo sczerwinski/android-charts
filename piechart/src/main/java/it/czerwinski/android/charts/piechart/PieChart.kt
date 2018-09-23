@@ -2,6 +2,7 @@ package it.czerwinski.android.charts.piechart
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.database.Observable
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -39,6 +40,19 @@ class PieChart @JvmOverloads constructor(
     var selectionAnimationDuration: Int = 0
 
     private var pieChartRect = Rect()
+
+    /**
+     * Data set adapter.
+     */
+    var adapter: DataSetAdapter? = null
+        set(value) {
+            field?.unregisterObserver(observer)
+            field = value
+            value?.registerObserver(observer)
+            onDataSetChanged()
+        }
+
+    private val observer = PieChartDataSetObserver()
 
     init {
         val attrsArray = context.obtainStyledAttributes(
@@ -118,5 +132,77 @@ class PieChart @JvmOverloads constructor(
     }
 
     private fun drawDataPoints(canvas: Canvas, cx: Float, cy: Float, radius: Float) {
+    }
+
+    private fun onDataSetChanged() {
+    }
+
+    /**
+     * [PieChart] data set adapter.
+     */
+    abstract class DataSetAdapter {
+
+        private val observable = DataSetObservable()
+
+        /**
+         * [PieChart] data set size.
+         */
+        abstract val size: Int
+
+        /**
+         * Sum of [PieChart] data set values.
+         */
+        abstract val sum: Float
+
+        /**
+         * Gets [PieChart] data set value at the given [index].
+         */
+        abstract operator fun get(index: Int): Float
+
+        /**
+         * Registers an [observer] of data set changes.
+         */
+        fun registerObserver(observer: DataSetObserver) {
+            observable.registerObserver(observer)
+        }
+
+        /**
+         * Unregisters ths [observer] from observing data set changes.
+         */
+        fun unregisterObserver(observer: DataSetObserver) {
+            observable.unregisterObserver(observer)
+        }
+
+        /**
+         * Notifies the [PieChart] that the data set has been changed.
+         */
+        protected fun notifyDataSetChanged() {
+            observable.notifyDataSetChanged()
+        }
+    }
+
+    private class DataSetObservable : Observable<DataSetObserver>() {
+        fun notifyDataSetChanged() {
+            for (observer in mObservers) {
+                observer.onDataSetChanged()
+            }
+        }
+    }
+
+    /**
+     * An interface for observers of [DataSetAdapter]s changes.
+     */
+    interface DataSetObserver {
+
+        /**
+         * Called when a data set in the [DataSetAdapter] has been changed.
+         */
+        fun onDataSetChanged()
+    }
+
+    private inner class PieChartDataSetObserver : DataSetObserver {
+        override fun onDataSetChanged() {
+            this@PieChart.onDataSetChanged()
+        }
     }
 }
