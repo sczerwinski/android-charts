@@ -1,6 +1,7 @@
 package it.czerwinski.android.charts.piechart
 
 import android.animation.ValueAnimator
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
 import android.database.Observable
@@ -10,10 +11,12 @@ import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
 import it.czerwinski.android.charts.common.*
+import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.min
 
@@ -100,6 +103,7 @@ class PieChart @JvmOverloads constructor(
     private var pieChartRect = Rect()
 
     init {
+        isClickable = true
         val attrsArray = context.obtainStyledAttributes(
             attrs,
             R.styleable.PieChart,
@@ -215,6 +219,52 @@ class PieChart @JvmOverloads constructor(
                 duration = dataSetAnimationDuration.toLong()
                 addUpdateListener {
                     dataPoints = (it.animatedValue as? FloatArray) ?: dataPoints
+                }
+            }
+            .start()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        updatePieChartRect()
+        event
+            ?.takeIf { it.action in listOf(MotionEvent.ACTION_UP, MotionEvent.ACTION_POINTER_UP) }
+            ?.also { motionEvent ->
+                val x = motionEvent.x - pieChartRect.centerX()
+                val y = motionEvent.y - pieChartRect.centerY()
+                val angle = atan2(y, x).radToDeg() - rotationAngle
+
+                var value = angle / FULL_ANGLE
+                while (value < 0) value++
+                while (value >= 1) value--
+
+                val selectionIndex = dataPoints
+                    .indexOfLast { dataPoint -> value >= dataPoint }
+
+                onDataPointSelected(selectionIndex)
+            }
+
+        return super.onTouchEvent(event)
+    }
+
+    private fun onDataPointSelected(selectionIndex: Int) {
+        val selectionsSize = dataPoints.size - 1
+
+        val oldSelections = selections
+            .asIterable()
+            .withSize(size = selectionsSize, valueIfEmpty = 0f)
+            .toFloatArray()
+
+        val newSelections = oldSelections.indices
+            .map { if (it == selectionIndex) 1f else 0f }
+            .toFloatArray()
+
+        ValueAnimator.ofObject(FloatArrayEvaluator(), oldSelections, newSelections)
+            .apply {
+                interpolator = selectionInterpolator
+                duration = selectionAnimationDuration.toLong()
+                addUpdateListener {
+                    selections = (it.animatedValue as? FloatArray) ?: selections
                 }
             }
             .start()
