@@ -13,6 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <it.czerwinski.android.charts.piechart.PieChart
+            android:layout_width="match_parent"
+            android:layout_height="196dp" />
+
         <TextView
             android:text="@string/label_chart_data"
             android:layout_width="match_parent"

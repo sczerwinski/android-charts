@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Default style for PieChart -->
+    <attr name="pieChartStyle" format="reference" />
+
+</resources>
