@@ -2,9 +2,17 @@
 <resources>
 
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="pieChartStyle">@style/AppTheme.PieChart</item>
+
+    </style>
+
+    <style name="AppTheme.PieChart">
+        <item name="android:padding">8dp</item>
     </style>
 
 </resources>

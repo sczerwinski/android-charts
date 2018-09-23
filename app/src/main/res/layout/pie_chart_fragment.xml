@@ -14,6 +14,8 @@
         android:layout_height="match_parent">
 
         <it.czerwinski.android.charts.piechart.PieChart
+            android:id="@+id/pieChart"
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="196dp" />
 

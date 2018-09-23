@@ -4,4 +4,12 @@
     <!-- Default style for PieChart -->
     <attr name="pieChartStyle" format="reference" />
 
+    <!-- Pie chart -->
+    <declare-styleable name="PieChart">
+
+        <!-- Gravity of a pie chart within the view -->
+        <attr name="android:gravity" />
+
+    </declare-styleable>
+
 </resources>
