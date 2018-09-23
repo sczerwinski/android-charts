@@ -12,7 +12,9 @@ import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
+import it.czerwinski.android.charts.common.FULL_ANGLE
 import it.czerwinski.android.charts.common.getInterpolator
+import it.czerwinski.android.charts.common.partialSums
 import kotlin.math.min
 
 /**
@@ -31,15 +33,39 @@ class PieChart @JvmOverloads constructor(
      */
     var gravity: Int = Gravity.CENTER
 
+    /**
+     * Zero value angle.
+     */
     var rotationAngle: Float = 0f
 
+    /**
+     * Interpolator for data set changes animations.
+     */
     var dataSetInterpolator: Interpolator = DecelerateInterpolator()
+
+    /**
+     * Duration of data set changes animations.
+     */
     var dataSetAnimationDuration: Int = 0
 
+    /**
+     * Interpolator for selection changes animations.
+     */
     var selectionInterpolator: Interpolator = DecelerateInterpolator()
+
+    /**
+     * Duration of selection changes animations.
+     */
     var selectionAnimationDuration: Int = 0
 
-    private var pieChartRect = Rect()
+    /**
+     * Pie chart UI drawing object.
+     */
+    var ui: PieChartUI? = null
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     /**
      * Data set adapter.
@@ -53,6 +79,22 @@ class PieChart @JvmOverloads constructor(
         }
 
     private val observer = PieChartDataSetObserver()
+
+    @Suppress("ProtectedInFinal")
+    protected var dataPoints: FloatArray = floatArrayOf()
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    @Suppress("ProtectedInFinal")
+    protected var selections: FloatArray = floatArrayOf()
+        set(value) {
+            field = value
+            invalidate()
+        }
+
+    private var pieChartRect = Rect()
 
     init {
         val attrsArray = context.obtainStyledAttributes(
@@ -132,15 +174,35 @@ class PieChart @JvmOverloads constructor(
     }
 
     private fun drawDataPoints(canvas: Canvas, cx: Float, cy: Float, radius: Float) {
+        dataPoints.asSequence()
+            .map { rotationAngle + FULL_ANGLE * it }
+            .zipWithNext()
+            .forEachIndexed { index, (startAngle, endAngle) ->
+                ui?.draw(
+                    view = this,
+                    canvas = canvas,
+                    index = index,
+                    cx = cx, cy = cy, radius = radius,
+                    startAngle = startAngle,
+                    endAngle = endAngle,
+                    selection = selections.getOrElse(index) { 0f }
+                )
+            }
     }
 
     private fun onDataSetChanged() {
+        val sum = adapter?.sum ?: 0f
+        dataPoints = adapter
+            ?.partialSums()
+            ?.map { it / sum }
+            .orEmpty()
+            .toFloatArray()
     }
 
     /**
      * [PieChart] data set adapter.
      */
-    abstract class DataSetAdapter {
+    abstract class DataSetAdapter : Iterable<Float> {
 
         private val observable = DataSetObservable()
 
@@ -158,6 +220,11 @@ class PieChart @JvmOverloads constructor(
          * Gets [PieChart] data set value at the given [index].
          */
         abstract operator fun get(index: Int): Float
+
+        /**
+         * Returns an `Iterator` that returns the values from the data set.
+         */
+        override fun iterator(): Iterator<Float> = IteratorImpl()
 
         /**
          * Registers an [observer] of data set changes.
@@ -178,6 +245,12 @@ class PieChart @JvmOverloads constructor(
          */
         protected fun notifyDataSetChanged() {
             observable.notifyDataSetChanged()
+        }
+
+        private inner class IteratorImpl : Iterator<Float> {
+            private var index: Int = 0
+            override fun hasNext(): Boolean = index < size
+            override fun next(): Float = get(index++)
         }
     }
 
