@@ -9,6 +9,9 @@ import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.Gravity
 import android.view.View
+import android.view.animation.DecelerateInterpolator
+import android.view.animation.Interpolator
+import it.czerwinski.android.charts.common.getInterpolator
 import kotlin.math.min
 
 /**
@@ -17,7 +20,7 @@ import kotlin.math.min
  * @constructor Creates a pie chart view.
  */
 class PieChart @JvmOverloads constructor(
-    context: Context?,
+    context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = R.attr.pieChartStyle
 ) : View(context, attrs, defStyleAttr) {
@@ -27,23 +30,50 @@ class PieChart @JvmOverloads constructor(
      */
     var gravity: Int = Gravity.CENTER
 
+    var rotationAngle: Float = 0f
+
+    var dataSetInterpolator: Interpolator = DecelerateInterpolator()
+    var dataSetAnimationDuration: Int = 0
+
+    var selectionInterpolator: Interpolator = DecelerateInterpolator()
+    var selectionAnimationDuration: Int = 0
+
     private var pieChartRect = Rect()
 
     init {
-        val attrsArray = context?.obtainStyledAttributes(
+        val attrsArray = context.obtainStyledAttributes(
             attrs,
             R.styleable.PieChart,
             defStyleAttr,
             android.R.style.Widget
         )
         if (attrsArray != null) {
-            initAttrs(attrsArray)
+            attrsArray.initAttrs(context)
             attrsArray.recycle()
         }
     }
 
-    private fun initAttrs(attrsArray: TypedArray) {
-        gravity = attrsArray.getInteger(R.styleable.PieChart_android_gravity, Gravity.CENTER)
+    private fun TypedArray.initAttrs(context: Context) {
+        gravity = getInteger(R.styleable.PieChart_android_gravity, Gravity.CENTER)
+        rotationAngle = getFloat(R.styleable.PieChart_pieChart_rotationAngle, 0f)
+        dataSetInterpolator = getInterpolator(
+            context,
+            R.styleable.PieChart_pieChart_dataSetInterpolator,
+            dataSetInterpolator
+        )
+        dataSetAnimationDuration = getInteger(
+            R.styleable.PieChart_pieChart_dataSetAnimationDuration,
+            0
+        )
+        selectionInterpolator = getInterpolator(
+            context,
+            R.styleable.PieChart_pieChart_selectionInterpolator,
+            dataSetInterpolator
+        )
+        selectionAnimationDuration = getInteger(
+            R.styleable.PieChart_pieChart_dataSetAnimationDuration,
+            0
+        )
     }
 
     /**

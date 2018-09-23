@@ -7,8 +7,23 @@
     <!-- Pie chart -->
     <declare-styleable name="PieChart">
 
-        <!-- Gravity of a pie chart within the view -->
+        <!-- Pie chart gravity inside the view -->
         <attr name="android:gravity" />
+
+        <!-- Pie chart angle for zero value -->
+        <attr name="pieChart_rotationAngle" format="float" />
+
+        <!-- Interpolator for data set changes animations -->
+        <attr name="pieChart_dataSetInterpolator" format="reference" />
+
+        <!-- Duration of data set changes animations -->
+        <attr name="pieChart_dataSetAnimationDuration" format="integer" />
+
+        <!-- Interpolator for selection changes animations -->
+        <attr name="pieChart_selectionInterpolator" format="reference" />
+
+        <!-- Duration of selection changes animations -->
+        <attr name="pieChart_selectionAnimationDuration" format="integer" />
 
     </declare-styleable>
 
