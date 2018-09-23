@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/pieChartFragment">
+
+    <fragment
+        android:id="@+id/pieChartFragment"
+        android:name="it.czerwinski.android.charts.demo.PieChartFragment"
+        android:label="PieChartFragment"
+        tools:layout="@layout/pie_chart_fragment" />
+
+</navigation>
