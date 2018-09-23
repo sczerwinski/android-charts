@@ -17,6 +17,10 @@ class PieChartViewModel : ViewModel() {
         data.postValue((0 until DATA_SET_SIZE).map { random.nextFloat() + MIN_VALUE })
     }
 
+    fun clearData() {
+        data.postValue(emptyList())
+    }
+
     companion object {
         const val DATA_SET_SIZE = 5
         const val MIN_VALUE = .1f

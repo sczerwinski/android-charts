@@ -49,9 +49,5 @@ class PieChartFragment : Fragment() {
         pieChartViewModel.dataSet.observe(this, Observer { data ->
             adapter.data = data
         })
-
-        Handler().postDelayed(1000L) {
-            pieChartViewModel.generateRandomData()
-        }
     }
 }
