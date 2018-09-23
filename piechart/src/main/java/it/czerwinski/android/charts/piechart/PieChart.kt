@@ -1,5 +1,6 @@
 package it.czerwinski.android.charts.piechart
 
+import android.animation.ValueAnimator
 import android.content.Context
 import android.content.res.TypedArray
 import android.database.Observable
@@ -12,9 +13,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
-import it.czerwinski.android.charts.common.FULL_ANGLE
-import it.czerwinski.android.charts.common.getInterpolator
-import it.czerwinski.android.charts.common.partialSums
+import it.czerwinski.android.charts.common.*
+import kotlin.math.max
 import kotlin.math.min
 
 /**
@@ -80,15 +80,18 @@ class PieChart @JvmOverloads constructor(
 
     private val observer = PieChartDataSetObserver()
 
-    @Suppress("ProtectedInFinal")
-    protected var dataPoints: FloatArray = floatArrayOf()
+    private var dataPoints: FloatArray = floatArrayOf(0f)
         set(value) {
             field = value
+                .fold(listOf(value.first())) { output, next ->
+                    if (output.last() == next) output
+                    else output + next
+                }
+                .toFloatArray()
             invalidate()
         }
 
-    @Suppress("ProtectedInFinal")
-    protected var selections: FloatArray = floatArrayOf()
+    private var selections: FloatArray = floatArrayOf(0f)
         set(value) {
             field = value
             invalidate()
@@ -191,12 +194,30 @@ class PieChart @JvmOverloads constructor(
     }
 
     private fun onDataSetChanged() {
-        val sum = adapter?.sum ?: 0f
-        dataPoints = adapter
-            ?.partialSums()
-            ?.map { it / sum }
-            .orEmpty()
+        val dataPointsSize = max((adapter?.size ?: 0) + 1, dataPoints.size)
+
+        val oldDataPoints = dataPoints
+            .asIterable()
+            .withSize(size = dataPointsSize, valueIfEmpty = 0f)
             .toFloatArray()
+
+        val newDataPoints = adapter
+            ?.toList()
+            .orEmpty()
+            .normalize()
+            .partialSums()
+            .withSize(size = dataPointsSize, valueIfEmpty = 0f)
+            .toFloatArray()
+
+        ValueAnimator.ofObject(FloatArrayEvaluator(), oldDataPoints, newDataPoints)
+            .apply {
+                interpolator = dataSetInterpolator
+                duration = dataSetAnimationDuration.toLong()
+                addUpdateListener {
+                    dataPoints = (it.animatedValue as? FloatArray) ?: dataPoints
+                }
+            }
+            .start()
     }
 
     /**
