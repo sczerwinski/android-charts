@@ -111,12 +111,12 @@ class PieChart @JvmOverloads constructor(
             android.R.style.Widget
         )
         if (attrsArray != null) {
-            attrsArray.initAttrs(context)
+            attrsArray.initAttrs(context, attrs)
             attrsArray.recycle()
         }
     }
 
-    private fun TypedArray.initAttrs(context: Context) {
+    private fun TypedArray.initAttrs(context: Context, attrs: AttributeSet?) {
         gravity = getInteger(R.styleable.PieChart_android_gravity, Gravity.CENTER)
         rotationAngle = getFloat(R.styleable.PieChart_pieChart_rotationAngle, 0f)
         dataSetInterpolator = getInterpolator(
@@ -137,6 +137,39 @@ class PieChart @JvmOverloads constructor(
             R.styleable.PieChart_pieChart_dataSetAnimationDuration,
             0
         )
+
+        getString(R.styleable.PieChart_pieChart_ui)
+            ?.let {
+                val defStyleId = getResourceId(R.styleable.PieChart_pieChart_uiAppearance, 0)
+                createUI(it, attrs, defStyleId)
+            }
+    }
+
+    private fun createUI(
+        className: String,
+        attrs: AttributeSet?,
+        defStyleId: Int
+    ) {
+        try {
+            val uiClass = Class.forName(className)
+            ui = try {
+                uiClass.getConstructor(
+                    Context::class.java,
+                    AttributeSet::class.java,
+                    Int::class.java
+                )
+                    .newInstance(context, attrs, defStyleId)
+            } catch (throwable: Throwable) {
+                uiClass.getConstructor(Context::class.java, AttributeSet::class.java)
+                    .newInstance(context, attrs)
+            } catch (throwable: Throwable) {
+                uiClass.getConstructor(Context::class.java)
+                    .newInstance(context)
+            } catch (throwable: Throwable) {
+                uiClass.newInstance()
+            } as? PieChartUI
+        } catch (throwable: Throwable) {
+        }
     }
 
     /**

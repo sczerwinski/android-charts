@@ -25,6 +25,12 @@
         <!-- Duration of selection changes animations -->
         <attr name="pieChart_selectionAnimationDuration" format="integer" />
 
+        <!-- Pie chart UI class name -->
+        <attr name="pieChart_ui" format="string" />
+
+        <!-- Pie chart UI appearance style reference -->
+        <attr name="pieChart_uiAppearance" format="reference" />
+
     </declare-styleable>
 
 </resources>
