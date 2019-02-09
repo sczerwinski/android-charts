@@ -105,15 +105,13 @@ class PieChart @JvmOverloads constructor(
 
     init {
         isClickable = true
-        val attrsArray = context.obtainStyledAttributes(
-            attrs,
-            R.styleable.PieChart,
-            defStyleAttr,
-            android.R.style.Widget
-        )
-        if (attrsArray != null) {
-            attrsArray.initAttrs(context, attrs)
-            attrsArray.recycle()
+        context.withStyledAttributes(
+            attrs = attrs,
+            stylables = R.styleable.PieChart,
+            defStyleAttr = defStyleAttr,
+            defStyleRes = android.R.style.Widget
+        ) {
+            initAttrs(context, attrs)
         }
     }
 
