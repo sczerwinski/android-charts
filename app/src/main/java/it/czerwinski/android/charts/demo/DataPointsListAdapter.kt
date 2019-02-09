@@ -1,6 +1,5 @@
 package it.czerwinski.android.charts.demo
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,9 +34,11 @@ class DataPointViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val textView: TextView? = itemView.findViewById(R.id.text)
 
-    @SuppressLint("SetTextI18n")
     fun bind(index: Int, value: Float, onItemClicked: (position: Int) -> Unit) {
-        textView?.text = "${index + 1}: $value"
-        textView?.setOnClickListener { onItemClicked(index) }
+        textView?.apply {
+            text = context.resources
+                .getString(R.string.format_chart_data, index + 1, value)
+            setOnClickListener { onItemClicked(index) }
+        }
     }
 }

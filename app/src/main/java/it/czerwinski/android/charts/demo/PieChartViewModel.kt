@@ -14,7 +14,8 @@ class PieChartViewModel : ViewModel() {
     fun generateRandomData() {
         val random = Random()
         random.setSeed(Date().time)
-        data.postValue((0 until DATA_SET_SIZE).map { random.nextFloat() + MIN_VALUE })
+        data.postValue((0 until DATA_SET_SIZE)
+            .map { (random.nextInt(10) + 1) * 0.1f })
     }
 
     fun clearData() {
@@ -23,6 +24,5 @@ class PieChartViewModel : ViewModel() {
 
     companion object {
         const val DATA_SET_SIZE = 6
-        const val MIN_VALUE = .1f
     }
 }

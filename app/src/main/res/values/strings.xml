@@ -4,6 +4,7 @@
     <string name="app_name">Android Charts</string>
 
     <string name="label_chart_data">Data:</string>
+    <string name="format_chart_data">%1$d: %2$.1f</string>
 
     <string name="action_generate_data">Generate new data</string>
     <string name="action_clear_data">Clear data</string>
