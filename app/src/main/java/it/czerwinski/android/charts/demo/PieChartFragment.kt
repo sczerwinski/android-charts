@@ -47,6 +47,12 @@ class PieChartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         pieChart.adapter = adapter
+
+        dataList.adapter = DataPointsListAdapter { position ->
+            pieChart.selectionIndex = position
+        }.also {
+            pieChartViewModel.dataSet.observe(this, it)
+        }
     }
 
     override fun onResume() {

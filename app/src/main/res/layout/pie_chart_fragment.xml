@@ -10,6 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -48,22 +49,25 @@
         <TextView
             android:id="@+id/dataListLabel"
             android:text="@string/label_chart_data"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/generateDataButton" />
 
-        <TextView
-            android:id="@+id/dataListText"
-            android:text="@{viewModel.dataSet.toString()}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/dataList"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dataListLabel" />
+            app:layout_constraintTop_toBottomOf="@id/dataListLabel"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:listitem="@layout/data_point_list_item"
+            tools:itemCount="6" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

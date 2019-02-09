@@ -84,6 +84,15 @@ class PieChart @JvmOverloads constructor(
             onDataSetChanged()
         }
 
+    /**
+     * Index of selected data point.
+     */
+    var selectionIndex: Int = 0
+        set(value) {
+            field = value
+            onDataPointSelected(value)
+        }
+
     private val observer = PieChartDataSetObserver()
 
     private var dataPoints: FloatArray = floatArrayOf(0f)
@@ -273,10 +282,7 @@ class PieChart @JvmOverloads constructor(
                 while (value < 0) value++
                 while (value >= 1) value--
 
-                val selectionIndex = dataPoints
-                    .indexOfLast { dataPoint -> value >= dataPoint }
-
-                onDataPointSelected(selectionIndex)
+                selectionIndex = dataPoints.indexOfLast { dataPoint -> value >= dataPoint }
             }
 
         return super.onTouchEvent(event)
@@ -309,7 +315,7 @@ class PieChart @JvmOverloads constructor(
      * Clears current pie chart selection.
      */
     fun clearSelection() {
-        onDataPointSelected(-1)
+        selectionIndex = -1
     }
 
     /**
