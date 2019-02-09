@@ -304,6 +304,13 @@ class PieChart @JvmOverloads constructor(
     }
 
     /**
+     * Clears current pie chart selection.
+     */
+    fun clearSelection() {
+        onDataPointSelected(-1)
+    }
+
+    /**
      * [PieChart] data set adapter.
      */
     abstract class DataSetAdapter : Iterable<Float> {
