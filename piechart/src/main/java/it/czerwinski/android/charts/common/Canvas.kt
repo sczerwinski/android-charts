@@ -8,7 +8,11 @@ internal fun Canvas.translateRadial(distance: Float, angle: Float) {
     translate(distance * cos(angle.degToRad()), distance * sin(angle.degToRad()))
 }
 
-internal fun Canvas.translatedRadial(distance: Float, angle: Float, draw: Canvas.() -> Unit) {
+internal inline fun Canvas.translatedRadial(
+    distance: Float,
+    angle: Float,
+    draw: Canvas.() -> Unit
+) {
     val saveCount = save()
     translateRadial(distance, angle)
     draw()
