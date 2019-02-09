@@ -33,4 +33,33 @@
 
     </declare-styleable>
 
+    <!-- Donut UI for pie chart -->
+    <declare-styleable name="DonutPieChartUI">
+
+        <!-- Colors of subsequent donut slices -->
+        <attr name="donutPieChartUI_colors" format="reference" />
+
+        <!-- Color of a shadow behind the selected slice -->
+        <attr name="donutPieChartUI_shadowColor" format="color|reference" />
+
+        <!-- Width of the donut -->
+        <attr name="donutPieChartUI_donutWidth" format="dimension|reference" />
+
+        <!-- Spacing of donut slices -->
+        <attr name="donutPieChartUI_donutSpacing" format="dimension|reference" />
+
+        <!-- Colors of subsequent donut slices when selected -->
+        <attr name="donutPieChartUI_selectionColors" format="reference" />
+
+        <!-- Width of the selected donut slice -->
+        <attr name="donutPieChartUI_selectionWidth" format="dimension|reference" />
+
+        <!-- Shift of the selected donut slice -->
+        <attr name="donutPieChartUI_selectionShift" format="dimension|reference" />
+
+        <!-- Elevation of the selected donut slice -->
+        <attr name="donutPieChartUI_selectionElevation" format="dimension|reference" />
+
+    </declare-styleable>
+
 </resources>
