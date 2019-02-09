@@ -9,9 +9,15 @@ import android.view.View
 interface PieChartUI {
 
     /**
-     * Draws UI of a pie chart.
+     * Called when the UI is being attached to a pie chart view.
      *
      * @param view An instance of a [PieChart].
+     */
+    fun onAttachedToView(view: View)
+
+    /**
+     * Draws UI of a pie chart.
+     *
      * @param canvas The canvas on which the pie chart will be drawn.
      * @param cx X coordinate of the center of the pie chart.
      * @param cy Y coordinate of the center of the pie chart.
@@ -22,7 +28,6 @@ interface PieChartUI {
      * @param selection Animated value of the slice being selected.
      */
     fun draw(
-        view: View,
         canvas: Canvas,
         cx: Float,
         cy: Float,

@@ -67,6 +67,7 @@ class PieChart @JvmOverloads constructor(
     var ui: PieChartUI? = null
         set(value) {
             field = value
+            value?.onAttachedToView(view = this)
             invalidate()
         }
 
@@ -219,7 +220,6 @@ class PieChart @JvmOverloads constructor(
             .zipWithNext()
             .forEachIndexed { index, (startAngle, endAngle) ->
                 ui?.draw(
-                    view = this,
                     canvas = canvas,
                     index = index,
                     cx = cx, cy = cy, radius = radius,
