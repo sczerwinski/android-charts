@@ -16,6 +16,8 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
 import it.czerwinski.android.charts.common.*
+import it.czerwinski.android.charts.common.graphics.FULL_ANGLE
+import it.czerwinski.android.charts.common.graphics.radToDeg
 import kotlin.math.atan2
 import kotlin.math.max
 import kotlin.math.min

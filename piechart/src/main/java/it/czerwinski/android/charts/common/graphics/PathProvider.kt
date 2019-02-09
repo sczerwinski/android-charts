@@ -1,7 +1,6 @@
 package it.czerwinski.android.charts.common.graphics
 
 import android.graphics.Path
-import it.czerwinski.android.charts.common.radToDeg
 
 interface PathProvider : RectFProvider {
 
