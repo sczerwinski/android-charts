@@ -9,6 +9,7 @@ import android.view.View.*
 import it.czerwinski.android.charts.common.*
 import it.czerwinski.android.charts.common.graphics.InSituPathProvider
 import it.czerwinski.android.charts.common.graphics.PathProvider
+import it.czerwinski.android.charts.common.graphics.mixColors
 import it.czerwinski.android.charts.common.graphics.translatedRadial
 import kotlin.math.max
 
@@ -20,6 +21,7 @@ class DonutPieChartUI @JvmOverloads constructor(
     PathProvider by InSituPathProvider() {
 
     private var colors = intArrayOf(Color.CYAN)
+    private var selectedColors = intArrayOf(Color.BLUE)
 
     private var shadowColor = Color.BLACK
 
@@ -49,6 +51,10 @@ class DonutPieChartUI @JvmOverloads constructor(
             .takeUnless { it == 0 }
             ?.let { context?.resources?.getIntArray(it) }
                 ?: colors
+        selectedColors = getResourceId(R.styleable.DonutPieChartUI_donutPieChartUI_selectionColors, 0)
+            .takeUnless { it == 0 }
+            ?.let { context?.resources?.getIntArray(it) }
+                ?: selectedColors
         shadowColor =
                 getColor(R.styleable.DonutPieChartUI_donutPieChartUI_shadowColor, Color.BLACK)
         selectedElevation =
@@ -83,7 +89,8 @@ class DonutPieChartUI @JvmOverloads constructor(
         endAngle: Float,
         selection: Float
     ) {
-        paint.color = colors[index % colors.size]
+        val colorIndex = index % colors.size
+        paint.color = mixColors(colors[colorIndex], selectedColors[colorIndex], selection)
         if (selection > 0.01f) {
             paint.setShadowLayer(
                 selection * selectedElevation,
