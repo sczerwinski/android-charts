@@ -138,9 +138,9 @@ class PieChart @JvmOverloads constructor(
         )
 
         getString(R.styleable.PieChart_pieChart_ui)
-            ?.let {
+            ?.let { uiClassName ->
                 val defStyleId = getResourceId(R.styleable.PieChart_pieChart_uiAppearance, 0)
-                createUI(it, attrs, defStyleId)
+                createUI(uiClassName, attrs, defStyleId)
             }
     }
 
