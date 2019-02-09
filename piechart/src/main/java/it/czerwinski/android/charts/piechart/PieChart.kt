@@ -215,6 +215,7 @@ class PieChart @JvmOverloads constructor(
     }
 
     private fun drawDataPoints(canvas: Canvas, cx: Float, cy: Float, radius: Float) {
+        ui?.beforeDraw(canvas)
         dataPoints.asSequence()
             .map { rotationAngle + FULL_ANGLE * it }
             .zipWithNext()
@@ -228,6 +229,7 @@ class PieChart @JvmOverloads constructor(
                     selection = selections.getOrElse(index) { 0f }
                 )
             }
+        ui?.afterDraw(canvas)
     }
 
     private fun onDataSetChanged() {

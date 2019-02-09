@@ -16,6 +16,13 @@ interface PieChartUI {
     fun onAttachedToView(view: View)
 
     /**
+     * Called before the pie chart series are drawn.
+     *
+     * @param canvas The canvas on which the pie chart will be drawn.
+     */
+    fun beforeDraw(canvas: Canvas)
+
+    /**
      * Draws UI of a pie chart.
      *
      * @param canvas The canvas on which the pie chart will be drawn.
@@ -37,4 +44,11 @@ interface PieChartUI {
         endAngle: Float,
         selection: Float
     )
+
+    /**
+     * Called before the pie chart series have been drawn.
+     *
+     * @param canvas The canvas on which the pie chart has been drawn.
+     */
+    fun afterDraw(canvas: Canvas)
 }

@@ -71,6 +71,8 @@ class DonutPieChartUI @JvmOverloads constructor(
         }
     }
 
+    override fun beforeDraw(canvas: Canvas) = Unit
+
     override fun draw(
         canvas: Canvas,
         cx: Float,
@@ -107,5 +109,9 @@ class DonutPieChartUI @JvmOverloads constructor(
                 paint
             )
         }
+    }
+
+    override fun afterDraw(canvas: Canvas) {
+        paint.clearShadowLayer()
     }
 }
