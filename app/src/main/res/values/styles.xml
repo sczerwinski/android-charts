@@ -11,7 +11,7 @@
 
     </style>
 
-    <style name="AppTheme.PieChart">
+    <style name="AppTheme.PieChart" parent="AndroidCharts.PieChart.Donut.LightTheme">
         <item name="android:padding">8dp</item>
     </style>
 

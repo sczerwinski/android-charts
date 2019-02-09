@@ -39,7 +39,7 @@ class PieChartFragment : Fragment() {
             false
         ).apply {
             viewModel = pieChartViewModel
-            setLifecycleOwner(this@PieChartFragment)
+            lifecycleOwner = this@PieChartFragment
         }.root
     }
 

@@ -22,7 +22,7 @@ class PieChartViewModel : ViewModel() {
     }
 
     companion object {
-        const val DATA_SET_SIZE = 5
+        const val DATA_SET_SIZE = 6
         const val MIN_VALUE = .1f
     }
 }
