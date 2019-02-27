@@ -65,7 +65,7 @@ uploadArchives {
         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
         pom.groupId = "$groupId"
-        pom.artifactId = "$artifactId-piechart"
+        pom.artifactId = "$artifactIdPrefix-piechart"
         pom.version = "$libVersion"
 
         pom.project {
