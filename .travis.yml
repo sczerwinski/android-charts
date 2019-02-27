@@ -28,7 +28,7 @@ deploy:
     -PossrhPassword='$SONATYPE_PASSWORD'
     -Psigning.keyId='$SIG_KEY'
     -Psigning.password='$SIG_PASS'
-    -Psigning.secretKeyRingFile='$SIG_FILE'
+    -Psigning.secretKeyRingFile='../$SIG_FILE'
   skip_cleanup: true
   on:
     branch: develop
@@ -38,7 +38,7 @@ deploy:
     -PossrhPassword='$SONATYPE_PASSWORD'
     -Psigning.keyId='$SIG_KEY'
     -Psigning.password='$SIG_PASS'
-    -Psigning.secretKeyRingFile='$SIG_FILE'
+    -Psigning.secretKeyRingFile='../$SIG_FILE'
   skip_cleanup: true
   on:
     tags: true
