@@ -15,6 +15,7 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
+import androidx.annotation.AttrRes
 import it.czerwinski.android.charts.common.*
 import it.czerwinski.android.graphics.FULL_ANGLE
 import it.czerwinski.android.graphics.radToDeg
@@ -30,7 +31,7 @@ import kotlin.math.min
 class PieChart @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-    defStyleAttr: Int = R.attr.pieChartStyle
+    @AttrRes defStyleAttr: Int = R.attr.pieChartStyle
 ) : View(context, attrs, defStyleAttr) {
 
     /**
