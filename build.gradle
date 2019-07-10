@@ -20,10 +20,20 @@ buildscript {
 
 allprojects {
 
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+
     repositories {
         google()
         mavenCentral()
         jcenter()
+        maven {
+            url 'https://oss.sonatype.org/content/repositories/snapshots/'
+            mavenContent {
+                snapshotsOnly()
+            }
+        }
     }
 
 }

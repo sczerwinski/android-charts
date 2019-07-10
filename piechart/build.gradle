@@ -29,6 +29,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     implementation 'androidx.annotation:annotation:1.1.0'
+
+    implementation 'it.czerwinski.android:graphics-util:0.1-SNAPSHOT'
 }
 
 dokka {
