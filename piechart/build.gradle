@@ -26,11 +26,11 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
-    implementation 'androidx.annotation:annotation:1.0.2'
+    implementation 'androidx.annotation:annotation:1.1.0'
+
+    implementation 'it.czerwinski.android:graphics-util:0.1-SNAPSHOT'
 }
 
 dokka {
@@ -40,12 +40,12 @@ dokka {
 }
 
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
+    archiveClassifier.set('sources')
     from android.sourceSets.main.java.srcDirs
 }
 
 task dokkaJar(type: Jar, dependsOn: project.dokka) {
-    classifier = 'javadoc'
+    archiveClassifier.set('javadoc')
     from dokka
 }
 
@@ -65,7 +65,7 @@ uploadArchives {
         beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
         pom.groupId = "$groupId"
-        pom.artifactId = "$artifactIdPrefix-piechart"
+        pom.artifactId = "$artifactIdPrefix-${project.name}"
         pom.version = "$libVersion"
 
         pom.project {

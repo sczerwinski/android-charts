@@ -1,4 +1,6 @@
 language: android
+sudo: required
+jdk: oraclejdk8
 
 env:
   global:
@@ -7,13 +9,35 @@ env:
   - secure: "Wd+Rdm9ELL9rx56Q1SbPoCEs9VgQ58ni3wTQ6g+kBKBiug94sBKEufHpvBe0NyIIuCn/GBv82y25/BDl1MDdsVDRY/Z3SFJNuQ6IvdqFk9Dj+2i3CoE5TLyHKKHdj35vaKIuEqOtuzX1GpYCqANeFG1BPLTl11HiJ427O+8fVpA1IgtJyprTlpeTZKEmjT0bW9XzwtUcSDcWeSb4f4+2RYNSLYO5kZVfftFPpviRSjXqSVoQJV5dDXVLZ+4s+SWVbngJ14F3NtXsPDcLHRBrk6Akijekn2s00cctEUVRm8EaIR4qQl/jPZJwmAjkA4K4nCAnR8Y0UsKfxqWo63ue5gBh5Ruzx0akXfnLISjafuXUQU1l9qRPpSLDxOKcD6tadd663av9ncPJfb+VXy0zlStwBZtZj0KHIhRNPjuC54DJ074uMLJgfYXh3csGNVZyzXwnQLpKGx1uR7VVuqVPzFwAnTOGO+y2OX1VmVK67FgD7E/RPgWop0EMzt38sVqq2LI4S1aMaGQa5JOMpslBf7dqfHLiPmYwINt0UKdsBxWVUVwCryhgm/4I+yD0TZFWgzR2jlhHHtwnnipd7do/qT4bnRQWyJpF6ezcx5QhAhyK62rIvNOg1wUwg3Nx9559hfU2fseTmwsFFCIMmH8qT96IHaYbjbdkYvy2c7DUu8I="
   - secure: "FhnypzqiFjwTE00fqSA/YLRxLBCWQ/y2HBdL8L1cAH8m3KucBamB1pjRWY1AyOzjmiWfjw5FUJO4UbCrrwFsod28akrJdx4ImiPsiQ0FtRdzgQuY6WFkJsRBXC6G+s04XQBwotMvV10AzV1jjKZE4jvlwTP52wCLu+JgB7vz64A5dSl3zcqFur8FxUtyz4bS1IsHdqLH5/MrFskvdvjCN5+i5PduQPflDHCenxCS6C6pjnmBrh3JSGs0Wz/j10vuRPWlXzb1gEN4z+/pNbYjYyxDRQy3KZKyEw6fC9YP0dKBb1yTKnWOEb5cBb/+c86QRFOrQ31HO08zINRYwDhLVKMAPIRH0Vk7TzAsjziLyYBQeqv/FT4505t0SHl3LSSN7umin2rI84OLK1e2r9VBLoNc7GAE0W+j57pCLydEX33ZRosc+BEt+OJ70F8o3aUBeeRdMtOEq+5k/GAaNgsHBTOKzgss8t6ABXuAr8F64PwjMeZR72cNwFZbz2YDjZqDxkyjq/C0jcDppM+q92lITGpweBFfei7A4f9zkarvyHxDz2onyGfiD2sebGxJBL8dg5r1q6CuJy4wbUabnPn1PdKgl94lcqz8Y1F3z4mg3WJrbySKfQq28dOEQn++KlZyN04wZZ6B0YI5cHET8pHz+voLZr0kKVSd8XcWfQO/vvU="
   - secure: "OZA1/CUKOugIrFVx15/iVvypuFTi8gnW6IaGK4PUVvYYALHhh/XT5o7ETfwxyIIIK4E552Yh5V2alCvt3t4L3rWUjqsuw+s4y7FiEhnzTg7Qv/ZsiR96i+wlPgIlyXmo8zptA58PM5Eo3ZFRhot6WIqPmS1NDvfPyDSoDn0L7aYJRRIVet0tv5Z+2bgCjCkXiEczIYLP+Qx36qjlZao/q72bvwDP6aNAiCXXT7cNwUZevURVX8/nyYSe7NoX3N4jg6mSHzm/Rlr+EMEmqNmTz9eze8iQAU3TnB5oRkgOthI4l753J+znlToyUQHj2pJEa2MA5bCiragWK1Lb2RmNPC7ia26yoF1y0/m+fi/0bxvAHD/XvSxdo3mEDGkLTJyLhNCISacKB5Wan8ek48ntsasXrv4tdI0QE58/NjKydvNz9Ml/+A+HxGK2HmkIoGjWdLPStv4oZt4OE9gODdIsF8yggily6DsNZnSsuA/gpqnwlhE7kBBjXNmEOjvc07z+Ac7+0dITCiXiOncUhwjIcZCMpnXes8P+GHnjBIR+tmkZOTcokOMR94rnyJ4xIF9WRwxrzSGGnQQ6XlKlcnCgDF0uCpNrvCbGVYrZvPjXI+E+3bjG8Q1+FpFDWGiqOn6uD+xp4T+E1YvjdmbhCKtQ7OWx/bJzCNtB0CgxJ5MTAZ8="
+  - ANDROID_API_LEVEL=28
+  - ANDROID_BUILD_TOOLS_VERSION=28.0.3
 
 android:
   components:
-  - build-tools-28.0.3
-  - android-28
-  - extra-google-m2repository
-  - extra-android-m2repository
+    - tools
+    - platform-tools
+    - tools
+    - extra-google-m2repository
+    - extra-android-m2repository
+  licenses:
+    - 'android-sdk-preview-license-52d11cd2'
+    - 'android-sdk-license-.+'
+    - 'google-gdk-license-.+'
+
+before_install:
+  - touch $HOME/.android/repositories.cfg
+  - yes | sdkmanager "platforms;android-28"
+  - yes | sdkmanager "build-tools;28.0.3"
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
 
 before_deploy: openssl aes-256-cbc
   -K $encrypted_83b258603a40_key

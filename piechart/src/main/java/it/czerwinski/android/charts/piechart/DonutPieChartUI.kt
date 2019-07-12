@@ -7,18 +7,16 @@ import android.util.AttributeSet
 import android.view.View
 import android.view.View.*
 import it.czerwinski.android.charts.common.*
-import it.czerwinski.android.charts.common.graphics.InSituPathProvider
-import it.czerwinski.android.charts.common.graphics.PathProvider
-import it.czerwinski.android.charts.common.graphics.mixColors
-import it.czerwinski.android.charts.common.graphics.translatedRadial
+import it.czerwinski.android.graphics.AdvancedPath
+import it.czerwinski.android.graphics.mixColors
+import it.czerwinski.android.graphics.withRadialTranslation
 import kotlin.math.max
 
 class DonutPieChartUI @JvmOverloads constructor(
     context: Context? = null,
     attrs: AttributeSet? = null,
     defStyleRes: Int = 0
-) : PieChartUI,
-    PathProvider by InSituPathProvider() {
+) : PieChartUI {
 
     private var colors = intArrayOf(Color.CYAN)
     private var selectedColors = intArrayOf(Color.BLUE)
@@ -31,6 +29,8 @@ class DonutPieChartUI @JvmOverloads constructor(
     private var donutSpacing = 0f
     private var selectedDonutWidth = donutWidth
     private var selectedDonutShift = 0f
+
+    private val path = AdvancedPath()
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
@@ -107,14 +107,21 @@ class DonutPieChartUI @JvmOverloads constructor(
             0f,
             outerRadius - (1 - selection) * donutWidth - selection * selectedDonutWidth
         )
-        canvas.translatedRadial(
+        canvas.withRadialTranslation(
             distance = selection * selectedDonutShift,
             angle = middleAngle
         ) {
-            drawPath(
-                donutSlice(cx, cy, startAngle, endAngle, innerRadius, outerRadius, donutSpacing),
-                paint
+            path.reset()
+            path.addRingSector(
+                cx = cx,
+                cy = cy,
+                radius = outerRadius,
+                startAngle = startAngle,
+                sweepAngle = endAngle - startAngle,
+                thickness = outerRadius - innerRadius,
+                inset = donutSpacing / 2
             )
+            drawPath(path, paint)
         }
     }
 

@@ -31,7 +31,7 @@ interface PieChartUI {
      * @param radius Radius of the pie chart.
      * @param index Index of the slice.
      * @param startAngle Start angle of the slice.
-     * @param startAngle End angle of the slice.
+     * @param endAngle End angle of the slice.
      * @param selection Animated value of the slice being selected.
      */
     fun draw(
