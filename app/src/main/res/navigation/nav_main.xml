@@ -10,6 +10,44 @@
         android:id="@+id/pieChartFragment"
         android:name="it.czerwinski.android.charts.demo.PieChartFragment"
         android:label="PieChartFragment"
-        tools:layout="@layout/pie_chart_fragment" />
+        tools:layout="@layout/pie_chart_fragment">
+        <argument
+            android:name="type"
+            android:defaultValue="SIMPLE"
+            app:argType="it.czerwinski.android.charts.demo.PieChartFragment$ChartType"
+            app:nullable="false" />
+    </fragment>
+
+    <action
+        android:id="@+id/actionPieChart"
+        app:destination="@+id/pieChartFragment"
+        app:popUpTo="@+id/pieChartFragment"
+        app:popUpToInclusive="true"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out">
+        <argument
+            android:name="type"
+            android:defaultValue="SIMPLE"
+            app:argType="it.czerwinski.android.charts.demo.PieChartFragment$ChartType"
+            app:nullable="false" />
+    </action>
+
+    <action
+        android:id="@+id/actionDonutChart"
+        app:destination="@+id/pieChartFragment"
+        app:popUpTo="@+id/pieChartFragment"
+        app:popUpToInclusive="true"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out"
+        app:popEnterAnim="@anim/fade_in"
+        app:popExitAnim="@anim/fade_out">
+        <argument
+            android:name="type"
+            android:defaultValue="DONUT"
+            app:argType="it.czerwinski.android.charts.demo.PieChartFragment$ChartType"
+            app:nullable="false" />
+    </action>
 
 </navigation>

@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.StyleRes
+import androidx.appcompat.view.ContextThemeWrapper
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -28,13 +30,16 @@ class PieChartFragment : Fragment() {
         }
     }
 
+    private val chartType: ChartType
+        get() = requireNotNull(arguments?.getSerializable("type") as? ChartType)
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         return DataBindingUtil.inflate<PieChartFragmentBinding>(
-            inflater,
+            inflater.cloneInContext(ContextThemeWrapper(requireContext(), chartType.theme)),
             R.layout.pie_chart_fragment,
             container,
             false
@@ -62,5 +67,10 @@ class PieChartFragment : Fragment() {
         pieChartViewModel.dataSet.observe(this, Observer { data ->
             adapter.data = data
         })
+    }
+
+    enum class ChartType(@StyleRes val theme: Int) {
+        SIMPLE(theme = R.style.AppTheme_SimplePieChart),
+        DONUT(theme = R.style.AppTheme_DonutPieChart)
     }
 }

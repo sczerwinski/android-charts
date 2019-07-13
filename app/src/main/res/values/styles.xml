@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
-
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-
-        <item name="pieChartStyle">@style/AppTheme.PieChart</item>
-
+        <item name="tabStyle">@style/TabLayout</item>
     </style>
 
-    <style name="AppTheme.PieChart" parent="AndroidCharts.PieChart.Donut.LightTheme">
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="AppTheme.SimplePieChart">
+        <item name="pieChartStyle">@style/PieChart.SimplePieChart</item>
+    </style>
+
+    <style name="AppTheme.DonutPieChart">
+        <item name="pieChartStyle">@style/PieChart.DonutPieChart</item>
+    </style>
+
+    <style name="PieChart.SimplePieChart" parent="AndroidCharts.PieChart.Simple.LightTheme">
         <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="PieChart.DonutPieChart" parent="AndroidCharts.PieChart.Donut.LightTheme">
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <style name="TabLayout" parent="Widget.MaterialComponents.TabLayout.Colored">
+        <item name="android:background">?attr/colorPrimary</item>
     </style>
 
 </resources>
