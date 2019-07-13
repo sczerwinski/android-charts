@@ -67,6 +67,8 @@ class PieChartFragment : Fragment() {
         pieChartViewModel.dataSet.observe(this, Observer { data ->
             adapter.data = data
         })
+
+        pieChartViewModel.generateRandomData()
     }
 
     enum class ChartType(@StyleRes val theme: Int) {
