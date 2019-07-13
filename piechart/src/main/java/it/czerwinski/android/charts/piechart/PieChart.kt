@@ -342,6 +342,11 @@ class PieChart @JvmOverloads constructor(
         abstract operator fun get(index: Int): Float
 
         /**
+         * Gets [PieChart] data set label at the given [index].
+         */
+        abstract fun getLabel(index: Int): String
+
+        /**
          * Returns an `Iterator` that returns the values from the data set.
          */
         override fun iterator(): Iterator<Float> = IteratorImpl()
