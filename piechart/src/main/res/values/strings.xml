@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="pie_chart_percent_format">%d%%</string>
     <string name="donut_pie_chart_ui">it.czerwinski.android.charts.piechart.DonutPieChartUI</string>
 </resources>

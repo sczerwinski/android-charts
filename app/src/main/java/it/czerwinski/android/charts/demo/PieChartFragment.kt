@@ -18,14 +18,15 @@ class PieChartFragment : Fragment() {
     private val pieChartViewModel: PieChartViewModel
         get() = ViewModelProviders.of(this)[PieChartViewModel::class.java]
 
-    private val adapter = FloatListPieChartAdapter()
-        .apply {
+    private val adapter by lazy {
+        FloatListPieChartAdapter(requireContext()).apply {
             registerObserver(object : PieChart.DataSetObserver {
                 override fun onDataSetChanged() {
                     pieChart.clearSelection()
                 }
             })
         }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
