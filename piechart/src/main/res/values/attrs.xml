@@ -33,6 +33,29 @@
 
     </declare-styleable>
 
+    <!-- Simple UI for pie chart -->
+    <declare-styleable name="SimplePieChartUI">
+
+        <!-- Colors of subsequent slices -->
+        <attr name="simplePieChartUI_colors" format="reference" />
+
+        <!-- Color of a shadow behind the selected slice -->
+        <attr name="simplePieChartUI_shadowColor" format="color|reference" />
+
+        <!-- Spacing of slices -->
+        <attr name="simplePieChartUI_sliceSpacing" format="dimension|reference" />
+
+        <!-- Colors of subsequent slices when selected -->
+        <attr name="simplePieChartUI_selectionColors" format="reference" />
+
+        <!-- Shift of the selected slice -->
+        <attr name="simplePieChartUI_selectionShift" format="dimension|reference" />
+
+        <!-- Elevation of the selected slice -->
+        <attr name="simplePieChartUI_selectionElevation" format="dimension|reference" />
+
+    </declare-styleable>
+
     <!-- Donut UI for pie chart -->
     <declare-styleable name="DonutPieChartUI">
 
