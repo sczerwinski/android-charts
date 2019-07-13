@@ -11,6 +11,18 @@
         <item name="pieChart_selectionAnimationDuration">300</item>
     </style>
 
+    <style name="AndroidCharts.PieChart.Simple">
+        <item name="pieChart_ui">@string/simple_pie_chart_ui</item>
+    </style>
+
+    <style name="AndroidCharts.PieChart.Simple.LightTheme">
+        <item name="pieChart_uiAppearance">@style/AndroidCharts.SimplePieChartUI.LightTheme</item>
+    </style>
+
+    <style name="AndroidCharts.PieChart.Simple.DarkTheme">
+        <item name="pieChart_uiAppearance">@style/AndroidCharts.SimplePieChartUI.DarkTheme</item>
+    </style>
+
     <style name="AndroidCharts.PieChart.Donut">
         <item name="pieChart_ui">@string/donut_pie_chart_ui</item>
     </style>
@@ -21,6 +33,23 @@
 
     <style name="AndroidCharts.PieChart.Donut.DarkTheme">
         <item name="pieChart_uiAppearance">@style/AndroidCharts.DonutPieChartUI.DarkTheme</item>
+    </style>
+
+    <style name="AndroidCharts.SimplePieChartUI">
+        <item name="simplePieChartUI_shadowColor">@color/pieChartShadowColor</item>
+        <item name="simplePieChartUI_sliceSpacing">2dp</item>
+        <item name="simplePieChartUI_selectionShift">8dp</item>
+        <item name="simplePieChartUI_selectionElevation">3dp</item>
+    </style>
+
+    <style name="AndroidCharts.SimplePieChartUI.LightTheme">
+        <item name="simplePieChartUI_colors">@array/pieChartColorsLightTheme</item>
+        <item name="simplePieChartUI_selectionColors">@array/pieChartSelectedColorsLightTheme</item>
+    </style>
+
+    <style name="AndroidCharts.SimplePieChartUI.DarkTheme">
+        <item name="simplePieChartUI_colors">@array/pieChartColorsDarkTheme</item>
+        <item name="simplePieChartUI_selectionColors">@array/pieChartSelectedColorsDarkTheme</item>
     </style>
 
     <style name="AndroidCharts.DonutPieChartUI">
