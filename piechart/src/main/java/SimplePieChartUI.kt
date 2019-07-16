@@ -6,7 +6,7 @@ import android.graphics.*
 import android.util.AttributeSet
 import android.view.View
 import android.view.View.*
-import it.czerwinski.android.charts.common.*
+import it.czerwinski.android.charts.core.*
 import it.czerwinski.android.graphics.AdvancedPath
 import it.czerwinski.android.graphics.mixColors
 import it.czerwinski.android.graphics.withRadialTranslation

@@ -1,4 +1,4 @@
-package it.czerwinski.android.charts.common
+package it.czerwinski.android.charts.core
 
 fun List<Float>.normalize(): List<Float> {
     val sum = sum()
