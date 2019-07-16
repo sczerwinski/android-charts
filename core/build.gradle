@@ -6,6 +6,9 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
 
     implementation 'it.czerwinski.android:graphics-util:0.1-SNAPSHOT'
+
+    testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
 }
 
 apply from: '../common-dokka.gradle'
