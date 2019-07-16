@@ -2,7 +2,7 @@ package it.czerwinski.android.charts.common
 
 import android.animation.TypeEvaluator
 
-internal class FloatArrayEvaluator : TypeEvaluator<FloatArray> {
+class FloatArrayEvaluator : TypeEvaluator<FloatArray> {
 
     override fun evaluate(
         fraction: Float,
