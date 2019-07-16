@@ -1,1 +1,1 @@
-include ':app', ':piechart'
+include ':app', ':core', ':piechart'
