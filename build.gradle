@@ -20,6 +20,9 @@ buildscript {
 
 allprojects {
 
+    project.group = groupId
+    project.version = libVersion
+
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }

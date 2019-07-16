@@ -8,7 +8,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.StyleRes
 import androidx.annotation.StyleableRes
 
-internal fun View.withStyledAttributes(
+fun View.withStyledAttributes(
     attrs: AttributeSet?,
     @StyleableRes stylables: IntArray,
     @AttrRes defStyleAttr: Int = 0,
@@ -18,7 +18,7 @@ internal fun View.withStyledAttributes(
     context?.withStyledAttributes(attrs, stylables, defStyleAttr, defStyleRes, initAttrs)
 }
 
-internal fun Context.withStyledAttributes(
+fun Context.withStyledAttributes(
     attrs: AttributeSet?,
     @StyleableRes stylables: IntArray,
     @AttrRes defStyleAttr: Int = 0,

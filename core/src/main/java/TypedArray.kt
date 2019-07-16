@@ -5,7 +5,7 @@ import android.content.res.TypedArray
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
 
-internal fun TypedArray.getInterpolator(
+fun TypedArray.getInterpolator(
     context: Context,
     index: Int,
     defValue: Interpolator
