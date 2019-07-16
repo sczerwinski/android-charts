@@ -7,4 +7,8 @@
 
 ## Pie Chart
 
-![Pie chart data changes](wiki/pie_chart_data_changes.gif)
+
+[![Sonatype Snapshot](https://img.shields.io/nexus/s/https/oss.sonatype.org/it.czerwinski.android/charts-core.svg)](https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/charts-core/)
+
+## Core
+
