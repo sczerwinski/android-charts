@@ -27,6 +27,9 @@ import it.czerwinski.android.graphics.AdvancedPath
 import it.czerwinski.android.graphics.mixColors
 import it.czerwinski.android.graphics.withRadialTranslation
 
+/**
+ * Simple UI for [PieChart]. Draws a classic pie chart.
+ */
 class SimplePieChartUI @JvmOverloads constructor(
     context: Context? = null,
     attrs: AttributeSet? = null,
@@ -41,7 +44,7 @@ class SimplePieChartUI @JvmOverloads constructor(
     private var selectedElevation = 4f
 
     private var sliceSpacing = 0f
-    private var selectedDonutShift = 0f
+    private var selectedSliceShift = 0f
 
     private val path = AdvancedPath()
 
@@ -74,7 +77,7 @@ class SimplePieChartUI @JvmOverloads constructor(
                 getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_selectionElevation, 4f)
         sliceSpacing =
                 getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_sliceSpacing, 0f)
-        selectedDonutShift =
+        selectedSliceShift =
                 getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_selectionShift, 0f)
     }
 
@@ -111,9 +114,9 @@ class SimplePieChartUI @JvmOverloads constructor(
             paint.clearShadowLayer()
         }
         val middleAngle = (startAngle + endAngle) / 2
-        val outerRadius = radius - selectedDonutShift - selectedElevation
+        val outerRadius = radius - selectedSliceShift - selectedElevation
         canvas.withRadialTranslation(
-            distance = selection * selectedDonutShift,
+            distance = selection * selectedSliceShift,
             angle = middleAngle
         ) {
             path.reset()

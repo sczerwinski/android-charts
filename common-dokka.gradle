@@ -4,4 +4,5 @@ dokka {
     moduleName = libDescription
     outputFormat = 'javadoc'
     outputDirectory = "$buildDir/javadoc"
+    includes = ['packages.md']
 }

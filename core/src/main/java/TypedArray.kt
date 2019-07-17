@@ -21,6 +21,11 @@ import android.content.res.TypedArray
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
 
+/**
+ * Retrieves the interpolator instance for the attribute at [index].
+ *
+ * If the value does not exist, [defValue] will be returned instead.
+ */
 fun TypedArray.getInterpolator(
     context: Context,
     index: Int,

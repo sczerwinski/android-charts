@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmName(name = "CustomViews")
+
 package it.czerwinski.android.charts.core
 
 import android.content.Context
@@ -24,6 +26,9 @@ import androidx.annotation.AttrRes
 import androidx.annotation.StyleRes
 import androidx.annotation.StyleableRes
 
+/**
+ * Performs [initAttrs] on a `TypedArray` of attributes defined for the view.
+ */
 fun View.withStyledAttributes(
     attrs: AttributeSet?,
     @StyleableRes stylables: IntArray,
@@ -34,6 +39,9 @@ fun View.withStyledAttributes(
     context?.withStyledAttributes(attrs, stylables, defStyleAttr, defStyleRes, initAttrs)
 }
 
+/**
+ * Performs [initAttrs] on a `TypedArray` of attributes defined for the view.
+ */
 fun Context.withStyledAttributes(
     attrs: AttributeSet?,
     @StyleableRes stylables: IntArray,
