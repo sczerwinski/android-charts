@@ -28,6 +28,9 @@ import it.czerwinski.android.graphics.mixColors
 import it.czerwinski.android.graphics.withRadialTranslation
 import kotlin.math.max
 
+/**
+ * Donut UI for [PieChart]. Draws a donut chart.
+ */
 class DonutPieChartUI @JvmOverloads constructor(
     context: Context? = null,
     attrs: AttributeSet? = null,

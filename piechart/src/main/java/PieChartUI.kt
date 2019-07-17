@@ -62,7 +62,7 @@ interface PieChartUI {
     )
 
     /**
-     * Called before the pie chart series have been drawn.
+     * Called after the pie chart series have been drawn.
      *
      * @param canvas The canvas on which the pie chart has been drawn.
      */

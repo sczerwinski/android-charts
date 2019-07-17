@@ -27,6 +27,9 @@ import it.czerwinski.android.graphics.AdvancedPath
 import it.czerwinski.android.graphics.mixColors
 import it.czerwinski.android.graphics.withRadialTranslation
 
+/**
+ * Simple UI for [PieChart]. Draws a classic pie chart.
+ */
 class SimplePieChartUI @JvmOverloads constructor(
     context: Context? = null,
     attrs: AttributeSet? = null,
