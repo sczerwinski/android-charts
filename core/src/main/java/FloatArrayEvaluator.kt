@@ -18,8 +18,17 @@ package it.czerwinski.android.charts.core
 
 import android.animation.TypeEvaluator
 
+/**
+ * Evaluator interpolating between `FloatArray`s.
+ *
+ * Values at each index of the array are interpolated separately.
+ */
 class FloatArrayEvaluator : TypeEvaluator<FloatArray> {
 
+    /**
+     * Interpolates the values at each index of the `FloatArray` by the [fraction],
+     * between corresponding values in the [startArray] and [endArray].
+     */
     override fun evaluate(
         fraction: Float,
         startValue: FloatArray,
