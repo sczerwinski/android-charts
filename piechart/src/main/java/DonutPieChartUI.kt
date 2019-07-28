@@ -25,6 +25,7 @@ import android.view.View.*
 import it.czerwinski.android.charts.core.*
 import it.czerwinski.android.graphics.AdvancedPath
 import it.czerwinski.android.graphics.mixColors
+import it.czerwinski.android.graphics.set
 import it.czerwinski.android.graphics.withRadialTranslation
 import kotlin.math.max
 
@@ -130,16 +131,17 @@ class DonutPieChartUI @JvmOverloads constructor(
             distance = selection * selectedDonutShift,
             angle = middleAngle
         ) {
-            path.reset()
-            path.addRingSector(
-                cx = cx,
-                cy = cy,
-                radius = outerRadius,
-                startAngle = startAngle,
-                sweepAngle = endAngle - startAngle,
-                thickness = outerRadius - innerRadius,
-                inset = donutSpacing / 2
-            )
+            path.set {
+                addRingSector(
+                    cx = cx,
+                    cy = cy,
+                    radius = outerRadius,
+                    startAngle = startAngle,
+                    sweepAngle = endAngle - startAngle,
+                    thickness = outerRadius - innerRadius,
+                    inset = donutSpacing / 2
+                )
+            }
             drawPath(path, paint)
         }
     }

@@ -25,6 +25,7 @@ import android.view.View.*
 import it.czerwinski.android.charts.core.*
 import it.czerwinski.android.graphics.AdvancedPath
 import it.czerwinski.android.graphics.mixColors
+import it.czerwinski.android.graphics.set
 import it.czerwinski.android.graphics.withRadialTranslation
 
 /**
@@ -119,15 +120,16 @@ class SimplePieChartUI @JvmOverloads constructor(
             distance = selection * selectedSliceShift,
             angle = middleAngle
         ) {
-            path.reset()
-            path.addCircleSector(
-                cx = cx,
-                cy = cy,
-                radius = outerRadius,
-                startAngle = startAngle,
-                sweepAngle = endAngle - startAngle,
-                inset = sliceSpacing / 2
-            )
+            path.set {
+                addCircleSector(
+                    cx = cx,
+                    cy = cy,
+                    radius = outerRadius,
+                    startAngle = startAngle,
+                    sweepAngle = endAngle - startAngle,
+                    inset = sliceSpacing / 2
+                )
+            }
             drawPath(path, paint)
         }
     }
