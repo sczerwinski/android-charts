@@ -17,6 +17,7 @@
 package it.czerwinski.android.charts.piechart
 
 import android.graphics.Canvas
+import android.graphics.Rect
 import android.view.View
 
 /**
@@ -30,6 +31,14 @@ interface PieChartUI {
      * @param view An instance of a [PieChart].
      */
     fun onAttachedToView(view: View)
+
+    /**
+     * Measures padding required to draw the labels, and applies it to the given `Rect`.
+     *
+     * @param labels Pie chart labels.
+     * @param pieChartRect An instance of `RectF`, to which the padding will be applied.
+     */
+    fun applyLabelsPadding(labels: Iterable<String>, pieChartRect: Rect)
 
     /**
      * Called before the pie chart series are drawn.
@@ -49,6 +58,7 @@ interface PieChartUI {
      * @param startAngle Start angle of the slice.
      * @param endAngle End angle of the slice.
      * @param selection Animated value of the slice being selected.
+     * @param label Label of the slice.
      */
     fun draw(
         canvas: Canvas,
@@ -58,7 +68,8 @@ interface PieChartUI {
         index: Int,
         startAngle: Float,
         endAngle: Float,
-        selection: Float
+        selection: Float,
+        label: String?
     )
 
     /**

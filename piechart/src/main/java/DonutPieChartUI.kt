@@ -56,6 +56,8 @@ class DonutPieChartUI @JvmOverloads constructor(
         style = Paint.Style.FILL
     }
 
+    private val labelUIDelegate = SimplePieChartLabelUIDelegate()
+
     init {
         context?.withStyledAttributes(
             attrs = attrs,
@@ -63,6 +65,7 @@ class DonutPieChartUI @JvmOverloads constructor(
             defStyleRes = defStyleRes
         ) {
             initAttrs(context)
+            initTextAttrs(context, attrs)
         }
     }
 
@@ -89,12 +92,36 @@ class DonutPieChartUI @JvmOverloads constructor(
                 getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_selectionShift, 0f)
     }
 
+    private fun TypedArray.initTextAttrs(context: Context, attrs: AttributeSet?) {
+        val labelPosition =
+            getInt(R.styleable.DonutPieChartUI_donutPieChartUI_labelPosition, 1)
+        val labelSpacing =
+            getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_labelSpacing, 0f)
+        val labelMinPercent =
+            getInt(R.styleable.DonutPieChartUI_donutPieChartUI_labelMinPercent, 0)
+        context.withStyledAttributes(
+            attrs = attrs,
+            stylables = R.styleable.TextPaint,
+            defStyleRes = getResourceId(
+                R.styleable.DonutPieChartUI_donutPieChartUI_labelAppearance, 0
+            )
+        ) {
+            labelUIDelegate.applyFrom(
+                context, this, labelPosition, labelSpacing, labelMinPercent
+            )
+        }
+    }
+
     override fun onAttachedToView(view: View) {
         if (selectedElevation > 0) {
             view.setLayerType(LAYER_TYPE_SOFTWARE, paint)
         } else {
             view.setLayerType(LAYER_TYPE_HARDWARE, paint)
         }
+    }
+
+    override fun applyLabelsPadding(labels: Iterable<String>, pieChartRect: Rect) {
+        labelUIDelegate.applyLabelsPadding(labels, pieChartRect)
     }
 
     override fun beforeDraw(canvas: Canvas) = Unit
@@ -107,7 +134,8 @@ class DonutPieChartUI @JvmOverloads constructor(
         index: Int,
         startAngle: Float,
         endAngle: Float,
-        selection: Float
+        selection: Float,
+        label: String?
     ) {
         val colorIndex = index % colors.size
         paint.color = mixColors(colors[colorIndex], selectedColors[colorIndex], selection)
@@ -143,6 +171,17 @@ class DonutPieChartUI @JvmOverloads constructor(
                 )
             }
             drawPath(path, paint)
+            if (label != null) {
+                labelUIDelegate.draw(
+                    canvas = canvas,
+                    cx = cx,
+                    cy = cy,
+                    radius = outerRadius,
+                    startAngle = startAngle,
+                    endAngle = endAngle,
+                    label = label
+                )
+            }
         }
     }
 

@@ -54,6 +54,21 @@
         <!-- Elevation of the selected slice -->
         <attr name="simplePieChartUI_selectionElevation" format="dimension|reference" />
 
+        <!-- Text appearance of the label for the selected slice -->
+        <attr name="simplePieChartUI_labelAppearance" format="reference" />
+
+        <!-- Position of the label for the selected slice -->
+        <attr name="simplePieChartUI_labelPosition" format="enum">
+            <enum name="outside" value="1" />
+            <enum name="inside" value="-1" />
+        </attr>
+
+        <!-- Spacing of the label for the selected slice -->
+        <attr name="simplePieChartUI_labelSpacing" format="dimension|reference" />
+
+        <!-- Minimum value (in percent) to display a label for the selected slice -->
+        <attr name="simplePieChartUI_labelMinPercent" format="integer" />
+
     </declare-styleable>
 
     <!-- Donut UI for pie chart -->
@@ -82,6 +97,21 @@
 
         <!-- Elevation of the selected donut slice -->
         <attr name="donutPieChartUI_selectionElevation" format="dimension|reference" />
+
+        <!-- Text appearance of the label for the selected slice -->
+        <attr name="donutPieChartUI_labelAppearance" format="reference" />
+
+        <!-- Position of the label for the selected slice -->
+        <attr name="donutPieChartUI_labelPosition" format="enum">
+            <enum name="outside" value="1" />
+            <enum name="inside" value="-1" />
+        </attr>
+
+        <!-- Spacing of the label for the selected slice -->
+        <attr name="donutPieChartUI_labelSpacing" format="dimension|reference" />
+
+        <!-- Minimum value (in percent) to display a label for the selected slice -->
+        <attr name="donutPieChartUI_labelMinPercent" format="integer" />
 
     </declare-styleable>
 
