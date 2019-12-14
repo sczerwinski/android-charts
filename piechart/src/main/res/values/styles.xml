@@ -40,16 +40,21 @@
         <item name="simplePieChartUI_sliceSpacing">2dp</item>
         <item name="simplePieChartUI_selectionShift">8dp</item>
         <item name="simplePieChartUI_selectionElevation">3dp</item>
+        <item name="simplePieChartUI_labelPosition">inside</item>
+        <item name="simplePieChartUI_labelSpacing">12dp</item>
+        <item name="simplePieChartUI_labelMinPercent">5</item>
     </style>
 
     <style name="AndroidCharts.SimplePieChartUI.LightTheme">
         <item name="simplePieChartUI_colors">@array/pieChartColorsLightTheme</item>
         <item name="simplePieChartUI_selectionColors">@array/pieChartSelectedColorsLightTheme</item>
+        <item name="simplePieChartUI_labelAppearance">@style/AndroidCharts.PieChart.TextAppearance.Light</item>
     </style>
 
     <style name="AndroidCharts.SimplePieChartUI.DarkTheme">
         <item name="simplePieChartUI_colors">@array/pieChartColorsDarkTheme</item>
         <item name="simplePieChartUI_selectionColors">@array/pieChartSelectedColorsDarkTheme</item>
+        <item name="simplePieChartUI_labelAppearance">@style/AndroidCharts.PieChart.TextAppearance.Dark</item>
     </style>
 
     <style name="AndroidCharts.DonutPieChartUI">
@@ -59,16 +64,32 @@
         <item name="donutPieChartUI_selectionWidth">4dp</item>
         <item name="donutPieChartUI_selectionShift">8dp</item>
         <item name="donutPieChartUI_selectionElevation">3dp</item>
+        <item name="donutPieChartUI_labelPosition">outside</item>
+        <item name="donutPieChartUI_labelSpacing">8dp</item>
     </style>
 
     <style name="AndroidCharts.DonutPieChartUI.LightTheme">
         <item name="donutPieChartUI_colors">@array/pieChartColorsLightTheme</item>
         <item name="donutPieChartUI_selectionColors">@array/pieChartSelectedColorsLightTheme</item>
+        <item name="donutPieChartUI_labelAppearance">@style/AndroidCharts.PieChart.TextAppearance.Dark</item>
     </style>
 
     <style name="AndroidCharts.DonutPieChartUI.DarkTheme">
         <item name="donutPieChartUI_colors">@array/pieChartColorsDarkTheme</item>
         <item name="donutPieChartUI_selectionColors">@array/pieChartSelectedColorsDarkTheme</item>
+        <item name="donutPieChartUI_labelAppearance">@style/AndroidCharts.PieChart.TextAppearance.Light</item>
+    </style>
+
+    <style name="AndroidCharts.PieChart.TextAppearance">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="AndroidCharts.PieChart.TextAppearance.Dark">
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="AndroidCharts.PieChart.TextAppearance.Light">
+        <item name="android:textColor">@color/white</item>
     </style>
 
 </resources>

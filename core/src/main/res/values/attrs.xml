@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Text paint -->
+    <declare-styleable name="TextPaint">
+
+        <!-- Text size -->
+        <attr name="android:textSize" />
+
+        <!-- Text color -->
+        <attr name="android:textColor" />
+
+        <!-- Text scale X -->
+        <attr name="android:textScaleX" />
+
+        <!-- Text skew X -->
+        <attr name="textPaint_textSkewX" format="float" />
+
+        <!-- Text bold flag -->
+        <attr name="textPaint_bold" format="boolean" />
+
+        <!-- Text strike through flag -->
+        <attr name="textPaint_strikeThrough" format="boolean" />
+
+        <!-- Text underline flag -->
+        <attr name="textPaint_underline" format="boolean" />
+
+        <!-- Text typeface -->
+        <attr name="textPaint_typeface" format="enum">
+            <enum name="regular" value="0" />
+            <enum name="bold" value="1" />
+            <enum name="sans_serif" value="2" />
+            <enum name="serif" value="3" />
+            <enum name="monospace" value="4" />
+            <enum name="custom" value="5" />
+        </attr>
+
+        <!-- Text typeface asset used with custom typeface -->
+        <attr name="textPaint_typefaceAsset" format="string" />
+
+    </declare-styleable>
+
+</resources>

@@ -206,6 +206,8 @@ class PieChart @JvmOverloads constructor(
         if (canvas != null) {
             updatePieChartRect()
 
+            adapter?.getLabels()?.let { ui?.applyLabelsPadding(it, pieChartRect) }
+
             val cx = pieChartRect.centerX().toFloat()
             val cy = pieChartRect.centerY().toFloat()
             val radius = pieChartRect.width() / 2f
@@ -252,7 +254,8 @@ class PieChart @JvmOverloads constructor(
                     cx = cx, cy = cy, radius = radius,
                     startAngle = startAngle,
                     endAngle = endAngle,
-                    selection = selections.getOrElse(index) { 0f }
+                    selection = selections.getOrElse(index) { 0f },
+                    label = adapter?.getLabel(index)
                 )
             }
         ui?.afterDraw(canvas)
@@ -368,6 +371,11 @@ class PieChart @JvmOverloads constructor(
         override fun iterator(): Iterator<Float> = IteratorImpl()
 
         /**
+         * Returns an `Iterable` that iterates through the labels for the data set.
+         */
+        fun getLabels(): Iterable<String> = Iterable { LabelIteratorImpl() }
+
+        /**
          * Registers an [observer] of data set changes.
          */
         fun registerObserver(observer: DataSetObserver) {
@@ -392,6 +400,12 @@ class PieChart @JvmOverloads constructor(
             private var index: Int = 0
             override fun hasNext(): Boolean = index < size
             override fun next(): Float = get(index++)
+        }
+
+        private inner class LabelIteratorImpl : Iterator<String> {
+            private var index: Int = 0
+            override fun hasNext(): Boolean = index < size
+            override fun next(): String = getLabel(index++)
         }
     }
 

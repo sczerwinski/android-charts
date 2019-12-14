@@ -53,6 +53,8 @@ class SimplePieChartUI @JvmOverloads constructor(
         style = Paint.Style.FILL
     }
 
+    private val labelUIDelegate = SimplePieChartLabelUIDelegate()
+
     init {
         context?.withStyledAttributes(
             attrs = attrs,
@@ -60,6 +62,7 @@ class SimplePieChartUI @JvmOverloads constructor(
             defStyleRes = defStyleRes
         ) {
             initAttrs(context)
+            initTextAttrs(context, attrs)
         }
     }
 
@@ -82,12 +85,36 @@ class SimplePieChartUI @JvmOverloads constructor(
                 getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_selectionShift, 0f)
     }
 
+    private fun TypedArray.initTextAttrs(context: Context, attrs: AttributeSet?) {
+        val labelPosition =
+            getInt(R.styleable.SimplePieChartUI_simplePieChartUI_labelPosition, 1)
+        val labelSpacing =
+            getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_labelSpacing, 0f)
+        val labelMinPercent =
+            getInt(R.styleable.SimplePieChartUI_simplePieChartUI_labelMinPercent, 0)
+        context.withStyledAttributes(
+            attrs = attrs,
+            stylables = R.styleable.TextPaint,
+            defStyleRes = getResourceId(
+                R.styleable.SimplePieChartUI_simplePieChartUI_labelAppearance, 0
+            )
+        ) {
+            labelUIDelegate.applyFrom(
+                context, this, labelPosition, labelSpacing, labelMinPercent
+            )
+        }
+    }
+
     override fun onAttachedToView(view: View) {
         if (selectedElevation > 0) {
             view.setLayerType(LAYER_TYPE_SOFTWARE, paint)
         } else {
             view.setLayerType(LAYER_TYPE_HARDWARE, paint)
         }
+    }
+
+    override fun applyLabelsPadding(labels: Iterable<String>, pieChartRect: Rect) {
+        labelUIDelegate.applyLabelsPadding(labels, pieChartRect)
     }
 
     override fun beforeDraw(canvas: Canvas) = Unit
@@ -100,7 +127,8 @@ class SimplePieChartUI @JvmOverloads constructor(
         index: Int,
         startAngle: Float,
         endAngle: Float,
-        selection: Float
+        selection: Float,
+        label: String?
     ) {
         val colorIndex = index % colors.size
         paint.color = mixColors(colors[colorIndex], selectedColors[colorIndex], selection)
@@ -131,6 +159,17 @@ class SimplePieChartUI @JvmOverloads constructor(
                 )
             }
             drawPath(path, paint)
+            if (label != null) {
+                labelUIDelegate.draw(
+                    canvas = canvas,
+                    cx = cx,
+                    cy = cy,
+                    radius = outerRadius,
+                    startAngle = startAngle,
+                    endAngle = endAngle,
+                    label = label
+                )
+            }
         }
     }
 
