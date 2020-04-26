@@ -21,6 +21,7 @@ import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Rect
 import it.czerwinski.android.charts.core.TextPaint
+import it.czerwinski.android.charts.core.drawTextAdvanced
 import it.czerwinski.android.graphics.FULL_ANGLE
 import it.czerwinski.android.graphics.degToRad
 import kotlin.math.*
@@ -110,11 +111,11 @@ class SimplePieChartLabelUIDelegate {
             val textCX = cx + (anchorRadius + textHalfWidth * labelPosition) * midAngleCos
             val textCY = cy + (anchorRadius + textHalfHeight * labelPosition) * midAngleSin
 
-            canvas.drawText(
-                label,
-                textCX - textHalfWidth,
-                textCY + textHalfHeight,
-                textPaint
+            canvas.drawTextAdvanced(
+                text = label,
+                x = textCX - textHalfWidth,
+                y = textCY + textHalfHeight,
+                paint = textPaint
             )
         }
     }
