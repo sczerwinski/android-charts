@@ -255,7 +255,7 @@ class PieChart @JvmOverloads constructor(
                     startAngle = startAngle,
                     endAngle = endAngle,
                     selection = selections.getOrElse(index) { 0f },
-                    label = adapter?.getLabel(index)
+                    label = adapter?.takeIf { it.size > index }?.getLabel(index)
                 )
             }
         ui?.afterDraw(canvas)
