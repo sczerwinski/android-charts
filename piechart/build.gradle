@@ -11,4 +11,4 @@ dependencies {
 }
 
 apply from: '../common-dokka.gradle'
-apply from: '../common-upload.gradle'
+apply from: '../common-publish.gradle'
