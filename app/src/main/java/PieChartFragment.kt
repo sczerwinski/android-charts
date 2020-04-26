@@ -8,8 +8,8 @@ import androidx.annotation.StyleRes
 import androidx.appcompat.view.ContextThemeWrapper
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import it.czerwinski.android.charts.demo.databinding.PieChartFragmentBinding
 import it.czerwinski.android.charts.piechart.PieChart
 import it.czerwinski.android.charts.piechart.adapters.FloatListPieChartAdapter
@@ -17,8 +17,7 @@ import kotlinx.android.synthetic.main.pie_chart_fragment.*
 
 class PieChartFragment : Fragment() {
 
-    private val pieChartViewModel: PieChartViewModel
-        get() = ViewModelProviders.of(this)[PieChartViewModel::class.java]
+    private val pieChartViewModel: PieChartViewModel by viewModels()
 
     private val adapter by lazy {
         FloatListPieChartAdapter(requireContext()).apply {
@@ -57,7 +56,7 @@ class PieChartFragment : Fragment() {
         dataList.adapter = DataPointsListAdapter { position ->
             pieChart.selectionIndex = position
         }.also {
-            pieChartViewModel.dataSet.observe(this, it)
+            pieChartViewModel.dataSet.observe(viewLifecycleOwner, it)
         }
     }
 
