@@ -82,6 +82,7 @@
 
     <style name="AndroidCharts.PieChart.TextAppearance">
         <item name="android:textSize">12sp</item>
+        <item name="fontFamily">sans-serif-medium</item>
     </style>
 
     <style name="AndroidCharts.PieChart.TextAppearance.Dark">
