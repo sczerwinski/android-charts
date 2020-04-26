@@ -48,7 +48,7 @@ before_deploy: openssl aes-256-cbc
 
 deploy:
 - provider: script
-  script: ./gradlew uploadArchives
+  script: ./gradlew publish
     -PossrhUsername='$SONATYPE_USERNAME'
     -PossrhPassword='$SONATYPE_PASSWORD'
     -Psigning.keyId='$SIG_KEY'
@@ -58,7 +58,7 @@ deploy:
   on:
     branch: develop
 - provider: script
-  script: ./gradlew uploadArchives
+  script: ./gradlew publish
     -PossrhUsername='$SONATYPE_USERNAME'
     -PossrhPassword='$SONATYPE_PASSWORD'
     -Psigning.keyId='$SIG_KEY'

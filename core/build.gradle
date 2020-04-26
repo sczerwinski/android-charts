@@ -4,10 +4,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
 
     implementation 'androidx.annotation:annotation:1.1.0'
-
-    testImplementation "junit:junit:$junitVersion"
-    testImplementation "org.mockito:mockito-core:$mockitoVersion"
 }
 
+apply from: '../common-tests.gradle'
+
 apply from: '../common-dokka.gradle'
-apply from: '../common-upload.gradle'
+apply from: '../common-publish.gradle'
