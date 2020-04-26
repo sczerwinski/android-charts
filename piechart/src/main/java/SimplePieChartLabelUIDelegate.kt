@@ -110,7 +110,6 @@ class SimplePieChartLabelUIDelegate {
             val textCX = cx + (anchorRadius + textHalfWidth * labelPosition) * midAngleCos
             val textCY = cy + (anchorRadius + textHalfHeight * labelPosition) * midAngleSin
 
-            canvas.drawCircle(textCX, textCY, 2f, textPaint)
             canvas.drawText(
                 label,
                 textCX - textHalfWidth,
