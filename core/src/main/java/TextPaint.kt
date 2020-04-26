@@ -17,15 +17,23 @@
 package it.czerwinski.android.charts.core
 
 import android.content.Context
+import android.content.res.Resources
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
+import android.util.Log
+import androidx.core.content.res.ResourcesCompat
 
 /**
  * An extension of `Paint` class, allowing for easy style application.
  */
 class TextPaint : Paint(ANTI_ALIAS_FLAG) {
+
+    /**
+     * Indicates whether the text should be drawn in all caps.
+     */
+    var textAllCaps: Boolean = false
 
     /**
      * Applies a style from the [typedArray] in a given [context] to the `Paint` object.
@@ -37,34 +45,59 @@ class TextPaint : Paint(ANTI_ALIAS_FLAG) {
     private fun TypedArray.initAttrs(context: Context?) {
         textSize = getDimension(R.styleable.TextPaint_android_textSize, textSize)
         color = getColor(R.styleable.TextPaint_android_textColor, Color.BLACK)
-        textScaleX = getFloat(R.styleable.TextPaint_android_textScaleX, 1f)
-        textSkewX = getFloat(R.styleable.TextPaint_textPaint_textSkewX, 0f)
-        isFakeBoldText = getBoolean(R.styleable.TextPaint_textPaint_bold, false)
-        isStrikeThruText = getBoolean(R.styleable.TextPaint_textPaint_strikeThrough, false)
-        isUnderlineText = getBoolean(R.styleable.TextPaint_textPaint_underline, false)
-        typeface = when (getInt(R.styleable.TextPaint_textPaint_typeface, 0)) {
-            TYPEFACE_DEFAULT_BOLD -> Typeface.DEFAULT_BOLD
-            TYPEFACE_SANS_SERIF -> Typeface.SANS_SERIF
-            TYPEFACE_SERIF -> Typeface.SERIF
-            TYPEFACE_MONOSPACE -> Typeface.MONOSPACE
-            TYPEFACE_CUSTOM -> try {
-                Typeface.createFromAsset(
-                    context?.assets,
-                    getString(R.styleable.TextPaint_textPaint_typefaceAsset)
-                )
-            } catch (ignored: Throwable) {
-                Typeface.DEFAULT
+        textAllCaps = getBoolean(R.styleable.TextPaint_textAllCaps, false)
+
+        val fontFamilyIndex = findIndexWithValue(
+            R.styleable.TextPaint_android_fontFamily,
+            R.styleable.TextPaint_fontFamily
+        )
+        setTypeface(
+            context = context,
+            fontFamilyResourceId = getResourceId(fontFamilyIndex, 0),
+            fontFamily = getString(fontFamilyIndex),
+            textStyle = getInt(R.styleable.TextPaint_android_textStyle, Typeface.NORMAL),
+            typefaceFromId =
+            when (getInt(R.styleable.TextPaint_android_typeface, TYPEFACE_DEFAULT)) {
+                TYPEFACE_SANS_SERIF -> Typeface.SANS_SERIF
+                TYPEFACE_SERIF -> Typeface.SERIF
+                TYPEFACE_MONOSPACE -> Typeface.MONOSPACE
+                else -> null
             }
-            else -> Typeface.DEFAULT
+        )
+    }
+
+    private fun setTypeface(
+        context: Context?,
+        fontFamilyResourceId: Int,
+        fontFamily: String?,
+        textStyle: Int,
+        typefaceFromId: Typeface?
+    ) {
+        if (context != null && fontFamilyResourceId != 0) {
+            try {
+                typeface = ResourcesCompat.getFont(context, fontFamilyResourceId)
+                return
+            } catch (e: Resources.NotFoundException) {
+                Log.e(TAG, "Could not find font at ID $fontFamilyResourceId", e)
+            }
+        }
+        typeface = if (fontFamily != null) {
+            Typeface.create(fontFamily, textStyle)
+        } else if (textStyle > 0) {
+            if (typefaceFromId == null) Typeface.defaultFromStyle(textStyle)
+            else Typeface.create(typefaceFromId, textStyle)
+        } else {
+            typefaceFromId
         }
     }
 
     companion object {
+
+        private const val TAG: String = "TextPaint"
+
         private const val TYPEFACE_DEFAULT = 0
-        private const val TYPEFACE_DEFAULT_BOLD = 1
-        private const val TYPEFACE_SANS_SERIF = 2
-        private const val TYPEFACE_SERIF = 3
-        private const val TYPEFACE_MONOSPACE = 4
-        private const val TYPEFACE_CUSTOM = 5
+        private const val TYPEFACE_SANS_SERIF = 1
+        private const val TYPEFACE_SERIF = 2
+        private const val TYPEFACE_MONOSPACE = 3
     }
 }
