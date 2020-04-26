@@ -1,4 +1,4 @@
-group groupId
+group libGroupId
 version libVersion
 description = libDescription
 
@@ -11,18 +11,18 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'com.android.tools.build:gradle:3.6.3'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "org.jetbrains.dokka:dokka-gradle-plugin:$dokkaVersion"
+        classpath 'org.jetbrains.dokka:dokka-gradle-plugin:0.10.1'
     }
 
 }
 
 allprojects {
-
-    project.group = groupId
+    project.group = libGroupId
     project.version = libVersion
 
+    // Snapshots caching:
     configurations.all {
         resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
     }
@@ -31,6 +31,8 @@ allprojects {
         google()
         mavenCentral()
         jcenter()
+
+        // Snapshots:
         maven {
             url 'https://oss.sonatype.org/content/repositories/snapshots/'
             mavenContent {
