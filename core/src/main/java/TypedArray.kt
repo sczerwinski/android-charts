@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
+import androidx.annotation.StyleableRes
 
 /**
  * Retrieves the interpolator instance for the attribute at [index].
@@ -37,3 +38,14 @@ fun TypedArray.getInterpolator(
 } catch (throwable: Throwable) {
     defValue
 }
+
+/**
+ * Retrieves first of the `@StyleableRes` indices that contains value in this `TypedArray`.
+ *
+ * If none of the indices contains any value, the last index is returned.
+ *
+ * @param indices `@StyleableRes` indices
+ * @return
+ */
+fun TypedArray.findIndexWithValue(@StyleableRes vararg indices: Int): Int =
+    indices.find { index -> hasValue(index) } ?: indices.last()
