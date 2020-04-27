@@ -1,9 +1,9 @@
 package it.czerwinski.android.charts.demo
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
@@ -11,6 +11,8 @@ import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.main_activity.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val mainViewModel: MainViewModel by viewModels()
 
     private val navController: NavController
         get() = (supportFragmentManager.findFragmentById(R.id.navHost) as NavHostFragment)
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initTabs() {
+        tabs.getTabAt(mainViewModel.selectedTabIndex.value ?: 0)?.select()
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
@@ -36,8 +39,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onTabSelected(tab: TabLayout.Tab) {
+        mainViewModel.selectedTabIndex.postValue(tab.position)
         with (Tab.values()[tab.position]) {
-            navController.navigate(action, bundleOf())
+            navController.navigate(action)
         }
     }
 
