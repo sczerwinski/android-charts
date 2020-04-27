@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AndroidCharts" />
-
     <style name="AndroidCharts.PieChart">
         <item name="pieChart_rotationAngle">270</item>
         <item name="pieChart_dataSetInterpolator">@android:anim/decelerate_interpolator</item>
@@ -48,13 +46,13 @@
     <style name="AndroidCharts.SimplePieChartUI.LightTheme">
         <item name="simplePieChartUI_colors">@array/pieChartColorsLightTheme</item>
         <item name="simplePieChartUI_selectionColors">@array/pieChartSelectedColorsLightTheme</item>
-        <item name="simplePieChartUI_labelAppearance">@style/AndroidCharts.PieChart.TextAppearance.Light</item>
+        <item name="simplePieChartUI_labelAppearance">@style/AndroidCharts.TextAppearance.Light</item>
     </style>
 
     <style name="AndroidCharts.SimplePieChartUI.DarkTheme">
         <item name="simplePieChartUI_colors">@array/pieChartColorsDarkTheme</item>
         <item name="simplePieChartUI_selectionColors">@array/pieChartSelectedColorsDarkTheme</item>
-        <item name="simplePieChartUI_labelAppearance">@style/AndroidCharts.PieChart.TextAppearance.Dark</item>
+        <item name="simplePieChartUI_labelAppearance">@style/AndroidCharts.TextAppearance.Dark</item>
     </style>
 
     <style name="AndroidCharts.DonutPieChartUI">
@@ -71,25 +69,13 @@
     <style name="AndroidCharts.DonutPieChartUI.LightTheme">
         <item name="donutPieChartUI_colors">@array/pieChartColorsLightTheme</item>
         <item name="donutPieChartUI_selectionColors">@array/pieChartSelectedColorsLightTheme</item>
-        <item name="donutPieChartUI_labelAppearance">@style/AndroidCharts.PieChart.TextAppearance.Dark</item>
+        <item name="donutPieChartUI_labelAppearance">@style/AndroidCharts.TextAppearance.Dark</item>
     </style>
 
     <style name="AndroidCharts.DonutPieChartUI.DarkTheme">
         <item name="donutPieChartUI_colors">@array/pieChartColorsDarkTheme</item>
         <item name="donutPieChartUI_selectionColors">@array/pieChartSelectedColorsDarkTheme</item>
-        <item name="donutPieChartUI_labelAppearance">@style/AndroidCharts.PieChart.TextAppearance.Light</item>
-    </style>
-
-    <style name="AndroidCharts.PieChart.TextAppearance">
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="AndroidCharts.PieChart.TextAppearance.Dark">
-        <item name="android:textColor">@color/black</item>
-    </style>
-
-    <style name="AndroidCharts.PieChart.TextAppearance.Light">
-        <item name="android:textColor">@color/white</item>
+        <item name="donutPieChartUI_labelAppearance">@style/AndroidCharts.TextAppearance.Light</item>
     </style>
 
 </resources>

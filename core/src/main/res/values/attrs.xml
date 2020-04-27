@@ -10,33 +10,20 @@
         <!-- Text color -->
         <attr name="android:textColor" />
 
-        <!-- Text scale X -->
-        <attr name="android:textScaleX" />
+        <!-- Text style -->
+        <attr name="android:textStyle" />
 
-        <!-- Text skew X -->
-        <attr name="textPaint_textSkewX" format="float" />
+        <!-- Typeface -->
+        <attr name="android:typeface" />
 
-        <!-- Text bold flag -->
-        <attr name="textPaint_bold" format="boolean" />
+        <!-- Font family -->
+        <attr name="android:fontFamily" />
 
-        <!-- Text strike through flag -->
-        <attr name="textPaint_strikeThrough" format="boolean" />
+        <!-- Font family -->
+        <attr name="fontFamily" format="string|reference" />
 
-        <!-- Text underline flag -->
-        <attr name="textPaint_underline" format="boolean" />
-
-        <!-- Text typeface -->
-        <attr name="textPaint_typeface" format="enum">
-            <enum name="regular" value="0" />
-            <enum name="bold" value="1" />
-            <enum name="sans_serif" value="2" />
-            <enum name="serif" value="3" />
-            <enum name="monospace" value="4" />
-            <enum name="custom" value="5" />
-        </attr>
-
-        <!-- Text typeface asset used with custom typeface -->
-        <attr name="textPaint_typefaceAsset" format="string" />
+        <!-- Indicates whether the text should be drawn in all caps -->
+        <attr name="textAllCaps" format="boolean" />
 
     </declare-styleable>
 
