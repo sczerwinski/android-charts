@@ -33,7 +33,7 @@
         <item name="donutPieChartUI_labelAppearance">@style/PieChart.DonutPieChart.UI.TextAppearance</item>
     </style>
 
-    <style name="PieChart.DonutPieChart.UI.TextAppearance" parent="AndroidCharts.PieChart.TextAppearance.Dark">
+    <style name="PieChart.DonutPieChart.UI.TextAppearance" parent="AndroidCharts.TextAppearance.Dark">
         <item name="android:textStyle">italic</item>
     </style>
 
