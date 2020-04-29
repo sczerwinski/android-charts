@@ -21,23 +21,9 @@ package it.czerwinski.android.charts.core
 import android.content.Context
 import android.content.res.TypedArray
 import android.util.AttributeSet
-import android.view.View
 import androidx.annotation.AttrRes
 import androidx.annotation.StyleRes
 import androidx.annotation.StyleableRes
-
-/**
- * Performs [initAttrs] on a `TypedArray` of attributes defined for the view.
- */
-fun View.withStyledAttributes(
-    attrs: AttributeSet?,
-    @StyleableRes stylables: IntArray,
-    @AttrRes defStyleAttr: Int = 0,
-    @StyleRes defStyleRes: Int = 0,
-    initAttrs: TypedArray.() -> Unit
-) {
-    context?.withStyledAttributes(attrs, stylables, defStyleAttr, defStyleRes, initAttrs)
-}
 
 /**
  * Performs [initAttrs] on a `TypedArray` of attributes defined for the view.
