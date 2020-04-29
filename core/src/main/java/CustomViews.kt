@@ -36,8 +36,6 @@ fun Context.withStyledAttributes(
     initAttrs: TypedArray.() -> Unit
 ) {
     val attrsArray = obtainStyledAttributes(attrs, stylables, defStyleAttr, defStyleRes)
-    if (attrsArray != null) {
-        attrsArray.initAttrs()
-        attrsArray.recycle()
-    }
+    attrsArray.initAttrs()
+    attrsArray.recycle()
 }
