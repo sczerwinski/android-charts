@@ -32,6 +32,7 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.animation.Interpolator
 import androidx.annotation.AttrRes
+import androidx.core.content.withStyledAttributes
 import it.czerwinski.android.charts.core.*
 import it.czerwinski.android.graphics.FULL_ANGLE
 import it.czerwinski.android.graphics.radToDeg
@@ -134,8 +135,8 @@ class PieChart @JvmOverloads constructor(
     init {
         isClickable = true
         context.withStyledAttributes(
-            attrs = attrs,
-            stylables = R.styleable.PieChart,
+            set = attrs,
+            attrs = R.styleable.PieChart,
             defStyleAttr = defStyleAttr,
             defStyleRes = android.R.style.Widget
         ) {
