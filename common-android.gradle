@@ -10,33 +10,12 @@ android {
         targetSdkVersion 29
         versionCode libVersionCode.toInteger()
         versionName libVersion
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-
-    testOptions.unitTests.all {
-        testLogging {
-            events "passed", "skipped", "failed"
-            showExceptions true
-            exceptionFormat "full"
-            showCauses true
-            showStackTraces true
-
-            afterSuite { desc, result ->
-                def output = "${result.resultType} (" +
-                        "${result.testCount} tests, " +
-                        "${result.successfulTestCount} passed, " +
-                        "${result.failedTestCount} failed, " +
-                        "${result.skippedTestCount} skipped)"
-                def repeatLength = output.length()
-                logger.quiet('\n' + ('=' * repeatLength) + '\n' + desc.name + '\n' + output + '\n' + ('=' * repeatLength))
-            }
         }
     }
 
