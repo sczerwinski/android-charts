@@ -19,7 +19,6 @@ package it.czerwinski.android.charts.core
 import android.content.Context
 import android.content.res.Resources
 import android.content.res.TypedArray
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Typeface
 import android.util.Log
@@ -44,7 +43,7 @@ class TextPaint : Paint(ANTI_ALIAS_FLAG) {
 
     private fun TypedArray.initAttrs(context: Context?) {
         textSize = getDimension(R.styleable.TextPaint_android_textSize, textSize)
-        color = getColor(R.styleable.TextPaint_android_textColor, Color.BLACK)
+        color = getColor(R.styleable.TextPaint_android_textColor, color)
         textAllCaps = getBoolean(R.styleable.TextPaint_textAllCaps, false)
 
         val fontFamilyIndex = findIndexWithValue(
@@ -75,7 +74,10 @@ class TextPaint : Paint(ANTI_ALIAS_FLAG) {
     ) {
         if (context != null && fontFamilyResourceId != 0) {
             try {
-                typeface = ResourcesCompat.getFont(context, fontFamilyResourceId)
+                val typefaceFromFont = ResourcesCompat.getFont(context, fontFamilyResourceId)
+                typeface =
+                    if (textStyle > 0) Typeface.create(typefaceFromFont, textStyle)
+                    else typefaceFromFont
                 return
             } catch (e: Resources.NotFoundException) {
                 Log.e(TAG, "Could not find font at ID $fontFamilyResourceId", e)
@@ -83,11 +85,11 @@ class TextPaint : Paint(ANTI_ALIAS_FLAG) {
         }
         typeface = if (fontFamily != null) {
             Typeface.create(fontFamily, textStyle)
-        } else if (textStyle > 0) {
-            if (typefaceFromId == null) Typeface.defaultFromStyle(textStyle)
-            else Typeface.create(typefaceFromId, textStyle)
+        } else if (typefaceFromId != null) {
+            if (textStyle > 0) Typeface.create(typefaceFromId, textStyle)
+            else typefaceFromId
         } else {
-            typefaceFromId
+            Typeface.defaultFromStyle(textStyle)
         }
     }
 
