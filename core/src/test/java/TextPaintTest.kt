@@ -19,6 +19,7 @@ package it.czerwinski.android.charts.core
 import io.mockk.impl.annotations.SpyK
 import io.mockk.junit5.MockKExtension
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -31,5 +32,12 @@ class TextPaintTest {
     @Test
     fun `Given new text paint, when textAllCaps, then return false`() {
         assertFalse(paint.textAllCaps)
+    }
+
+    @Test
+    fun `Given text paint with textAllCaps set to true, when textAllCaps, then return false`() {
+        paint.textAllCaps = true
+
+        assertTrue(paint.textAllCaps)
     }
 }
