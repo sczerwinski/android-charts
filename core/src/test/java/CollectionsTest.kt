@@ -63,7 +63,8 @@ class CollectionsTest {
         @JvmStatic
         fun normalizeData(): Collection<Array<out Any>> = listOf(
             arrayOf(listOf(10f, 20f, 30f, 40f), listOf(0.1f, 0.2f, 0.3f, 0.4f)),
-            arrayOf(listOf(1f, 1f, 1f, 1f), listOf(0.25f, 0.25f, 0.25f, 0.25f))
+            arrayOf(listOf(1f, 1f, 1f, 1f), listOf(0.25f, 0.25f, 0.25f, 0.25f)),
+            arrayOf(listOf(0f, 1f, -1f), listOf(0f, 1f, -1f))
         )
 
         @JvmStatic

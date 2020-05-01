@@ -18,11 +18,15 @@ package it.czerwinski.android.charts.piechart
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.*
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
 import android.util.AttributeSet
 import android.view.View
-import android.view.View.*
-import it.czerwinski.android.charts.core.*
+import android.view.View.LAYER_TYPE_HARDWARE
+import android.view.View.LAYER_TYPE_SOFTWARE
+import androidx.core.content.withStyledAttributes
 import it.czerwinski.android.graphics.AdvancedPath
 import it.czerwinski.android.graphics.mixColors
 import it.czerwinski.android.graphics.set
@@ -60,8 +64,8 @@ class DonutPieChartUI @JvmOverloads constructor(
 
     init {
         context?.withStyledAttributes(
-            attrs = attrs,
-            stylables = R.styleable.DonutPieChartUI,
+            set = attrs,
+            attrs = R.styleable.DonutPieChartUI,
             defStyleRes = defStyleRes
         ) {
             initAttrs(context)
@@ -100,8 +104,8 @@ class DonutPieChartUI @JvmOverloads constructor(
         val labelMinPercent =
             getInt(R.styleable.DonutPieChartUI_donutPieChartUI_labelMinPercent, 0)
         context.withStyledAttributes(
-            attrs = attrs,
-            stylables = R.styleable.TextPaint,
+            set = attrs,
+            attrs = R.styleable.TextPaint,
             defStyleRes = getResourceId(
                 R.styleable.DonutPieChartUI_donutPieChartUI_labelAppearance, 0
             )

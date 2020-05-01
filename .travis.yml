@@ -1,6 +1,6 @@
 language: android
-sudo: required
 jdk: oraclejdk8
+os: linux
 dist: trusty
 
 env:
@@ -15,7 +15,6 @@ env:
 
 android:
   components:
-    - tools
     - platform-tools
     - tools
     - extra-google-m2repository
@@ -29,6 +28,8 @@ before_install:
   - touch $HOME/.android/repositories.cfg
   - yes | sdkmanager "platforms;android-29"
   - yes | sdkmanager "build-tools;29.0.2"
+
+script: ./gradlew build
 
 before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -54,7 +55,6 @@ deploy:
     -Psigning.keyId='$SIG_KEY'
     -Psigning.password='$SIG_PASS'
     -Psigning.secretKeyRingFile='../$SIG_FILE'
-  skip_cleanup: true
   on:
     branch: develop
 - provider: script
@@ -64,7 +64,6 @@ deploy:
     -Psigning.keyId='$SIG_KEY'
     -Psigning.password='$SIG_PASS'
     -Psigning.secretKeyRingFile='../$SIG_FILE'
-  skip_cleanup: true
   on:
     tags: true
     branch: master

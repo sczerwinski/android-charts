@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+@file:JvmName(name = "TypedArray")
+
 package it.czerwinski.android.charts.core
 
 import android.content.Context
