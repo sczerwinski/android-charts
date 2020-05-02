@@ -82,12 +82,36 @@ class PieChart @JvmOverloads constructor(
     var selectionAnimationDuration: Int = 0
 
     /**
+     * Horizontal padding for labels.
+     */
+    var labelsHorizontalPadding: Int = 0
+
+    /**
+     * Vertical padding for labels.
+     */
+    var labelsVerticalPadding: Int = 0
+
+    /**
+     * Reference text for measuring padding for labels.
+     */
+    var labelsPaddingReferenceText: String? = null
+
+    /**
      * Pie chart UI drawing object.
      */
     var ui: PieChartUI? = null
         set(value) {
             field = value
             value?.onAttachedToView(view = this)
+            invalidate()
+        }
+
+    /**
+     * Pie chart labels UI drawing object.
+     */
+    var labelsUI: PieChartLabelsUI? = null
+        set(value) {
+            field = value
             invalidate()
         }
 
@@ -132,6 +156,8 @@ class PieChart @JvmOverloads constructor(
 
     private var pieChartRect = Rect()
 
+    private val measuredTextBounds = Rect()
+
     init {
         isClickable = true
         context.withStyledAttributes(
@@ -165,22 +191,37 @@ class PieChart @JvmOverloads constructor(
             R.styleable.PieChart_pieChart_dataSetAnimationDuration,
             0
         )
+        labelsHorizontalPadding = getDimensionPixelOffset(
+            R.styleable.PieChart_pieChart_labelsPaddingHorizontal,
+            0
+        )
+        labelsVerticalPadding = getDimensionPixelOffset(
+            R.styleable.PieChart_pieChart_labelsPaddingVertical,
+            0
+        )
+        labelsPaddingReferenceText = getString(R.styleable.PieChart_pieChart_labelsPaddingFromText)
 
         getString(R.styleable.PieChart_pieChart_ui)
             ?.let { uiClassName ->
                 val defStyleId = getResourceId(R.styleable.PieChart_pieChart_uiAppearance, 0)
-                createUI(uiClassName, attrs, defStyleId)
+                ui = createUI(uiClassName, attrs, defStyleId)
+            }
+
+        getString(R.styleable.PieChart_pieChart_labelsUI)
+            ?.let { uiClassName ->
+                val defStyleId = getResourceId(R.styleable.PieChart_pieChart_labelsAppearance, 0)
+                labelsUI = createUI(uiClassName, attrs, defStyleId)
             }
     }
 
-    private fun createUI(
+    private inline fun <reified T> createUI(
         className: String,
         attrs: AttributeSet?,
         defStyleId: Int
-    ) {
-        try {
+    ): T? {
+        return try {
             val uiClass = Class.forName(className)
-            ui = try {
+            try {
                 uiClass.getConstructor(
                     Context::class.java,
                     AttributeSet::class.java,
@@ -195,9 +236,42 @@ class PieChart @JvmOverloads constructor(
                     .newInstance(context)
             } catch (throwable: Throwable) {
                 uiClass.newInstance()
-            } as? PieChartUI
+            } as? T
         } catch (throwable: Throwable) {
+            null
         }
+    }
+
+    /**
+     * Measures pie chart bounds.
+     */
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        updatePieChartRect()
+    }
+
+    private fun updatePieChartRect() {
+        var labelsPaddingHorizontal = labelsHorizontalPadding
+        var labelsPaddingVertical = labelsVerticalPadding
+        val referenceLabel = labelsPaddingReferenceText
+
+        if (referenceLabel != null) {
+            labelsUI?.measureText(referenceLabel, measuredTextBounds)
+            labelsPaddingHorizontal = max(labelsPaddingHorizontal, measuredTextBounds.width())
+            labelsPaddingVertical = max(labelsPaddingVertical, measuredTextBounds.height())
+        }
+
+        val measuredSize = min(
+            measuredWidth - paddingLeft - paddingRight - 2 * labelsPaddingHorizontal,
+            measuredHeight - paddingTop - paddingBottom - 2 * labelsPaddingVertical
+        )
+        pieChartRect.set(
+            paddingLeft + labelsPaddingHorizontal,
+            paddingTop + labelsPaddingVertical,
+            measuredWidth - paddingRight - labelsPaddingHorizontal,
+            measuredHeight - paddingBottom - labelsPaddingVertical
+        )
+        Gravity.apply(gravity, measuredSize, measuredSize, pieChartRect, pieChartRect)
     }
 
     /**
@@ -205,10 +279,6 @@ class PieChart @JvmOverloads constructor(
      */
     override fun onDraw(canvas: Canvas?) {
         if (canvas != null) {
-            updatePieChartRect()
-
-            adapter?.getLabels()?.let { ui?.applyLabelsPadding(it, pieChartRect) }
-
             val cx = pieChartRect.centerX().toFloat()
             val cy = pieChartRect.centerY().toFloat()
             val radius = pieChartRect.width() / 2f
@@ -216,20 +286,6 @@ class PieChart @JvmOverloads constructor(
             if (isInEditMode) drawInEditMode(canvas, cx, cy, radius)
             else drawDataPoints(canvas, cx, cy, radius)
         }
-    }
-
-    private fun updatePieChartRect() {
-        val measuredSize = min(
-            measuredWidth - paddingLeft - paddingRight,
-            measuredHeight - paddingTop - paddingBottom
-        )
-        pieChartRect.set(
-            paddingLeft,
-            paddingTop,
-            measuredWidth,
-            measuredHeight - paddingBottom
-        )
-        Gravity.apply(gravity, measuredSize, measuredSize, pieChartRect, pieChartRect)
     }
 
     private fun drawInEditMode(canvas: Canvas, cx: Float, cy: Float, radius: Float) {
@@ -252,11 +308,23 @@ class PieChart @JvmOverloads constructor(
                 ui?.draw(
                     canvas = canvas,
                     index = index,
-                    cx = cx, cy = cy, radius = radius,
+                    cx = cx,
+                    cy = cy,
+                    radius = radius,
+                    startAngle = startAngle,
+                    endAngle = endAngle,
+                    selection = selections.getOrElse(index) { 0f }
+                )
+                labelsUI?.draw(
+                    canvas = canvas,
+                    cx = cx,
+                    cy = cy,
+                    radius = radius,
                     startAngle = startAngle,
                     endAngle = endAngle,
                     selection = selections.getOrElse(index) { 0f },
-                    label = adapter?.takeIf { it.size > index }?.getLabel(index)
+                    label = adapter?.takeIf { it.size > index }?.getLabel(index),
+                    transformation = ui
                 )
             }
         ui?.afterDraw(canvas)

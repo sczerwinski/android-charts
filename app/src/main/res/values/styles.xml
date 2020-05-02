@@ -26,11 +26,11 @@
 
     <style name="PieChart.DonutPieChart" parent="AndroidCharts.PieChart.Donut.LightTheme">
         <item name="android:padding">8dp</item>
-        <item name="pieChart_uiAppearance">@style/PieChart.DonutPieChart.UI</item>
+        <item name="pieChart_labelsAppearance">@style/PieChart.DonutPieChart.LabelsUI</item>
     </style>
 
-    <style name="PieChart.DonutPieChart.UI" parent="AndroidCharts.DonutPieChartUI.LightTheme">
-        <item name="donutPieChartUI_labelAppearance">@style/PieChart.DonutPieChart.UI.TextAppearance</item>
+    <style name="PieChart.DonutPieChart.LabelsUI" parent="AndroidCharts.Labels.Outside">
+        <item name="simplePieChartLabelsUI_textAppearance">@style/PieChart.DonutPieChart.UI.TextAppearance</item>
     </style>
 
     <style name="PieChart.DonutPieChart.UI.TextAppearance" parent="AndroidCharts.TextAppearance.Dark">
