@@ -93,7 +93,7 @@
 
     <style name="AndroidCharts.Labels.Outside">
         <item name="simplePieChartLabelsUI_labelPosition">outside</item>
-        <item name="simplePieChartLabelsUI_labelSpacing">0dp</item>
+        <item name="simplePieChartLabelsUI_labelSpacing">-4dp</item>
     </style>
 
     <style name="AndroidCharts.Labels.Outside.Light">

@@ -22,6 +22,7 @@ import android.graphics.Canvas
 import android.graphics.Rect
 import android.util.AttributeSet
 import androidx.core.content.withStyledAttributes
+import androidx.core.graphics.withSave
 import it.czerwinski.android.charts.core.TextPaint
 import it.czerwinski.android.charts.core.drawTextAdvanced
 import it.czerwinski.android.graphics.FULL_ANGLE
@@ -90,7 +91,9 @@ class SimplePieChartLabelsUI @JvmOverloads constructor(
         radius: Float,
         startAngle: Float,
         endAngle: Float,
-        label: String?
+        selection: Float,
+        label: String?,
+        transformation: PieChartUITransformation?
     ) {
         if ((label != null) && (endAngle - startAngle) / FULL_ANGLE * 100 >= labelMinPercent) {
             val midAngle = (startAngle + endAngle) / 2f
@@ -105,12 +108,15 @@ class SimplePieChartLabelsUI @JvmOverloads constructor(
             val textCX = cx + (anchorRadius + textHalfWidth * labelPosition) * midAngleCos
             val textCY = cy + (anchorRadius + textHalfHeight * labelPosition) * midAngleSin
 
-            canvas.drawTextAdvanced(
-                text = label,
-                x = textCX - textHalfWidth,
-                y = textCY + textHalfHeight,
-                paint = textPaint
-            )
+            canvas.withSave {
+                transformation?.transform(canvas, radius, startAngle, endAngle, selection)
+                drawTextAdvanced(
+                    text = label,
+                    x = textCX - textHalfWidth,
+                    y = textCY + textHalfHeight,
+                    paint = textPaint
+                )
+            }
         }
     }
 }

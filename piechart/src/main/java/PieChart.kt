@@ -308,7 +308,9 @@ class PieChart @JvmOverloads constructor(
                 ui?.draw(
                     canvas = canvas,
                     index = index,
-                    cx = cx, cy = cy, radius = radius,
+                    cx = cx,
+                    cy = cy,
+                    radius = radius,
                     startAngle = startAngle,
                     endAngle = endAngle,
                     selection = selections.getOrElse(index) { 0f }
@@ -320,7 +322,9 @@ class PieChart @JvmOverloads constructor(
                     radius = radius,
                     startAngle = startAngle,
                     endAngle = endAngle,
-                    label = adapter?.takeIf { it.size > index }?.getLabel(index)
+                    selection = selections.getOrElse(index) { 0f },
+                    label = adapter?.takeIf { it.size > index }?.getLabel(index),
+                    transformation = ui
                 )
             }
         ui?.afterDraw(canvas)

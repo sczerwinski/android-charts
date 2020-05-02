@@ -17,43 +17,27 @@
 package it.czerwinski.android.charts.piechart
 
 import android.graphics.Canvas
-import android.graphics.Rect
 
 /**
- * An interface for classes drawing labels for a pie chart.
+ * Pie chart UI slice transformation.
  */
-interface PieChartLabelsUI {
+interface PieChartUITransformation {
 
     /**
-     * Measures dimensions of a given text drawn as a label.
-     *
-     * @param text Text to measure.
-     * @param bounds Rectangle to be set to measured bounds of the text.
-     */
-    fun measureText(text: String, bounds: Rect)
-
-    /**
-     * Draws a pie chart label for a single slice.
+     * Pre-concatenates the current matrix of the canvas with a transformation
+     * determined by the UI of a pie chart.
      *
      * @param canvas The canvas on which the pie chart will be drawn.
-     * @param cx X coordinate of the center of the pie chart.
-     * @param cy Y coordinate of the center of the pie chart.
-     * @param radius Radius of the pie chart slice.
+     * @param radius Radius of the pie chart.
      * @param startAngle Start angle of the slice.
      * @param endAngle End angle of the slice.
      * @param selection Animated value of the slice being selected.
-     * @param label Label of the slice.
-     * @param transformation Slice transformation determined by the UI of a pie chart.
      */
-    fun draw(
+    fun transform(
         canvas: Canvas,
-        cx: Float,
-        cy: Float,
         radius: Float,
         startAngle: Float,
         endAngle: Float,
-        selection: Float,
-        label: String?,
-        transformation: PieChartUITransformation?
+        selection: Float
     )
 }

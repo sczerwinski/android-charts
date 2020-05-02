@@ -22,9 +22,12 @@ import android.graphics.Paint
 import android.view.View
 import android.view.View.LAYER_TYPE_HARDWARE
 import android.view.View.LAYER_TYPE_SOFTWARE
+import androidx.core.graphics.withSave
 import it.czerwinski.android.graphics.AdvancedPath
+import it.czerwinski.android.graphics.degToRad
 import it.czerwinski.android.graphics.mixColors
-import it.czerwinski.android.graphics.withRadialTranslation
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
  * Base implementation of UI for [PieChart].
@@ -54,6 +57,21 @@ abstract class BasePieChartUI : PieChartUI {
 
     override fun beforeDraw(canvas: Canvas) = Unit
 
+    override fun transform(
+        canvas: Canvas,
+        radius: Float,
+        startAngle: Float,
+        endAngle: Float,
+        selection: Float
+    ) {
+        val distance = selection * selectedShift
+        val middleAngle = (startAngle + endAngle) / 2
+        canvas.translate(
+            distance * cos(middleAngle.degToRad()),
+            distance * sin(middleAngle.degToRad())
+        )
+    }
+
     override fun afterDraw(canvas: Canvas) {
         paint.clearShadowLayer()
     }
@@ -80,13 +98,12 @@ abstract class BasePieChartUI : PieChartUI {
         } else {
             paint.clearShadowLayer()
         }
-        val middleAngle = (startAngle + endAngle) / 2
         val outerRadius = radius - selectedShift - selectedElevation
+
         generateSlicePath(selection, cx, cy, outerRadius, startAngle, endAngle)
-        canvas.withRadialTranslation(
-            distance = selection * selectedShift,
-            angle = middleAngle
-        ) {
+
+        canvas.withSave{
+            transform(canvas, radius, startAngle, endAngle, selection)
             drawPath(path, paint)
         }
     }

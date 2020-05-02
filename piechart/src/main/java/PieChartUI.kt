@@ -22,7 +22,7 @@ import android.view.View
 /**
  * An interface for classes drawing UI of a pie chart.
  */
-interface PieChartUI {
+interface PieChartUI : PieChartUITransformation {
 
     /**
      * Called when the UI is being attached to a pie chart view.
