@@ -21,6 +21,7 @@ import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Rect
 import android.util.AttributeSet
+import androidx.annotation.StyleRes
 import androidx.core.content.withStyledAttributes
 import androidx.core.graphics.withSave
 import it.czerwinski.android.charts.core.TextPaint
@@ -36,7 +37,7 @@ import kotlin.math.sin
 class SimplePieChartLabelsUI @JvmOverloads constructor(
     context: Context? = null,
     attrs: AttributeSet? = null,
-    defStyleRes: Int = 0
+    @StyleRes defStyleRes: Int = 0
 ) : PieChartLabelsUI {
 
     private val textPaint = TextPaint()
@@ -53,6 +54,7 @@ class SimplePieChartLabelsUI @JvmOverloads constructor(
         context?.withStyledAttributes(
             set = attrs,
             attrs = R.styleable.SimplePieChartLabelsUI,
+            defStyleAttr = R.attr.simplePieChartLabelsStyle,
             defStyleRes = defStyleRes
         ) {
             initAttrs(context, attrs)

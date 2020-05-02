@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.AttributeSet
+import androidx.annotation.StyleRes
 import androidx.core.content.withStyledAttributes
 import it.czerwinski.android.graphics.set
 
@@ -29,7 +30,7 @@ import it.czerwinski.android.graphics.set
 class SimplePieChartUI @JvmOverloads constructor(
     context: Context? = null,
     attrs: AttributeSet? = null,
-    defStyleRes: Int = 0
+    @StyleRes defStyleRes: Int = 0
 ) : BasePieChartUI() {
 
     private var sliceSpacing = 0f
@@ -38,6 +39,7 @@ class SimplePieChartUI @JvmOverloads constructor(
         context?.withStyledAttributes(
             set = attrs,
             attrs = R.styleable.SimplePieChartUI,
+            defStyleAttr = R.attr.simplePieChartStyle,
             defStyleRes = defStyleRes
         ) {
             initAttrs(context)

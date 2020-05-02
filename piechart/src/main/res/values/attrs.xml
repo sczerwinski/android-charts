@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Default style for PieChart -->
+    <!-- Default style for pie chart -->
     <attr name="pieChartStyle" format="reference" />
+
+    <!-- Default style for pie chart simple UI -->
+    <attr name="simplePieChartStyle" format="reference" />
+
+    <!-- Default style for pie chart donut UI -->
+    <attr name="donutPieChartStyle" format="reference" />
+
+    <!-- Default style for pie chart simple labels -->
+    <attr name="simplePieChartLabelsStyle" format="reference" />
 
     <!-- Pie chart -->
     <declare-styleable name="PieChart">
@@ -100,6 +109,7 @@
 
     </declare-styleable>
 
+    <!-- Simple labels for pie chart -->
     <declare-styleable name="SimplePieChartLabelsUI">
 
         <!-- Text appearance of a label -->

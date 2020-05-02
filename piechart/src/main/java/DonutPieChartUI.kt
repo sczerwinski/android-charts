@@ -20,6 +20,7 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Color
 import android.util.AttributeSet
+import androidx.annotation.StyleRes
 import androidx.core.content.withStyledAttributes
 import it.czerwinski.android.graphics.set
 import kotlin.math.min
@@ -30,7 +31,7 @@ import kotlin.math.min
 class DonutPieChartUI @JvmOverloads constructor(
     context: Context? = null,
     attrs: AttributeSet? = null,
-    defStyleRes: Int = 0
+    @StyleRes defStyleRes: Int = 0
 ) : BasePieChartUI() {
 
     private var donutWidth = 50f
@@ -41,6 +42,7 @@ class DonutPieChartUI @JvmOverloads constructor(
         context?.withStyledAttributes(
             set = attrs,
             attrs = R.styleable.DonutPieChartUI,
+            defStyleAttr = R.attr.donutPieChartStyle,
             defStyleRes = defStyleRes
         ) {
             initAttrs(context)
