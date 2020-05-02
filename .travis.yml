@@ -55,6 +55,7 @@ deploy:
     -Psigning.keyId='$SIG_KEY'
     -Psigning.password='$SIG_PASS'
     -Psigning.secretKeyRingFile='../$SIG_FILE'
+  skip_cleanup: true
   on:
     branch: develop
 - provider: script
@@ -64,6 +65,7 @@ deploy:
     -Psigning.keyId='$SIG_KEY'
     -Psigning.password='$SIG_PASS'
     -Psigning.secretKeyRingFile='../$SIG_FILE'
+  skip_cleanup: true
   on:
     tags: true
     branch: master
