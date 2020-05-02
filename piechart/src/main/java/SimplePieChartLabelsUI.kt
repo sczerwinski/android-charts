@@ -20,16 +20,23 @@ import android.content.Context
 import android.content.res.TypedArray
 import android.graphics.Canvas
 import android.graphics.Rect
+import android.util.AttributeSet
+import androidx.core.content.withStyledAttributes
 import it.czerwinski.android.charts.core.TextPaint
 import it.czerwinski.android.charts.core.drawTextAdvanced
 import it.czerwinski.android.graphics.FULL_ANGLE
 import it.czerwinski.android.graphics.degToRad
-import kotlin.math.*
+import kotlin.math.cos
+import kotlin.math.sin
 
 /**
- * A delegate for a [PieChartUI], drawing pie chart labels.
+ * Simple labels UI for [PieChart].
  */
-class SimplePieChartLabelUIDelegate {
+class SimplePieChartLabelsUI @JvmOverloads constructor(
+    context: Context? = null,
+    attrs: AttributeSet? = null,
+    defStyleRes: Int = 0
+) : PieChartLabelsUI {
 
     private val textPaint = TextPaint()
 
@@ -41,64 +48,51 @@ class SimplePieChartLabelUIDelegate {
 
     private var labelMinPercent: Int = 0
 
-    /**
-     * Applies the style from the [typedArray] in a given [context].
-     */
-    fun applyFrom(
-        context: Context?,
-        typedArray: TypedArray,
-        labelPosition: Int,
-        labelSpacing: Float,
-        labelMinPercent: Int
-    ) {
-        textPaint.applyFrom(context, typedArray)
-        this.labelPosition = labelPosition
-        this.labelSpacing = labelSpacing
-        this.labelMinPercent = labelMinPercent
-    }
-
-    /**
-     * Measures padding required to draw the labels, and applies it to the given `Rect`.
-     *
-     * @param labels Pie chart labels.
-     * @param pieChartRect An instance of `RectF`, to which the padding will be applied.
-     */
-    fun applyLabelsPadding(labels: Iterable<String>, pieChartRect: Rect) {
-        if (labelPosition <= 0) return
-
-        var horizontalPadding = 0f
-        var verticalPadding = 0f
-
-        for (label in labels) {
-            textPaint.getTextBounds(label, 0, label.length, measuredTextBounds)
-            horizontalPadding = max(horizontalPadding, measuredTextBounds.width() + labelSpacing)
-            verticalPadding = max(verticalPadding, measuredTextBounds.height() + labelSpacing)
+    init {
+        context?.withStyledAttributes(
+            set = attrs,
+            attrs = R.styleable.SimplePieChartLabelsUI,
+            defStyleRes = defStyleRes
+        ) {
+            initAttrs(context, attrs)
         }
-
-        pieChartRect.inset(horizontalPadding.roundToInt(), verticalPadding.roundToInt())
     }
 
-    /**
-     * Draws a pie chart label for a single slice.
-     *
-     * @param canvas The canvas on which the pie chart will be drawn.
-     * @param cx X coordinate of the center of the pie chart.
-     * @param cy Y coordinate of the center of the pie chart.
-     * @param radius Radius of the pie chart slice.
-     * @param startAngle Start angle of the slice.
-     * @param endAngle End angle of the slice.
-     * @param label Label of the slice.
-     */
-    fun draw(
+    private fun TypedArray.initAttrs(context: Context, attrs: AttributeSet?) {
+        labelPosition = getInt(
+            R.styleable.SimplePieChartLabelsUI_simplePieChartLabelsUI_labelPosition, 1
+        )
+        labelSpacing = getDimension(
+            R.styleable.SimplePieChartLabelsUI_simplePieChartLabelsUI_labelSpacing, 0f
+        )
+        labelMinPercent = getInt(
+            R.styleable.SimplePieChartLabelsUI_simplePieChartLabelsUI_labelMinPercent, 0
+        )
+        context.withStyledAttributes(
+            set = attrs,
+            attrs = R.styleable.TextPaint,
+            defStyleRes = getResourceId(
+                R.styleable.SimplePieChartLabelsUI_simplePieChartLabelsUI_textAppearance, 0
+            )
+        ) {
+            textPaint.applyFrom(context, this)
+        }
+    }
+
+    override fun measureText(text: String, bounds: Rect) {
+        textPaint.getTextBounds(text, 0, text.length, bounds)
+    }
+
+    override fun draw(
         canvas: Canvas,
         cx: Float,
         cy: Float,
         radius: Float,
         startAngle: Float,
         endAngle: Float,
-        label: String
+        label: String?
     ) {
-        if ((endAngle - startAngle) / FULL_ANGLE * 100 >= labelMinPercent) {
+        if ((label != null) && (endAngle - startAngle) / FULL_ANGLE * 100 >= labelMinPercent) {
             val midAngle = (startAngle + endAngle) / 2f
             val midAngleCos = cos(midAngle.degToRad())
             val midAngleSin = sin(midAngle.degToRad())

@@ -18,20 +18,11 @@ package it.czerwinski.android.charts.piechart
 
 import android.content.Context
 import android.content.res.TypedArray
-import android.graphics.Canvas
 import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Rect
 import android.util.AttributeSet
-import android.view.View
-import android.view.View.LAYER_TYPE_HARDWARE
-import android.view.View.LAYER_TYPE_SOFTWARE
 import androidx.core.content.withStyledAttributes
-import it.czerwinski.android.graphics.AdvancedPath
-import it.czerwinski.android.graphics.mixColors
 import it.czerwinski.android.graphics.set
-import it.czerwinski.android.graphics.withRadialTranslation
-import kotlin.math.max
+import kotlin.math.min
 
 /**
  * Donut UI for [PieChart]. Draws a donut chart.
@@ -40,27 +31,11 @@ class DonutPieChartUI @JvmOverloads constructor(
     context: Context? = null,
     attrs: AttributeSet? = null,
     defStyleRes: Int = 0
-) : PieChartUI {
-
-    private var colors = intArrayOf(Color.CYAN)
-    private var selectedColors = intArrayOf(Color.BLUE)
-
-    private var shadowColor = Color.BLACK
-
-    private var selectedElevation = 4f
+) : BasePieChartUI() {
 
     private var donutWidth = 50f
     private var donutSpacing = 0f
     private var selectedDonutWidth = donutWidth
-    private var selectedDonutShift = 0f
-
-    private val path = AdvancedPath()
-
-    private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
-        style = Paint.Style.FILL
-    }
-
-    private val labelUIDelegate = SimplePieChartLabelUIDelegate()
 
     init {
         context?.withStyledAttributes(
@@ -69,19 +44,18 @@ class DonutPieChartUI @JvmOverloads constructor(
             defStyleRes = defStyleRes
         ) {
             initAttrs(context)
-            initTextAttrs(context, attrs)
         }
     }
 
-    private fun TypedArray.initAttrs(context: Context?) {
+    private fun TypedArray.initAttrs(context: Context) {
         colors = getResourceId(R.styleable.DonutPieChartUI_donutPieChartUI_colors, 0)
             .takeUnless { it == 0 }
-            ?.let { context?.resources?.getIntArray(it) }
-                ?: colors
+            ?.let { context.resources?.getIntArray(it) }
+            ?: colors
         selectedColors = getResourceId(R.styleable.DonutPieChartUI_donutPieChartUI_selectionColors, 0)
             .takeUnless { it == 0 }
-            ?.let { context?.resources?.getIntArray(it) }
-                ?: selectedColors
+            ?.let { context.resources?.getIntArray(it) }
+            ?: selectedColors
         shadowColor =
                 getColor(R.styleable.DonutPieChartUI_donutPieChartUI_shadowColor, Color.BLACK)
         selectedElevation =
@@ -92,104 +66,32 @@ class DonutPieChartUI @JvmOverloads constructor(
                 getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_donutSpacing, 0f)
         selectedDonutWidth =
                 getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_selectionWidth, donutWidth)
-        selectedDonutShift =
+        selectedShift =
                 getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_selectionShift, 0f)
     }
 
-    private fun TypedArray.initTextAttrs(context: Context, attrs: AttributeSet?) {
-        val labelPosition =
-            getInt(R.styleable.DonutPieChartUI_donutPieChartUI_labelPosition, 1)
-        val labelSpacing =
-            getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_labelSpacing, 0f)
-        val labelMinPercent =
-            getInt(R.styleable.DonutPieChartUI_donutPieChartUI_labelMinPercent, 0)
-        context.withStyledAttributes(
-            set = attrs,
-            attrs = R.styleable.TextPaint,
-            defStyleRes = getResourceId(
-                R.styleable.DonutPieChartUI_donutPieChartUI_labelAppearance, 0
-            )
-        ) {
-            labelUIDelegate.applyFrom(
-                context, this, labelPosition, labelSpacing, labelMinPercent
-            )
-        }
-    }
-
-    override fun onAttachedToView(view: View) {
-        if (selectedElevation > 0) {
-            view.setLayerType(LAYER_TYPE_SOFTWARE, paint)
-        } else {
-            view.setLayerType(LAYER_TYPE_HARDWARE, paint)
-        }
-    }
-
-    override fun applyLabelsPadding(labels: Iterable<String>, pieChartRect: Rect) {
-        labelUIDelegate.applyLabelsPadding(labels, pieChartRect)
-    }
-
-    override fun beforeDraw(canvas: Canvas) = Unit
-
-    override fun draw(
-        canvas: Canvas,
+    override fun generateSlicePath(
+        selection: Float,
         cx: Float,
         cy: Float,
-        radius: Float,
-        index: Int,
+        outerRadius: Float,
         startAngle: Float,
-        endAngle: Float,
-        selection: Float,
-        label: String?
+        endAngle: Float
     ) {
-        val colorIndex = index % colors.size
-        paint.color = mixColors(colors[colorIndex], selectedColors[colorIndex], selection)
-        if (selection > 0.01f) {
-            paint.setShadowLayer(
-                selection * selectedElevation,
-                0f,
-                selection * selectedElevation,
-                shadowColor
-            )
-        } else {
-            paint.clearShadowLayer()
-        }
-        val middleAngle = (startAngle + endAngle) / 2
-        val outerRadius = radius - selectedDonutShift - selectedElevation
-        val innerRadius = max(
-            0f,
-            outerRadius - (1 - selection) * donutWidth - selection * selectedDonutWidth
+        val thickness = min(
+            outerRadius,
+            (1 - selection) * donutWidth + selection * selectedDonutWidth
         )
-        canvas.withRadialTranslation(
-            distance = selection * selectedDonutShift,
-            angle = middleAngle
-        ) {
-            path.set {
-                addRingSector(
-                    cx = cx,
-                    cy = cy,
-                    radius = outerRadius,
-                    startAngle = startAngle,
-                    sweepAngle = endAngle - startAngle,
-                    thickness = outerRadius - innerRadius,
-                    inset = donutSpacing / 2
-                )
-            }
-            drawPath(path, paint)
-            if (label != null) {
-                labelUIDelegate.draw(
-                    canvas = canvas,
-                    cx = cx,
-                    cy = cy,
-                    radius = outerRadius,
-                    startAngle = startAngle,
-                    endAngle = endAngle,
-                    label = label
-                )
-            }
+        path.set {
+            addRingSector(
+                cx = cx,
+                cy = cy,
+                radius = outerRadius,
+                startAngle = startAngle,
+                sweepAngle = endAngle - startAngle,
+                thickness = thickness,
+                inset = donutSpacing / 2
+            )
         }
-    }
-
-    override fun afterDraw(canvas: Canvas) {
-        paint.clearShadowLayer()
     }
 }

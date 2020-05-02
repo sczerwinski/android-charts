@@ -17,54 +17,39 @@
 package it.czerwinski.android.charts.piechart
 
 import android.graphics.Canvas
-import android.view.View
+import android.graphics.Rect
 
 /**
- * An interface for classes drawing UI of a pie chart.
+ * An interface for classes drawing labels for a pie chart.
  */
-interface PieChartUI {
+interface PieChartLabelsUI {
 
     /**
-     * Called when the UI is being attached to a pie chart view.
+     * Measures dimensions of a given text drawn as a label.
      *
-     * @param view An instance of a [PieChart].
+     * @param text Text to measure.
+     * @param bounds Rectangle to be set to measured bounds of the text.
      */
-    fun onAttachedToView(view: View)
+    fun measureText(text: String, bounds: Rect)
 
     /**
-     * Called before the pie chart series are drawn.
-     *
-     * @param canvas The canvas on which the pie chart will be drawn.
-     */
-    fun beforeDraw(canvas: Canvas)
-
-    /**
-     * Draws UI of a pie chart.
+     * Draws a pie chart label for a single slice.
      *
      * @param canvas The canvas on which the pie chart will be drawn.
      * @param cx X coordinate of the center of the pie chart.
      * @param cy Y coordinate of the center of the pie chart.
-     * @param radius Radius of the pie chart.
-     * @param index Index of the slice.
+     * @param radius Radius of the pie chart slice.
      * @param startAngle Start angle of the slice.
      * @param endAngle End angle of the slice.
-     * @param selection Animated value of the slice being selected.
+     * @param label Label of the slice.
      */
     fun draw(
         canvas: Canvas,
         cx: Float,
         cy: Float,
         radius: Float,
-        index: Int,
         startAngle: Float,
         endAngle: Float,
-        selection: Float
+        label: String?
     )
-
-    /**
-     * Called after the pie chart series have been drawn.
-     *
-     * @param canvas The canvas on which the pie chart has been drawn.
-     */
-    fun afterDraw(canvas: Canvas)
 }
