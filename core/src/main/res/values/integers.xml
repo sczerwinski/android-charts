@@ -17,16 +17,6 @@
 
 <resources>
 
-    <color name="black_25">#40000000</color>
-
-    <integer-array name="charts_piechart_colors_light">
-        <item>@color/black</item>
-    </integer-array>
-
-    <integer-array name="charts_piechart_colors_dark">
-        <item>@color/white</item>
-    </integer-array>
-
-    <color name="charts_piechart_color_shadow">@color/black_25</color>
+    <integer name="charts_anim_duration">300</integer>
 
 </resources>
