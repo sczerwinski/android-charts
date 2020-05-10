@@ -19,9 +19,11 @@
 package it.czerwinski.android.charts.core
 
 import android.content.Context
+import android.content.res.Resources
 import android.content.res.TypedArray
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
+import androidx.annotation.ColorInt
 import androidx.annotation.StyleableRes
 
 /**
@@ -51,3 +53,26 @@ fun TypedArray.getInterpolator(
  */
 fun TypedArray.findIndexWithValue(@StyleableRes vararg indices: Int): Int =
     indices.find { index -> hasValue(index) } ?: indices.last()
+
+/**
+ * Retrieves an array of colors for the attribute at the given index.
+ *
+ * @param context Context
+ * @param index Color attribute index
+ * @param defValue Default color value
+ */
+fun TypedArray.getColors(
+    context: Context,
+    index: Int,
+    @ColorInt defValue: Int
+): IntArray =
+    try {
+        getResourceId(index, 0)
+            .takeUnless { it == 0 }
+            ?.let { context.resources?.getIntArray(it) }
+            ?.takeUnless { it.isEmpty() }
+    } catch (e: Resources.NotFoundException) { null }
+        ?: intArrayOf(
+            try { getColor(index, defValue) }
+            catch (e: UnsupportedOperationException) { defValue }
+        )
