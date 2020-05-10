@@ -18,7 +18,7 @@
 <resources>
 
     <style name="Base.AndroidCharts.TextAppearance" parent="">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/charts_labels_text_size</item>
         <item name="fontFamily">sans-serif-medium</item>
         <item name="android:fontFamily">sans-serif-medium</item>
     </style>

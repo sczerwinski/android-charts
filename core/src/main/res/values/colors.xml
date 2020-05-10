@@ -17,7 +17,7 @@
 
 <resources>
 
-    <color name="black">#000000</color>
-    <color name="white">#ffffff</color>
+    <color name="charts_black">#000000</color>
+    <color name="charts_white">#ffffff</color>
 
 </resources>
