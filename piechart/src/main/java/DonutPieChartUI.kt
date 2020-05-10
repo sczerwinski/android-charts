@@ -22,6 +22,7 @@ import android.graphics.Color
 import android.util.AttributeSet
 import androidx.annotation.StyleRes
 import androidx.core.content.withStyledAttributes
+import it.czerwinski.android.charts.core.getColors
 import it.czerwinski.android.graphics.set
 import kotlin.math.min
 
@@ -50,26 +51,22 @@ class DonutPieChartUI @JvmOverloads constructor(
     }
 
     private fun TypedArray.initAttrs(context: Context) {
-        colors = getResourceId(R.styleable.DonutPieChartUI_donutPieChartUI_colors, 0)
-            .takeUnless { it == 0 }
-            ?.let { context.resources?.getIntArray(it) }
-            ?: colors
-        selectedColors = getResourceId(R.styleable.DonutPieChartUI_donutPieChartUI_selectionColors, 0)
-            .takeUnless { it == 0 }
-            ?.let { context.resources?.getIntArray(it) }
-            ?: selectedColors
+        colors =
+            getColors(context, R.styleable.DonutPieChartUI_donutPieChartUI_colors, Color.CYAN)
+        selectedColors =
+            getColors(context, R.styleable.DonutPieChartUI_donutPieChartUI_selectionColors, Color.BLUE)
         shadowColor =
-                getColor(R.styleable.DonutPieChartUI_donutPieChartUI_shadowColor, Color.BLACK)
+            getColor(R.styleable.DonutPieChartUI_donutPieChartUI_shadowColor, Color.BLACK)
         selectedElevation =
-                getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_selectionElevation, 4f)
+            getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_selectionElevation, 4f)
         donutWidth =
-                getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_donutWidth, 50f)
+            getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_donutWidth, 50f)
         donutSpacing =
-                getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_donutSpacing, 0f)
+            getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_donutSpacing, 0f)
         selectedDonutWidth =
-                getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_selectionWidth, donutWidth)
+            getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_selectionWidth, donutWidth)
         selectedShift =
-                getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_selectionShift, 0f)
+            getDimension(R.styleable.DonutPieChartUI_donutPieChartUI_selectionShift, 0f)
     }
 
     override fun generateSlicePath(
