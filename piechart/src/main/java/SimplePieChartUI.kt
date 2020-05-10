@@ -22,6 +22,7 @@ import android.graphics.Color
 import android.util.AttributeSet
 import androidx.annotation.StyleRes
 import androidx.core.content.withStyledAttributes
+import it.czerwinski.android.charts.core.getColors
 import it.czerwinski.android.graphics.set
 
 /**
@@ -47,22 +48,18 @@ class SimplePieChartUI @JvmOverloads constructor(
     }
 
     private fun TypedArray.initAttrs(context: Context) {
-        colors = getResourceId(R.styleable.SimplePieChartUI_simplePieChartUI_colors, 0)
-            .takeUnless { it == 0 }
-            ?.let { context.resources?.getIntArray(it) }
-            ?: colors
-        selectedColors = getResourceId(R.styleable.SimplePieChartUI_simplePieChartUI_selectionColors, 0)
-            .takeUnless { it == 0 }
-            ?.let { context.resources?.getIntArray(it) }
-            ?: selectedColors
+        colors =
+            getColors(context, R.styleable.SimplePieChartUI_simplePieChartUI_colors, Color.CYAN)
+        selectedColors =
+            getColors(context, R.styleable.SimplePieChartUI_simplePieChartUI_selectionColors, Color.BLUE)
         shadowColor =
-                getColor(R.styleable.SimplePieChartUI_simplePieChartUI_shadowColor, Color.BLACK)
+            getColor(R.styleable.SimplePieChartUI_simplePieChartUI_shadowColor, Color.BLACK)
         selectedElevation =
-                getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_selectionElevation, 4f)
+            getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_selectionElevation, 4f)
         sliceSpacing =
-                getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_sliceSpacing, 0f)
+            getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_sliceSpacing, 0f)
         selectedShift =
-                getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_selectionShift, 0f)
+            getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_selectionShift, 0f)
     }
 
     override fun generateSlicePath(

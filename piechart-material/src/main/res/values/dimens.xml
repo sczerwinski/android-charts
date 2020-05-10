@@ -17,17 +17,17 @@
 
 <resources>
 
-    <style name="Base.AndroidCharts.TextAppearance" parent="">
-        <item name="android:textSize">@dimen/charts_labels_text_size</item>
-        <item name="fontFamily">sans-serif-medium</item>
-    </style>
+    <dimen name="charts_piechart_spacing_labels_inside">24dp</dimen>
+    <dimen name="charts_piechart_spacing_labels_outside">-4dp</dimen>
 
-    <style name="AndroidCharts.TextAppearance.Dark" parent="Base.AndroidCharts.TextAppearance">
-        <item name="android:textColor">@color/charts_black</item>
-    </style>
+    <dimen name="charts_piechart_simple_spacing">2dp</dimen>
+    <dimen name="charts_piechart_simple_selection_shift">8dp</dimen>
+    <dimen name="charts_piechart_simple_selection_elevation">3dp</dimen>
 
-    <style name="AndroidCharts.TextAppearance.Light" parent="Base.AndroidCharts.TextAppearance">
-        <item name="android:textColor">@color/charts_white</item>
-    </style>
+    <dimen name="charts_piechart_donut_width">4dp</dimen>
+    <dimen name="charts_piechart_donut_spacing">6dp</dimen>
+    <dimen name="charts_piechart_donut_selection_width">4dp</dimen>
+    <dimen name="charts_piechart_donut_selection_shift">8dp</dimen>
+    <dimen name="charts_piechart_donut_selection_elevation">3dp</dimen>
 
 </resources>

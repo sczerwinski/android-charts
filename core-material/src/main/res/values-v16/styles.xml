@@ -17,17 +17,10 @@
 
 <resources>
 
-    <style name="Base.AndroidCharts.TextAppearance" parent="">
-        <item name="android:textSize">@dimen/charts_labels_text_size</item>
+    <style name="AndroidCharts.Material.TextAppearance.Label.Inside" parent="Base.AndroidCharts.Material.TextAppearance.Label">
         <item name="fontFamily">sans-serif-medium</item>
-    </style>
-
-    <style name="AndroidCharts.TextAppearance.Dark" parent="Base.AndroidCharts.TextAppearance">
-        <item name="android:textColor">@color/charts_black</item>
-    </style>
-
-    <style name="AndroidCharts.TextAppearance.Light" parent="Base.AndroidCharts.TextAppearance">
-        <item name="android:textColor">@color/charts_white</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">?attr/colorOnPrimarySurface</item>
     </style>
 
 </resources>

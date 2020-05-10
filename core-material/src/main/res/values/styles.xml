@@ -17,24 +17,15 @@
 
 <resources>
 
-    <color name="black_25">#40000000</color>
+    <style name="Base.AndroidCharts.Material.TextAppearance.Label" parent="TextAppearance.MaterialComponents.Caption" />
 
-    <integer-array name="pieChartColorsLightTheme">
-        <item>@color/black</item>
-    </integer-array>
+    <style name="AndroidCharts.Material.TextAppearance.Label.Outside" parent="Base.AndroidCharts.Material.TextAppearance.Label">
+        <item name="android:textColor">?attr/colorOnSurface</item>
+    </style>
 
-    <integer-array name="pieChartSelectedColorsLightTheme">
-        <item>@color/black</item>
-    </integer-array>
-
-    <integer-array name="pieChartColorsDarkTheme">
-        <item>@color/white</item>
-    </integer-array>
-
-    <integer-array name="pieChartSelectedColorsDarkTheme">
-        <item>@color/white</item>
-    </integer-array>
-
-    <color name="pieChartShadowColor">@color/black_25</color>
+    <style name="AndroidCharts.Material.TextAppearance.Label.Inside" parent="Base.AndroidCharts.Material.TextAppearance.Label">
+        <item name="fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">?attr/colorOnPrimarySurface</item>
+    </style>
 
 </resources>

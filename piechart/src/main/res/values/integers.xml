@@ -17,17 +17,8 @@
 
 <resources>
 
-    <style name="Base.AndroidCharts.TextAppearance" parent="">
-        <item name="android:textSize">@dimen/charts_labels_text_size</item>
-        <item name="fontFamily">sans-serif-medium</item>
-    </style>
+    <integer name="charts_piechart_rotation_top">270</integer>
 
-    <style name="AndroidCharts.TextAppearance.Dark" parent="Base.AndroidCharts.TextAppearance">
-        <item name="android:textColor">@color/charts_black</item>
-    </style>
-
-    <style name="AndroidCharts.TextAppearance.Light" parent="Base.AndroidCharts.TextAppearance">
-        <item name="android:textColor">@color/charts_white</item>
-    </style>
+    <integer name="charts_piechart_min_percent_label">5</integer>
 
 </resources>

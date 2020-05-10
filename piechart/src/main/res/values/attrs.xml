@@ -77,7 +77,7 @@
     <declare-styleable name="SimplePieChartUI">
 
         <!-- Colors of subsequent slices -->
-        <attr name="simplePieChartUI_colors" format="reference" />
+        <attr name="simplePieChartUI_colors" format="color|reference" />
 
         <!-- Color of a shadow behind the selected slice -->
         <attr name="simplePieChartUI_shadowColor" format="color|reference" />
@@ -86,7 +86,7 @@
         <attr name="simplePieChartUI_sliceSpacing" format="dimension|reference" />
 
         <!-- Colors of subsequent slices when selected -->
-        <attr name="simplePieChartUI_selectionColors" format="reference" />
+        <attr name="simplePieChartUI_selectionColors" format="color|reference" />
 
         <!-- Shift of the selected slice -->
         <attr name="simplePieChartUI_selectionShift" format="dimension|reference" />
@@ -100,7 +100,7 @@
     <declare-styleable name="DonutPieChartUI">
 
         <!-- Colors of subsequent donut slices -->
-        <attr name="donutPieChartUI_colors" format="reference" />
+        <attr name="donutPieChartUI_colors" format="color|reference" />
 
         <!-- Color of a shadow behind the selected slice -->
         <attr name="donutPieChartUI_shadowColor" format="color|reference" />
@@ -112,7 +112,7 @@
         <attr name="donutPieChartUI_donutSpacing" format="dimension|reference" />
 
         <!-- Colors of subsequent donut slices when selected -->
-        <attr name="donutPieChartUI_selectionColors" format="reference" />
+        <attr name="donutPieChartUI_selectionColors" format="color|reference" />
 
         <!-- Width of the selected donut slice -->
         <attr name="donutPieChartUI_selectionWidth" format="dimension|reference" />
