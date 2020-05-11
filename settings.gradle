@@ -1,5 +1,5 @@
 include ':app',
-        ':core',
-        ':core-material',
-        ':piechart',
-        ':piechart-material'
+        ':charts:core',
+        ':charts:core-material',
+        ':charts:piechart',
+        ':charts:piechart-material'
