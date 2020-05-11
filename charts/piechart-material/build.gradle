@@ -5,8 +5,8 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.1.0'
 
-    implementation project(':core-material')
-    api project(':piechart')
+    implementation project(':charts:core-material')
+    api project(':charts:piechart')
 }
 
 apply from: '../common-dokka.gradle'
