@@ -26,6 +26,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -239,8 +240,12 @@ class PieChart @JvmOverloads constructor(
                     .newInstance(context)
             } catch (throwable: Throwable) {
                 uiClass.newInstance()
-            } as? T
+            } catch (throwable: Throwable) {
+                Log.e(TAG, "Error instantiating UI", throwable)
+                null
+            } as T
         } catch (throwable: Throwable) {
+            Log.e(TAG, "Error instantiating UI", throwable)
             null
         }
     }
@@ -303,7 +308,11 @@ class PieChart @JvmOverloads constructor(
     }
 
     private fun drawDataPoints(canvas: Canvas, cx: Float, cy: Float, radius: Float) {
+        if (ui == null) Log.w(TAG, "No UI was set. Pie chart will not be drawn.")
+        if (labelsUI == null) Log.w(TAG, "No labels UI was set. Labels will not be drawn.")
+
         ui?.beforeDraw(canvas)
+
         dataPoints.asSequence()
             .map { rotationAngle + FULL_ANGLE * it }
             .zipWithNext()
@@ -330,6 +339,7 @@ class PieChart @JvmOverloads constructor(
                     transformation = ui
                 )
             }
+
         ui?.afterDraw(canvas)
     }
 
@@ -438,6 +448,10 @@ class PieChart @JvmOverloads constructor(
      */
     fun clearSelection() {
         selectionIndex = -1
+    }
+
+    companion object {
+        private const val TAG = "PieChart"
     }
 
     /**
