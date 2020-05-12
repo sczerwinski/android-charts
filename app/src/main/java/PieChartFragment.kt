@@ -54,13 +54,14 @@ class PieChartFragment : Fragment() {
 
         pieChart.adapter = adapter
         pieChart.addOnSelectionChangedListener { _, _, newSelectionIndex ->
+            val displayIndex: Int = newSelectionIndex + 1
             dataSelection.text =
                 if (newSelectionIndex in 0 until adapter.size) {
                     getString(
                         R.string.format_chart_selection,
                         getString(
                             R.string.format_chart_data,
-                            newSelectionIndex + 1,
+                            displayIndex,
                             adapter[newSelectionIndex]
                         )
                     )
