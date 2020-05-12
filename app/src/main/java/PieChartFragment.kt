@@ -10,10 +10,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.GridLayoutManager
 import it.czerwinski.android.charts.demo.databinding.PieChartFragmentBinding
-import it.czerwinski.android.charts.piechart.PieChart
 import it.czerwinski.android.charts.piechart.adapters.FloatListPieChartAdapter
+import it.czerwinski.android.charts.piechart.addOnSelectionChangedListener
+import it.czerwinski.android.charts.piechart.registerObserver
 import kotlinx.android.synthetic.main.pie_chart_fragment.*
+import kotlinx.android.synthetic.main.pie_chart_fragment_controls.*
 
 class PieChartFragment : Fragment() {
 
@@ -21,11 +24,9 @@ class PieChartFragment : Fragment() {
 
     private val adapter by lazy {
         FloatListPieChartAdapter(requireContext()).apply {
-            registerObserver(object : PieChart.DataSetObserver {
-                override fun onDataSetChanged() {
-                    pieChart.clearSelection()
-                }
-            })
+            registerObserver {
+                pieChart.clearSelection()
+            }
         }
     }
 
@@ -52,7 +53,23 @@ class PieChartFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         pieChart.adapter = adapter
+        pieChart.addOnSelectionChangedListener { _, _, newSelectionIndex ->
+            dataSelection.text =
+                if (newSelectionIndex in 0 until adapter.size) {
+                    getString(
+                        R.string.format_chart_selection,
+                        getString(
+                            R.string.format_chart_data,
+                            newSelectionIndex + 1,
+                            adapter[newSelectionIndex]
+                        )
+                    )
+                } else {
+                    getString(R.string.format_chart_no_selection)
+                }
+        }
 
+        dataList.layoutManager = GridLayoutManager(context, 3)
         dataList.adapter = DataPointsListAdapter { position ->
             pieChart.selectionIndex = position
         }.also {
