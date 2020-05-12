@@ -26,6 +26,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Rect
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -129,11 +130,14 @@ class PieChart @JvmOverloads constructor(
     /**
      * Index of selected data point.
      */
-    var selectionIndex: Int = 0
+    var selectionIndex: Int = -1
         set(value) {
+            val oldValue = field
             field = value
-            onDataPointSelected(value)
+            onDataPointSelected(oldValue, value)
         }
+
+    private val onSelectionChangedListeners = mutableListOf<OnSelectionChangedListener>()
 
     private val observer = PieChartDataSetObserver()
 
@@ -236,8 +240,12 @@ class PieChart @JvmOverloads constructor(
                     .newInstance(context)
             } catch (throwable: Throwable) {
                 uiClass.newInstance()
-            } as? T
+            } catch (throwable: Throwable) {
+                Log.e(TAG, "Error instantiating UI", throwable)
+                null
+            } as T
         } catch (throwable: Throwable) {
+            Log.e(TAG, "Error instantiating UI", throwable)
             null
         }
     }
@@ -300,7 +308,11 @@ class PieChart @JvmOverloads constructor(
     }
 
     private fun drawDataPoints(canvas: Canvas, cx: Float, cy: Float, radius: Float) {
+        if (ui == null) Log.w(TAG, "No UI was set. Pie chart will not be drawn.")
+        if (labelsUI == null) Log.w(TAG, "No labels UI was set. Labels will not be drawn.")
+
         ui?.beforeDraw(canvas)
+
         dataPoints.asSequence()
             .map { rotationAngle + FULL_ANGLE * it }
             .zipWithNext()
@@ -327,6 +339,7 @@ class PieChart @JvmOverloads constructor(
                     transformation = ui
                 )
             }
+
         ui?.afterDraw(canvas)
     }
 
@@ -377,7 +390,7 @@ class PieChart @JvmOverloads constructor(
         return super.onTouchEvent(event)
     }
 
-    private fun onDataPointSelected(selectionIndex: Int) {
+    private fun onDataPointSelected(oldSelectionIndex: Int, newSelectionIndex: Int) {
         val selectionsSize = dataPoints.size - 1
 
         val oldSelections = selections
@@ -386,7 +399,7 @@ class PieChart @JvmOverloads constructor(
             .toFloatArray()
 
         val newSelections = oldSelections.indices
-            .map { if (it == selectionIndex) 1f else 0f }
+            .map { if (it == newSelectionIndex) 1f else 0f }
             .toFloatArray()
 
         ValueAnimator.ofObject(FloatArrayEvaluator(), oldSelections, newSelections)
@@ -398,6 +411,36 @@ class PieChart @JvmOverloads constructor(
                 }
             }
             .start()
+
+        notifySelectionChanged(oldSelectionIndex, newSelectionIndex)
+    }
+
+    private fun notifySelectionChanged(oldSelectionIndex: Int, newSelectionIndex: Int) {
+        for (listener in onSelectionChangedListeners) {
+            listener.onSelectionChangedListener(
+                view = this,
+                oldSelectionIndex = oldSelectionIndex,
+                newSelectionIndex = newSelectionIndex
+            )
+        }
+    }
+
+    /**
+     * Adds a listener of selection index changes.
+     *
+     * @param listener Listener to add.
+     */
+    fun addOnSelectionChangedListener(listener: OnSelectionChangedListener) {
+        onSelectionChangedListeners.add(listener)
+    }
+
+    /**
+     * Adds a listener of selection index changes.
+     *
+     * @param listener Listener to remove.
+     */
+    fun removeOnSelectionChangedListener(listener: OnSelectionChangedListener) {
+        onSelectionChangedListeners.remove(listener)
     }
 
     /**
@@ -405,6 +448,10 @@ class PieChart @JvmOverloads constructor(
      */
     fun clearSelection() {
         selectionIndex = -1
+    }
+
+    companion object {
+        private const val TAG = "PieChart"
     }
 
     /**
@@ -501,5 +548,24 @@ class PieChart @JvmOverloads constructor(
         override fun onDataSetChanged() {
             this@PieChart.onDataSetChanged()
         }
+    }
+
+    /**
+     * An interface for listeners of pie chart selection index changes.
+     */
+    interface OnSelectionChangedListener {
+
+        /**
+         * Called when selection index of the pie chart has been changed.
+         *
+         * @param view Pie chart.
+         * @param oldSelectionIndex Old selection index.
+         * @param newSelectionIndex New selection index.
+         */
+        fun onSelectionChangedListener(
+            view: PieChart,
+            oldSelectionIndex: Int,
+            newSelectionIndex: Int
+        )
     }
 }

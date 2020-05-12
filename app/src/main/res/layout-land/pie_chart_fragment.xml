@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,50 +25,15 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/generateDataButton"
-            android:text="@string/action_generate_data"
-            android:onClickListener="@{() -> viewModel.generateRandomData()}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_margin="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/clearDataButton"
-            android:text="@string/action_clear_data"
-            android:onClickListener="@{() -> viewModel.clearData()}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_margin="8dp"
-            app:layout_constraintEnd_toStartOf="@id/generateDataButton"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/dataListLabel"
-            android:text="@string/label_chart_data"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/pieChart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/generateDataButton" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/dataList"
+        <include
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintStart_toEndOf="@id/pieChart"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/dataListLabel"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:listitem="@layout/data_point_list_item"
-            tools:itemCount="6" />
+            bind:viewModel="@{viewModel}"
+            layout="@layout/pie_chart_fragment_controls" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
