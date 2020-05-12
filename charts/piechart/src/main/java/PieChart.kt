@@ -129,11 +129,14 @@ class PieChart @JvmOverloads constructor(
     /**
      * Index of selected data point.
      */
-    var selectionIndex: Int = 0
+    var selectionIndex: Int = -1
         set(value) {
+            val oldValue = field
             field = value
-            onDataPointSelected(value)
+            onDataPointSelected(oldValue, value)
         }
+
+    private val onSelectionChangedListeners = mutableListOf<OnSelectionChangedListener>()
 
     private val observer = PieChartDataSetObserver()
 
@@ -377,7 +380,7 @@ class PieChart @JvmOverloads constructor(
         return super.onTouchEvent(event)
     }
 
-    private fun onDataPointSelected(selectionIndex: Int) {
+    private fun onDataPointSelected(oldSelectionIndex: Int, newSelectionIndex: Int) {
         val selectionsSize = dataPoints.size - 1
 
         val oldSelections = selections
@@ -386,7 +389,7 @@ class PieChart @JvmOverloads constructor(
             .toFloatArray()
 
         val newSelections = oldSelections.indices
-            .map { if (it == selectionIndex) 1f else 0f }
+            .map { if (it == newSelectionIndex) 1f else 0f }
             .toFloatArray()
 
         ValueAnimator.ofObject(FloatArrayEvaluator(), oldSelections, newSelections)
@@ -398,6 +401,36 @@ class PieChart @JvmOverloads constructor(
                 }
             }
             .start()
+
+        notifySelectionChanged(oldSelectionIndex, newSelectionIndex)
+    }
+
+    private fun notifySelectionChanged(oldSelectionIndex: Int, newSelectionIndex: Int) {
+        for (listener in onSelectionChangedListeners) {
+            listener.onSelectionChangedListener(
+                view = this,
+                oldSelectionIndex = oldSelectionIndex,
+                newSelectionIndex = newSelectionIndex
+            )
+        }
+    }
+
+    /**
+     * Adds a listener of selection index changes.
+     *
+     * @param listener Listener to add.
+     */
+    fun addOnSelectionChangedListener(listener: OnSelectionChangedListener) {
+        onSelectionChangedListeners.add(listener)
+    }
+
+    /**
+     * Adds a listener of selection index changes.
+     *
+     * @param listener Listener to remove.
+     */
+    fun removeOnSelectionChangedListener(listener: OnSelectionChangedListener) {
+        onSelectionChangedListeners.remove(listener)
     }
 
     /**
@@ -501,5 +534,24 @@ class PieChart @JvmOverloads constructor(
         override fun onDataSetChanged() {
             this@PieChart.onDataSetChanged()
         }
+    }
+
+    /**
+     * An interface for listeners of pie chart selection index changes.
+     */
+    interface OnSelectionChangedListener {
+
+        /**
+         * Called when selection index of the pie chart has been changed.
+         *
+         * @param view Pie chart.
+         * @param oldSelectionIndex Old selection index.
+         * @param newSelectionIndex New selection index.
+         */
+        fun onSelectionChangedListener(
+            view: PieChart,
+            oldSelectionIndex: Int,
+            newSelectionIndex: Int
+        )
     }
 }
