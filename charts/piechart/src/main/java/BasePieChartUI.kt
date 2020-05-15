@@ -30,24 +30,49 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /**
- * Base implementation of UI for [PieChart].
+ * Base implementation of pie chart UI.
  */
 abstract class BasePieChartUI : PieChartUI {
 
+    /**
+     * Colors of pie chart slices.
+     */
     protected var colors = intArrayOf(Color.CYAN)
+
+    /**
+     * Colors of pie chart slices when selected.
+     */
     protected var selectedColors = intArrayOf(Color.BLUE)
 
+    /**
+     * Elevated slice shadow color.
+     */
     protected var shadowColor = Color.BLACK
 
+    /**
+     * Elevation of the selected slice.
+     */
     protected var selectedElevation = 4f
+
+    /**
+     * Outwards shift of the selected slice.
+     */
     protected var selectedShift = 0f
 
+    /**
+     * Path defining shape of a slice.
+     */
     protected val path = AdvancedPath()
 
     private val paint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         style = Paint.Style.FILL
     }
 
+    /**
+     * Sets software layer type of the view if the UI draws shadows.
+     *
+     * @param view Pie chart view.
+     */
     override fun onAttachedToView(view: View) {
         view.setLayerType(
             if (selectedElevation > 0) LAYER_TYPE_SOFTWARE else LAYER_TYPE_HARDWARE,
@@ -57,6 +82,15 @@ abstract class BasePieChartUI : PieChartUI {
 
     override fun beforeDraw(canvas: Canvas) = Unit
 
+    /**
+     * Shifts the slice outwards.
+     *
+     * @param canvas Canvas to draw on.
+     * @param radius Radius of the pie chart.
+     * @param startAngle Start angle of the slice.
+     * @param endAngle End angle of the slice.
+     * @param selection Fraction of the slice being selected.
+     */
     override fun transform(
         canvas: Canvas,
         radius: Float,
@@ -70,10 +104,6 @@ abstract class BasePieChartUI : PieChartUI {
             distance * cos(middleAngle.degToRad()),
             distance * sin(middleAngle.degToRad())
         )
-    }
-
-    override fun afterDraw(canvas: Canvas) {
-        paint.clearShadowLayer()
     }
 
     override fun draw(
@@ -108,6 +138,16 @@ abstract class BasePieChartUI : PieChartUI {
         }
     }
 
+    /**
+     * Generates path defining shape of a slice.
+     *
+     * @param selection Fraction of the slice being selected.
+     * @param cx X coordinate of the center of the pie chart.
+     * @param cy Y coordinate of the center of the pie chart.
+     * @param outerRadius Outer radius of the pie chart.
+     * @param startAngle Start angle of the slice.
+     * @param endAngle End angle of the slice.
+     */
     protected abstract fun generateSlicePath(
         selection: Float,
         cx: Float,
@@ -116,4 +156,13 @@ abstract class BasePieChartUI : PieChartUI {
         startAngle: Float,
         endAngle: Float
     )
+
+    /**
+     * Clears shadow layer.
+     *
+     * @param canvas Canvas to draw on.
+     */
+    override fun afterDraw(canvas: Canvas) {
+        paint.clearShadowLayer()
+    }
 }

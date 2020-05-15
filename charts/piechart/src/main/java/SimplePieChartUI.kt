@@ -26,7 +26,14 @@ import it.czerwinski.android.charts.core.getColors
 import it.czerwinski.android.graphics.set
 
 /**
- * Simple UI for [PieChart]. Draws a classic pie chart.
+ * Simple UI for pie chart view.
+ *
+ * Draws a classic pie chart.
+ *
+ * @constructor Creates a simple UI for pie chart view.
+ * @param context The context.
+ * @param attrs Set of styleable attributes.
+ * @param defStyleRes Default style resource.
  */
 class SimplePieChartUI @JvmOverloads constructor(
     context: Context? = null,
@@ -62,6 +69,16 @@ class SimplePieChartUI @JvmOverloads constructor(
             getDimension(R.styleable.SimplePieChartUI_simplePieChartUI_selectionShift, 0f)
     }
 
+    /**
+     * Generates path defining classic pie chart slice shape.
+     *
+     * @param selection Fraction of the slice being selected.
+     * @param cx X coordinate of the center of the pie chart.
+     * @param cy Y coordinate of the center of the pie chart.
+     * @param outerRadius Outer radius of the pie chart.
+     * @param startAngle Start angle of the slice.
+     * @param endAngle End angle of the slice.
+     */
     override fun generateSlicePath(
         selection: Float,
         cx: Float,

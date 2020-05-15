@@ -22,11 +22,11 @@ import android.graphics.Canvas
 import java.util.*
 
 /**
- * Draw the text, with origin at _(x, y)_, using the specified `TextPaint`.
+ * Draws the text, with origin at _(x, y)_, using the specified `TextPaint`.
  *
  * When drawing text with a `TextPain`, it is advised to use this function instead of `drawText()`.
  *
- * @receiver The canvas
+ * @receiver The canvas.
  * @param text The text to be drawn.
  * @param x X coordinate of the origin of the text.
  * @param y Y coordinate of the base line of the text.

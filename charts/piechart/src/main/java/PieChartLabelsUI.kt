@@ -35,13 +35,13 @@ interface PieChartLabelsUI {
     /**
      * Draws a pie chart label for a single slice.
      *
-     * @param canvas The canvas on which the pie chart will be drawn.
+     * @param canvas Canvas to draw on.
      * @param cx X coordinate of the center of the pie chart.
      * @param cy Y coordinate of the center of the pie chart.
      * @param radius Radius of the pie chart slice.
      * @param startAngle Start angle of the slice.
      * @param endAngle End angle of the slice.
-     * @param selection Animated value of the slice being selected.
+     * @param selection Fraction of the slice being selected.
      * @param label Label of the slice.
      * @param transformation Slice transformation determined by the UI of a pie chart.
      */

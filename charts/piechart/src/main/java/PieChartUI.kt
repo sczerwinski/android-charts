@@ -27,28 +27,28 @@ interface PieChartUI : PieChartUITransformation {
     /**
      * Called when the UI is being attached to a pie chart view.
      *
-     * @param view An instance of a [PieChart].
+     * @param view Pie chart view.
      */
     fun onAttachedToView(view: View)
 
     /**
      * Called before the pie chart series are drawn.
      *
-     * @param canvas The canvas on which the pie chart will be drawn.
+     * @param canvas Canvas to draw on.
      */
     fun beforeDraw(canvas: Canvas)
 
     /**
      * Draws UI of a pie chart.
      *
-     * @param canvas The canvas on which the pie chart will be drawn.
+     * @param canvas Canvas to draw on.
      * @param cx X coordinate of the center of the pie chart.
      * @param cy Y coordinate of the center of the pie chart.
      * @param radius Radius of the pie chart.
      * @param index Index of the slice.
      * @param startAngle Start angle of the slice.
      * @param endAngle End angle of the slice.
-     * @param selection Animated value of the slice being selected.
+     * @param selection Fraction of the slice being selected.
      */
     fun draw(
         canvas: Canvas,
@@ -64,7 +64,7 @@ interface PieChartUI : PieChartUITransformation {
     /**
      * Called after the pie chart series have been drawn.
      *
-     * @param canvas The canvas on which the pie chart has been drawn.
+     * @param canvas Canvas to draw on.
      */
     fun afterDraw(canvas: Canvas)
 }

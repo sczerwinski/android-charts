@@ -45,6 +45,9 @@ import kotlin.math.min
  * Pie chart view.
  *
  * @constructor Creates a pie chart view.
+ * @param context The context.
+ * @param attrs Set of styleable attributes.
+ * @param defStyleAttr Default style attribute.
  */
 class PieChart @JvmOverloads constructor(
     context: Context,
@@ -141,7 +144,7 @@ class PieChart @JvmOverloads constructor(
 
     private val observer = PieChartDataSetObserver()
 
-    private var dataPoints: FloatArray = floatArrayOf(0f)
+    private var dataPointsAngles: FloatArray = floatArrayOf(0f)
         set(value) {
             field = value
                 .fold(listOf(value.first())) { output, next ->
@@ -252,6 +255,9 @@ class PieChart @JvmOverloads constructor(
 
     /**
      * Measures pie chart bounds.
+     *
+     * @param widthMeasureSpec Horizontal space requirements as imposed by the parent view.
+     * @param heightMeasureSpec Vertical space requirements as imposed by the parent view.
      */
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
@@ -283,7 +289,9 @@ class PieChart @JvmOverloads constructor(
     }
 
     /**
-     * Draws a pie chart on the [canvas].
+     * Draws a pie chart on the canvas.
+     *
+     * @param canvas Canvas to draw on.
      */
     override fun onDraw(canvas: Canvas?) {
         if (canvas != null) {
@@ -313,7 +321,7 @@ class PieChart @JvmOverloads constructor(
 
         ui?.beforeDraw(canvas)
 
-        dataPoints.asSequence()
+        dataPointsAngles.asSequence()
             .map { rotationAngle + FULL_ANGLE * it }
             .zipWithNext()
             .forEachIndexed { index, (startAngle, endAngle) ->
@@ -344,32 +352,38 @@ class PieChart @JvmOverloads constructor(
     }
 
     private fun onDataSetChanged() {
-        val dataPointsSize = max((adapter?.size ?: 0) + 1, dataPoints.size)
+        val dataPointsAnglesSize = max((adapter?.size ?: 0) + 1, dataPointsAngles.size)
 
-        val oldDataPoints = dataPoints
+        val oldDataPointsAngles = dataPointsAngles
             .asIterable()
-            .withSize(size = dataPointsSize, valueIfEmpty = 0f)
+            .withSize(size = dataPointsAnglesSize, valueIfEmpty = 0f)
             .toFloatArray()
 
-        val newDataPoints = adapter
+        val newDataPointsAngles = adapter
             ?.toList()
             .orEmpty()
             .normalize()
             .partialSums()
-            .withSize(size = dataPointsSize, valueIfEmpty = 0f)
+            .withSize(size = dataPointsAnglesSize, valueIfEmpty = 0f)
             .toFloatArray()
 
-        ValueAnimator.ofObject(FloatArrayEvaluator(), oldDataPoints, newDataPoints)
+        ValueAnimator.ofObject(FloatArrayEvaluator(), oldDataPointsAngles, newDataPointsAngles)
             .apply {
                 interpolator = dataSetInterpolator
                 duration = dataSetAnimationDuration.toLong()
                 addUpdateListener {
-                    dataPoints = (it.animatedValue as? FloatArray) ?: dataPoints
+                    dataPointsAngles = (it.animatedValue as? FloatArray) ?: dataPointsAngles
                 }
             }
             .start()
     }
 
+    /**
+     * Handles touch screen motion events.
+     *
+     * @param event The event to handle.
+     * @return True if the event has been handled, false otherwise.
+     */
     @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         updatePieChartRect()
@@ -384,14 +398,14 @@ class PieChart @JvmOverloads constructor(
                 while (value < 0) value++
                 while (value >= 1) value--
 
-                selectionIndex = dataPoints.indexOfLast { dataPoint -> value >= dataPoint }
+                selectionIndex = dataPointsAngles.indexOfLast { dataPoint -> value >= dataPoint }
             }
 
         return super.onTouchEvent(event)
     }
 
     private fun onDataPointSelected(oldSelectionIndex: Int, newSelectionIndex: Int) {
-        val selectionsSize = dataPoints.size - 1
+        val selectionsSize = dataPointsAngles.size - 1
 
         val oldSelections = selections
             .asIterable()
@@ -455,58 +469,72 @@ class PieChart @JvmOverloads constructor(
     }
 
     /**
-     * [PieChart] data set adapter.
+     * Pie chart data set adapter.
      */
     abstract class DataSetAdapter : Iterable<Float> {
 
         private val observable = DataSetObservable()
 
         /**
-         * [PieChart] data set size.
+         * Data set size.
          */
         abstract val size: Int
 
         /**
-         * Sum of [PieChart] data set values.
+         * Sum of all values in the data set.
          */
         abstract val sum: Float
 
         /**
-         * Gets [PieChart] data set value at the given [index].
+         * Gets data set value at the given index.
+         *
+         * @param index Index in the data set.
+         * @return Value at the given index.
          */
         abstract operator fun get(index: Int): Float
 
         /**
-         * Gets [PieChart] data set label at the given [index].
+         * Gets data set label at the given index.
+         *
+         * @param index Index in the data set.
+         * @return Label at the given index.
          */
         abstract fun getLabel(index: Int): String
 
         /**
-         * Returns an `Iterator` that returns the values from the data set.
+         * Returns an `Iterator` for the values in the data set.
+         *
+         * @return `Iterator` for the values in the data set.
          */
         override fun iterator(): Iterator<Float> = IteratorImpl()
 
         /**
          * Returns an `Iterable` that iterates through the labels for the data set.
+         *
+         * @return `Iterable` that iterates through the labels for the data set.
          */
         fun getLabels(): Iterable<String> = Iterable { LabelIteratorImpl() }
 
         /**
-         * Registers an [observer] of data set changes.
+         * Registers an observer of data set changes.
+         *
+         * @param observer Observer to register.
          */
         fun registerObserver(observer: DataSetObserver) {
             observable.registerObserver(observer)
         }
 
         /**
-         * Unregisters ths [observer] from observing data set changes.
+         * Unregisters the observer from observing data set changes.
+         *
+         * @param observer Observer to unregister.
          */
         fun unregisterObserver(observer: DataSetObserver) {
             observable.unregisterObserver(observer)
         }
 
         /**
-         * Notifies the [PieChart] that the data set has been changed.
+         * Notifies all registered observers that the data set has been changed.
          */
         protected fun notifyDataSetChanged() {
             observable.notifyDataSetChanged()
@@ -534,12 +562,12 @@ class PieChart @JvmOverloads constructor(
     }
 
     /**
-     * An interface for observers of [DataSetAdapter]s changes.
+     * An interface for observers of `DataSetAdapter`s changes.
      */
     interface DataSetObserver {
 
         /**
-         * Called when a data set in the [DataSetAdapter] has been changed.
+         * Called when data set has been changed.
          */
         fun onDataSetChanged()
     }
@@ -558,7 +586,7 @@ class PieChart @JvmOverloads constructor(
         /**
          * Called when selection index of the pie chart has been changed.
          *
-         * @param view Pie chart.
+         * @param view The pie chart.
          * @param oldSelectionIndex Old selection index.
          * @param newSelectionIndex New selection index.
          */
