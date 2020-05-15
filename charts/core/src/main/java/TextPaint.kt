@@ -26,6 +26,10 @@ import androidx.core.content.res.ResourcesCompat
 
 /**
  * An extension of `Paint` class, allowing for easy style application.
+ *
+ * When using `TextPaint` to draw a text, it is advisable to use `Canvas.drawTextAdvanced()` method.
+ *
+ * @see drawTextAdvanced
  */
 class TextPaint : Paint(ANTI_ALIAS_FLAG) {
 
@@ -35,7 +39,10 @@ class TextPaint : Paint(ANTI_ALIAS_FLAG) {
     var textAllCaps: Boolean = false
 
     /**
-     * Applies a style from the [typedArray] in a given [context] to the `Paint` object.
+     * Applies a style to the `Paint` object.
+     *
+     * @param context The context.
+     * @param typedArray The typed array containing style attributes.
      */
     fun applyFrom(context: Context?, typedArray: TypedArray) {
         typedArray.initAttrs(context)

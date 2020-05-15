@@ -27,11 +27,11 @@ interface PieChartUITransformation {
      * Pre-concatenates the current matrix of the canvas with a transformation
      * determined by the UI of a pie chart.
      *
-     * @param canvas The canvas on which the pie chart will be drawn.
+     * @param canvas Canvas to draw on.
      * @param radius Radius of the pie chart.
      * @param startAngle Start angle of the slice.
      * @param endAngle End angle of the slice.
-     * @param selection Animated value of the slice being selected.
+     * @param selection Fraction of the slice being selected.
      */
     fun transform(
         canvas: Canvas,

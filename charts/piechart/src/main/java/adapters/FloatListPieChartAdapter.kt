@@ -21,10 +21,11 @@ import it.czerwinski.android.charts.piechart.PieChart
 import it.czerwinski.android.charts.piechart.R
 
 /**
- * [PieChart] data set adapter for a list of `Float`s.
+ * Pie chart data set adapter for a list of `Float`s.
  *
- * @constructor Creates a [PieChart] data set adapter for a list of `Float`s.
- * @param initialData Initial data points.
+ * @constructor Creates a pie chart data set adapter for a list of `Float`s.
+ * @param context The context.
+ * @param initialData Initial data set.
  */
 class FloatListPieChartAdapter @JvmOverloads constructor(
     context: Context,
@@ -43,22 +44,28 @@ class FloatListPieChartAdapter @JvmOverloads constructor(
         }
 
     /**
-     * [PieChart] data set size.
+     * Data set size.
      */
     override val size: Int get() = data.size
 
     /**
-     * Sum of [PieChart] data set values.
+     * Sum of all values in the data set.
      */
     override val sum: Float get() = data.sum()
 
     /**
-     * Gets [PieChart] data set value at the given [index].
+     * Gets data set value at the given index.
+     *
+     * @param index Index in the data set.
+     * @return Value at the given index.
      */
     override fun get(index: Int): Float = data[index]
 
     /**
-     * Gets [PieChart] data set label at the given [index].
+     * Gets data set label at the given index.
+     *
+     * @param index Index in the data set.
+     * @return Label at the given index.
      */
     override fun getLabel(index: Int): String =
         labelFormat.format((100f * get(index) / sum).toInt())

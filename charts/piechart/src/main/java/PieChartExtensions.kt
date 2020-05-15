@@ -21,6 +21,7 @@ package it.czerwinski.android.charts.piechart
 /**
  * Adds a listener of selection index changes.
  *
+ * @receiver Pie chart view.
  * @param listener Listener to add.
  */
 fun PieChart.addOnSelectionChangedListener(
@@ -40,6 +41,7 @@ fun PieChart.addOnSelectionChangedListener(
 /**
  * Registers an observer of data set changes.
  *
+ * @receiver Pie chart data set adapter.
  * @param observer Observer to register.
  */
 fun PieChart.DataSetAdapter.registerObserver(observer: () -> Unit) {

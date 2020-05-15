@@ -27,9 +27,14 @@ import androidx.annotation.ColorInt
 import androidx.annotation.StyleableRes
 
 /**
- * Retrieves the interpolator instance for the attribute at [index].
+ * Retrieves the interpolator instance for the attribute at the given index.
  *
- * If the value does not exist, [defValue] will be returned instead.
+ * If the value does not exist, `defValue` will be returned instead.
+ *
+ * @receiver A typed array of attributes.
+ * @param context The context.
+ * @param index Index of attribute to retrieve.
+ * @param defValue Default interpolator value to be used.
  */
 fun TypedArray.getInterpolator(
     context: Context,
@@ -48,8 +53,9 @@ fun TypedArray.getInterpolator(
  *
  * If none of the indices contains any value, the last index is returned.
  *
- * @param indices `@StyleableRes` indices
- * @return
+ * @receiver A typed array of attributes.
+ * @param indices `@StyleableRes` indices.
+ * @return First of the indices containing a value.
  */
 fun TypedArray.findIndexWithValue(@StyleableRes vararg indices: Int): Int =
     indices.find { index -> hasValue(index) } ?: indices.last()
@@ -57,9 +63,10 @@ fun TypedArray.findIndexWithValue(@StyleableRes vararg indices: Int): Int =
 /**
  * Retrieves an array of colors for the attribute at the given index.
  *
- * @param context Context
- * @param index Color attribute index
- * @param defValue Default color value
+ * @receiver A typed array of attributes.
+ * @param context The context.
+ * @param index Index of the color attribute.
+ * @param defValue Default color value.
  */
 fun TypedArray.getColors(
     context: Context,

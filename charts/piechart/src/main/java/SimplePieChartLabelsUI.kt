@@ -32,7 +32,12 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 /**
- * Simple labels UI for [PieChart].
+ * Simple labels UI for pie chart view.
+ *
+ * @constructor Creates a simple labels UI for pie chart view.
+ * @param context The context.
+ * @param attrs Set of styleable attributes.
+ * @param defStyleRes Default style resource.
  */
 class SimplePieChartLabelsUI @JvmOverloads constructor(
     context: Context? = null,

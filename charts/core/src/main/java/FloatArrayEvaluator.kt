@@ -26,14 +26,19 @@ import android.animation.TypeEvaluator
 class FloatArrayEvaluator : TypeEvaluator<FloatArray> {
 
     /**
-     * Interpolates the values at each index of the `FloatArray` by the [fraction],
-     * between corresponding values in the [startArray] and [endArray].
+     * Interpolates the values at each index of the `FloatArray` by the `fraction`,
+     * between corresponding values in the start and end array values.
+     *
+     * @param fraction A fraction from the start to end values.
+     * @param startValues The start array values.
+     * @param endValues The end array values.
+     * @return A linear interpolation between start and end values.
      */
     override fun evaluate(
         fraction: Float,
-        startValue: FloatArray,
-        endValue: FloatArray
-    ): FloatArray = (startValue zip endValue)
+        startValues: FloatArray,
+        endValues: FloatArray
+    ): FloatArray = (startValues zip endValues)
         .map { (start, end) ->
             start + fraction * (end - start)
         }
