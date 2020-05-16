@@ -43,7 +43,7 @@ class SimplePieChartLabelsUI @JvmOverloads constructor(
     context: Context? = null,
     attrs: AttributeSet? = null,
     @StyleRes defStyleRes: Int = 0
-) : PieChartLabelsUI {
+) : PieChart.LabelsUI {
 
     private val textPaint = TextPaint()
 
@@ -100,7 +100,7 @@ class SimplePieChartLabelsUI @JvmOverloads constructor(
         endAngle: Float,
         selection: Float,
         label: String?,
-        transformation: PieChartUITransformation?
+        transformation: PieChart.UITransformation?
     ) {
         if ((label != null) && (endAngle - startAngle) / FULL_ANGLE * 100 >= labelMinPercent) {
             val midAngle = (startAngle + endAngle) / 2f

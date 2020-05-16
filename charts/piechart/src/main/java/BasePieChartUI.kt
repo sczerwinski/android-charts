@@ -32,7 +32,7 @@ import kotlin.math.sin
 /**
  * Base implementation of pie chart UI.
  */
-abstract class BasePieChartUI : PieChartUI {
+abstract class BasePieChartUI : PieChart.UI {
 
     /**
      * Colors of pie chart slices.
