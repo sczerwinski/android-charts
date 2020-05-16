@@ -103,7 +103,7 @@ class PieChart @JvmOverloads constructor(
     /**
      * Pie chart UI drawing object.
      */
-    var ui: PieChartUI? = null
+    var ui: UI? = null
         set(value) {
             field = value
             value?.onAttachedToView(view = this)
@@ -113,7 +113,7 @@ class PieChart @JvmOverloads constructor(
     /**
      * Pie chart labels UI drawing object.
      */
-    var labelsUI: PieChartLabelsUI? = null
+    var labelsUI: LabelsUI? = null
         set(value) {
             field = value
             invalidate()
@@ -576,6 +576,119 @@ class PieChart @JvmOverloads constructor(
         override fun onDataSetChanged() {
             this@PieChart.onDataSetChanged()
         }
+    }
+
+    /**
+     * Pie chart UI slice transformation.
+     */
+    interface UITransformation {
+
+        /**
+         * Pre-concatenates the current matrix of the canvas with a transformation
+         * determined by the UI of a pie chart.
+         *
+         * @param canvas Canvas to draw on.
+         * @param radius Radius of the pie chart.
+         * @param startAngle Start angle of the slice.
+         * @param endAngle End angle of the slice.
+         * @param selection Fraction of the slice being selected.
+         */
+        fun transform(
+            canvas: Canvas,
+            radius: Float,
+            startAngle: Float,
+            endAngle: Float,
+            selection: Float
+        )
+    }
+
+    /**
+     * An interface for classes drawing UI of a pie chart.
+     */
+    interface UI : UITransformation {
+
+        /**
+         * Called when the UI is being attached to a pie chart view.
+         *
+         * @param view Pie chart view.
+         */
+        fun onAttachedToView(view: View)
+
+        /**
+         * Called before the pie chart series are drawn.
+         *
+         * @param canvas Canvas to draw on.
+         */
+        fun beforeDraw(canvas: Canvas)
+
+        /**
+         * Draws UI of a pie chart.
+         *
+         * @param canvas Canvas to draw on.
+         * @param cx X coordinate of the center of the pie chart.
+         * @param cy Y coordinate of the center of the pie chart.
+         * @param radius Radius of the pie chart.
+         * @param index Index of the slice.
+         * @param startAngle Start angle of the slice.
+         * @param endAngle End angle of the slice.
+         * @param selection Fraction of the slice being selected.
+         */
+        fun draw(
+            canvas: Canvas,
+            cx: Float,
+            cy: Float,
+            radius: Float,
+            index: Int,
+            startAngle: Float,
+            endAngle: Float,
+            selection: Float
+        )
+
+        /**
+         * Called after the pie chart series have been drawn.
+         *
+         * @param canvas Canvas to draw on.
+         */
+        fun afterDraw(canvas: Canvas)
+    }
+
+    /**
+     * An interface for classes drawing labels for a pie chart.
+     */
+    interface LabelsUI {
+
+        /**
+         * Measures dimensions of a given text drawn as a label.
+         *
+         * @param text Text to measure.
+         * @param bounds Rectangle to be set to measured bounds of the text.
+         */
+        fun measureText(text: String, bounds: Rect)
+
+        /**
+         * Draws a pie chart label for a single slice.
+         *
+         * @param canvas Canvas to draw on.
+         * @param cx X coordinate of the center of the pie chart.
+         * @param cy Y coordinate of the center of the pie chart.
+         * @param radius Radius of the pie chart slice.
+         * @param startAngle Start angle of the slice.
+         * @param endAngle End angle of the slice.
+         * @param selection Fraction of the slice being selected.
+         * @param label Label of the slice.
+         * @param transformation Slice transformation determined by the UI of a pie chart.
+         */
+        fun draw(
+            canvas: Canvas,
+            cx: Float,
+            cy: Float,
+            radius: Float,
+            startAngle: Float,
+            endAngle: Float,
+            selection: Float,
+            label: String?,
+            transformation: UITransformation?
+        )
     }
 
     /**
