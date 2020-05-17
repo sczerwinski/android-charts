@@ -1,0 +1,10 @@
+apply plugin: 'org.jetbrains.dokka'
+
+dokka {
+    outputFormat = 'javadoc'
+    outputDirectory = "$buildDir/javadoc"
+    configuration {
+        moduleName = libDescription
+        includes = ['packages.md']
+    }
+}

@@ -3,8 +3,19 @@
 
     <color name="colorPrimary">#2196F3</color>
     <color name="colorPrimaryDark">#1976D2</color>
+    <color name="colorPrimaryLight">#64B5F6</color>
+    <color name="colorSecondary">#FF9800</color>
+    <color name="colorSecondaryLight">#FFB74D</color>
+    <color name="colorTernary">#F44336</color>
+    <color name="colorTernaryLight">#E57373</color>
     <color name="colorAccent">#FF9100</color>
 
     <color name="ic_launcher_background">@color/colorPrimary</color>
+
+    <array name="chartColors">
+        <item>@color/chart_color_primary</item>
+        <item>@color/chart_color_secondary</item>
+        <item>@color/chart_color_ternary</item>
+    </array>
 
 </resources>

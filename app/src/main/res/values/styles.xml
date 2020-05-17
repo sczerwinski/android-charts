@@ -1,10 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- App theme -->
+
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryLight</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="tabStyle">@style/TabLayout</item>
+        <item name="textButtonStyle">@style/Widget.MaterialComponents.Button.TextButton</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+    <style name="TabLayout" parent="Widget.MaterialComponents.TabLayout.Colored">
+        <item name="android:background">?attr/colorPrimary</item>
+    </style>
+
+    <!-- Pie chart theme -->
+
+    <style name="AppTheme.SimplePieChart">
+        <item name="pieChartStyle">@style/PieChart.SimplePieChart</item>
+    </style>
+
+    <style name="PieChart.SimplePieChart" parent="AndroidCharts.Material.PieChart.Simple.LabelsInside">
+        <item name="android:padding">8dp</item>
+    </style>
+
+    <!-- Donut chart theme -->
+
+    <style name="AppTheme.DonutPieChart">
+        <item name="pieChartStyle">@style/PieChart.DonutPieChart</item>
+    </style>
+
+    <style name="PieChart.DonutPieChart" parent="AndroidCharts.Material.PieChart.Donut.LabelsOutside">
+        <item name="android:padding">8dp</item>
+        <item name="pieChart_uiAppearance">@style/PieChart.DonutPieChart.UI</item>
+        <item name="pieChart_labelsAppearance">@style/PieChart.DonutPieChart.LabelsUI</item>
+    </style>
+
+    <style name="PieChart.DonutPieChart.UI" parent="AndroidCharts.Material.PieChart.DonutUI">
+        <item name="donutPieChartUI_colors">@array/chartColors</item>
+    </style>
+
+    <style name="PieChart.DonutPieChart.LabelsUI" parent="AndroidCharts.SimplePieChartLabelsUI.Outside.Dark">
+        <item name="simplePieChartLabelsUI_textAppearance">@style/PieChart.DonutPieChart.UI.TextAppearance</item>
+    </style>
+
+    <style name="PieChart.DonutPieChart.UI.TextAppearance" parent="AndroidCharts.Material.TextAppearance.Label.Outside">
+        <item name="android:textStyle">italic</item>
     </style>
 
 </resources>

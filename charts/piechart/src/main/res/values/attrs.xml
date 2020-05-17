@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2018–2020 Slawomir Czerwinski
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources>
+
+    <!-- Default style for pie chart -->
+    <attr name="pieChartStyle" format="reference" />
+
+    <!-- Default style for pie chart simple UI -->
+    <attr name="simplePieChartStyle" format="reference" />
+
+    <!-- Default style for pie chart donut UI -->
+    <attr name="donutPieChartStyle" format="reference" />
+
+    <!-- Default style for pie chart simple labels -->
+    <attr name="simplePieChartLabelsStyle" format="reference" />
+
+    <!-- Pie chart -->
+    <declare-styleable name="PieChart">
+
+        <!-- Pie chart gravity inside the view -->
+        <attr name="android:gravity" />
+
+        <!-- Pie chart angle for zero value -->
+        <attr name="pieChart_rotationAngle" format="float" />
+
+        <!-- Interpolator for data set changes animations -->
+        <attr name="pieChart_dataSetInterpolator" format="reference" />
+
+        <!-- Duration of data set changes animations -->
+        <attr name="pieChart_dataSetAnimationDuration" format="integer" />
+
+        <!-- Interpolator for selection changes animations -->
+        <attr name="pieChart_selectionInterpolator" format="reference" />
+
+        <!-- Duration of selection changes animations -->
+        <attr name="pieChart_selectionAnimationDuration" format="integer" />
+
+        <!-- Pie chart UI class name -->
+        <attr name="pieChart_ui" format="string" />
+
+        <!-- Pie chart UI appearance style reference -->
+        <attr name="pieChart_uiAppearance" format="reference" />
+
+        <!-- Pie chart horizontal padding for labels -->
+        <attr name="pieChart_labelsPaddingHorizontal" format="dimension|reference" />
+
+        <!-- Pie chart vertical padding for labels -->
+        <attr name="pieChart_labelsPaddingVertical" format="dimension|reference" />
+
+        <!-- Pie chart padding for labels set from a reference text -->
+        <attr name="pieChart_labelsPaddingFromText" format="string" />
+
+        <!-- Pie chart labels UI class name -->
+        <attr name="pieChart_labelsUI" format="string" />
+
+        <!-- Pie chart labels appearance style reference -->
+        <attr name="pieChart_labelsAppearance" format="reference" />
+
+    </declare-styleable>
+
+    <!-- Simple UI for pie chart -->
+    <declare-styleable name="SimplePieChartUI">
+
+        <!-- Colors of subsequent slices -->
+        <attr name="simplePieChartUI_colors" format="color|reference" />
+
+        <!-- Color of a shadow behind the selected slice -->
+        <attr name="simplePieChartUI_shadowColor" format="color|reference" />
+
+        <!-- Spacing of slices -->
+        <attr name="simplePieChartUI_sliceSpacing" format="dimension|reference" />
+
+        <!-- Shift of the selected slice -->
+        <attr name="simplePieChartUI_selectionShift" format="dimension|reference" />
+
+        <!-- Elevation of the selected slice -->
+        <attr name="simplePieChartUI_selectionElevation" format="dimension|reference" />
+
+    </declare-styleable>
+
+    <!-- Donut UI for pie chart -->
+    <declare-styleable name="DonutPieChartUI">
+
+        <!-- Colors of subsequent donut slices -->
+        <attr name="donutPieChartUI_colors" format="color|reference" />
+
+        <!-- Color of a shadow behind the selected slice -->
+        <attr name="donutPieChartUI_shadowColor" format="color|reference" />
+
+        <!-- Width of the donut -->
+        <attr name="donutPieChartUI_donutWidth" format="dimension|reference" />
+
+        <!-- Spacing of donut slices -->
+        <attr name="donutPieChartUI_donutSpacing" format="dimension|reference" />
+
+        <!-- Width of the selected donut slice -->
+        <attr name="donutPieChartUI_selectionWidth" format="dimension|reference" />
+
+        <!-- Shift of the selected donut slice -->
+        <attr name="donutPieChartUI_selectionShift" format="dimension|reference" />
+
+        <!-- Elevation of the selected donut slice -->
+        <attr name="donutPieChartUI_selectionElevation" format="dimension|reference" />
+
+    </declare-styleable>
+
+    <!-- Simple labels for pie chart -->
+    <declare-styleable name="SimplePieChartLabelsUI">
+
+        <!-- Text appearance of a label -->
+        <attr name="simplePieChartLabelsUI_textAppearance" format="reference" />
+
+        <!-- Position of a label -->
+        <attr name="simplePieChartLabelsUI_labelPosition" format="enum">
+            <enum name="outside" value="1" />
+            <enum name="inside" value="-1" />
+        </attr>
+
+        <!-- Spacing of a label -->
+        <attr name="simplePieChartLabelsUI_labelSpacing" format="dimension|reference" />
+
+        <!-- Minimum value (in percent) to display a label -->
+        <attr name="simplePieChartLabelsUI_labelMinPercent" format="integer" />
+
+    </declare-styleable>
+
+</resources>
