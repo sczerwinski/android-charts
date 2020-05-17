@@ -34,8 +34,7 @@
     <!-- Base styles for pie chart UI -->
 
     <style name="Base.AndroidCharts.Material.PieChart.SimpleUI" parent="">
-        <item name="simplePieChartUI_colors">?attr/colorPrimary</item>
-        <item name="simplePieChartUI_selectionColors">?attr/colorPrimaryVariant</item>
+        <item name="simplePieChartUI_colors">@color/charts_series_color</item>
         <item name="simplePieChartUI_shadowColor">@color/charts_piechart_color_shadow</item>
         <item name="simplePieChartUI_sliceSpacing">@dimen/charts_piechart_simple_spacing</item>
         <item name="simplePieChartUI_selectionShift">@dimen/charts_piechart_simple_selection_shift</item>
@@ -43,8 +42,7 @@
     </style>
 
     <style name="Base.AndroidCharts.Material.PieChart.DonutUI" parent="">
-        <item name="donutPieChartUI_colors">?attr/colorPrimary</item>
-        <item name="donutPieChartUI_selectionColors">?attr/colorPrimaryVariant</item>
+        <item name="donutPieChartUI_colors">@color/charts_series_color</item>
         <item name="donutPieChartUI_shadowColor">@color/charts_piechart_color_shadow</item>
         <item name="donutPieChartUI_donutWidth">@dimen/charts_piechart_donut_width</item>
         <item name="donutPieChartUI_donutSpacing">@dimen/charts_piechart_donut_spacing</item>

@@ -85,9 +85,6 @@
         <!-- Spacing of slices -->
         <attr name="simplePieChartUI_sliceSpacing" format="dimension|reference" />
 
-        <!-- Colors of subsequent slices when selected -->
-        <attr name="simplePieChartUI_selectionColors" format="color|reference" />
-
         <!-- Shift of the selected slice -->
         <attr name="simplePieChartUI_selectionShift" format="dimension|reference" />
 
@@ -110,9 +107,6 @@
 
         <!-- Spacing of donut slices -->
         <attr name="donutPieChartUI_donutSpacing" format="dimension|reference" />
-
-        <!-- Colors of subsequent donut slices when selected -->
-        <attr name="donutPieChartUI_selectionColors" format="color|reference" />
 
         <!-- Width of the selected donut slice -->
         <attr name="donutPieChartUI_selectionWidth" format="dimension|reference" />

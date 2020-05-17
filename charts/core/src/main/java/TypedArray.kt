@@ -19,12 +19,20 @@
 package it.czerwinski.android.charts.core
 
 import android.content.Context
-import android.content.res.Resources
+import android.content.res.ColorStateList
 import android.content.res.TypedArray
 import android.view.animation.AnimationUtils
 import android.view.animation.Interpolator
 import androidx.annotation.ColorInt
 import androidx.annotation.StyleableRes
+
+/**
+ * Indices with data in this array.
+ */
+val TypedArray.indices: Iterable<Int>
+    get() =
+        if (indexCount == 0) 0 until length()
+        else (0 until indexCount).map(this::getIndex)
 
 /**
  * Retrieves the interpolator instance for the attribute at the given index.
@@ -61,25 +69,38 @@ fun TypedArray.findIndexWithValue(@StyleableRes vararg indices: Int): Int =
     indices.find { index -> hasValue(index) } ?: indices.last()
 
 /**
- * Retrieves an array of colors for the attribute at the given index.
+ * Retrieves a list of `ColorStateList` objects for the attribute at the given index.
  *
  * @receiver A typed array of attributes.
  * @param context The context.
  * @param index Index of the color attribute.
  * @param defValue Default color value.
+ * @return List of `ColorStateList` objects at the given index.
  */
 fun TypedArray.getColors(
     context: Context,
     index: Int,
     @ColorInt defValue: Int
-): IntArray =
-    try {
-        getResourceId(index, 0)
-            .takeUnless { it == 0 }
-            ?.let { context.resources?.getIntArray(it) }
-            ?.takeUnless { it.isEmpty() }
-    } catch (e: Resources.NotFoundException) { null }
-        ?: intArrayOf(
-            try { getColor(index, defValue) }
-            catch (e: UnsupportedOperationException) { defValue }
-        )
+): List<ColorStateList> {
+    val resourceId = getResourceId(index, 0).takeUnless { it == 0 }
+
+    if (resourceId != null) {
+        try {
+            val typedArray = context.resources?.obtainTypedArray(resourceId)
+            if (typedArray != null) {
+                val colors = typedArray.indices.mapNotNull(typedArray::getColorStateList)
+                typedArray.recycle()
+                if (colors.isNotEmpty()) return colors
+            }
+            typedArray?.recycle()
+        } catch (e: Throwable) {
+        }
+    }
+
+    val colorStateList = try {
+        getColorStateList(index) ?: ColorStateList.valueOf(defValue)
+    } catch (e: Throwable) {
+        ColorStateList.valueOf(defValue)
+    }
+    return listOf(colorStateList)
+}
