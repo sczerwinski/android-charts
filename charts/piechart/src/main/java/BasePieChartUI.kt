@@ -16,6 +16,7 @@
 
 package it.czerwinski.android.charts.piechart
 
+import android.content.res.ColorStateList
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
@@ -37,12 +38,7 @@ abstract class BasePieChartUI : PieChart.UI {
     /**
      * Colors of pie chart slices.
      */
-    protected var colors = intArrayOf(Color.CYAN)
-
-    /**
-     * Colors of pie chart slices when selected.
-     */
-    protected var selectedColors = intArrayOf(Color.BLUE)
+    protected var colors = listOf(ColorStateList.valueOf(Color.CYAN))
 
     /**
      * Elevated slice shadow color.
@@ -117,7 +113,16 @@ abstract class BasePieChartUI : PieChart.UI {
         selection: Float
     ) {
         val colorIndex = index % colors.size
-        paint.color = mixColors(colors[colorIndex], selectedColors[colorIndex], selection)
+        val colorStateList = colors[colorIndex]
+        val color = colorStateList.getColorForState(
+            intArrayOf(-android.R.attr.state_selected),
+            colorStateList.defaultColor
+        )
+        val selectedColor = colorStateList.getColorForState(
+            intArrayOf(android.R.attr.state_selected),
+            colorStateList.defaultColor
+        )
+        paint.color = mixColors(color, selectedColor, selection)
         if (selection > 0.01f) {
             paint.setShadowLayer(
                 selection * selectedElevation,

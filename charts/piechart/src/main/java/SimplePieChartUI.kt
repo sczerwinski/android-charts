@@ -57,8 +57,6 @@ class SimplePieChartUI @JvmOverloads constructor(
     private fun TypedArray.initAttrs(context: Context) {
         colors =
             getColors(context, R.styleable.SimplePieChartUI_simplePieChartUI_colors, Color.CYAN)
-        selectedColors =
-            getColors(context, R.styleable.SimplePieChartUI_simplePieChartUI_selectionColors, Color.BLUE)
         shadowColor =
             getColor(R.styleable.SimplePieChartUI_simplePieChartUI_shadowColor, Color.BLACK)
         selectedElevation =

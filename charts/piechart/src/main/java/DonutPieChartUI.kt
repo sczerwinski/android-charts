@@ -60,8 +60,6 @@ class DonutPieChartUI @JvmOverloads constructor(
     private fun TypedArray.initAttrs(context: Context) {
         colors =
             getColors(context, R.styleable.DonutPieChartUI_donutPieChartUI_colors, Color.CYAN)
-        selectedColors =
-            getColors(context, R.styleable.DonutPieChartUI_donutPieChartUI_selectionColors, Color.BLUE)
         shadowColor =
             getColor(R.styleable.DonutPieChartUI_donutPieChartUI_shadowColor, Color.BLACK)
         selectedElevation =

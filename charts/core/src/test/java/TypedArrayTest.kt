@@ -17,6 +17,7 @@
 package it.czerwinski.android.charts.core
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.content.res.TypedArray
 import android.graphics.Color
@@ -25,9 +26,10 @@ import android.view.animation.Interpolator
 import io.mockk.every
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
 import io.mockk.mockkStatic
-import io.mockk.slot
-import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertSame
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -47,8 +49,29 @@ class TypedArrayTest {
     lateinit var defaultInterpolator: Interpolator
 
     @Test
+    fun `Given typed array of attributes, when indices, then return indices of attributes`() {
+        every { typedArray.indexCount } returns 2
+        every { typedArray.getIndex(0) } returns FIRST_INDEX
+        every { typedArray.getIndex(1) } returns SECOND_INDEX
+
+        val result = typedArray.indices
+
+        assertEquals(listOf(FIRST_INDEX, SECOND_INDEX), result.toList())
+    }
+
+    @Test
+    fun `Given typed array resource, when indices, then return ordinal indices`() {
+        every { typedArray.indexCount } returns 0
+        every { typedArray.length() } returns 2
+
+        val result = typedArray.indices
+
+        assertEquals(listOf(0, 1), result.toList())
+    }
+
+    @Test
     fun `Given interpolator was not set, when getInterpolator, then return default interpolator`() {
-        every {typedArray.getResourceId(INTERPOLATOR_ATTR_INDEX, 0) } returns 0
+        every { typedArray.getResourceId(INTERPOLATOR_ATTR_INDEX, 0) } returns 0
 
         val result = typedArray.getInterpolator(
             context = context,
@@ -136,59 +159,54 @@ class TypedArrayTest {
     }
 
     @Test
-    fun `Given attribute is array of integers, when getColors, then return array of colors`() {
+    fun `Given attribute is array of colors, when getColors, then return array of colors`() {
         every { typedArray.getResourceId(COLORS_ATTR_INDEX, any()) } returns COLORS_RES_ID
-        every { context.resources.getIntArray(COLORS_RES_ID) } returns COLORS_ARRAY
+        every { context.resources.obtainTypedArray(COLORS_RES_ID) } returns COLORS_TYPED_ARRAY
+        every { COLORS_TYPED_ARRAY.indexCount } returns 0
+        every { COLORS_TYPED_ARRAY.length() } returns 3
+        every { COLORS_TYPED_ARRAY.getColorStateList(0) } returns COLOR_1
+        every { COLORS_TYPED_ARRAY.getColorStateList(1) } returns COLOR_2
+        every { COLORS_TYPED_ARRAY.getColorStateList(2) } returns COLOR_3
 
         val result = typedArray.getColors(context, COLORS_ATTR_INDEX, Color.BLACK)
 
-        assertArrayEquals(COLORS_ARRAY, result)
+        assertEquals(listOf(COLOR_1, COLOR_2, COLOR_3), result)
     }
 
     @Test
     fun `Given attribute is a single color, when getColors, then return array containing the color`() {
         every { typedArray.getResourceId(COLORS_ATTR_INDEX, any()) } returns COLORS_RES_ID
-        every { context.resources.getIntArray(COLORS_RES_ID) } throws Resources.NotFoundException()
-        every { typedArray.getColor(COLORS_ATTR_INDEX, any()) } returns Color.RED
+        every { context.resources.obtainTypedArray(COLORS_RES_ID) } throws Resources.NotFoundException()
+        every { typedArray.getColorStateList(COLORS_ATTR_INDEX) } returns COLOR_1
 
         val result = typedArray.getColors(context, COLORS_ATTR_INDEX, Color.BLACK)
 
-        assertArrayEquals(intArrayOf(Color.RED), result)
-    }
-
-    @Test
-    fun `Given attribute is a single color, when getColors, then return array containing the color (old API)`() {
-        every { typedArray.getResourceId(COLORS_ATTR_INDEX, any()) } returns COLORS_RES_ID
-        every { context.resources.getIntArray(COLORS_RES_ID) } returns intArrayOf()
-        every { typedArray.getColor(COLORS_ATTR_INDEX, any()) } returns Color.RED
-
-        val result = typedArray.getColors(context, COLORS_ATTR_INDEX, Color.BLACK)
-
-        assertArrayEquals(intArrayOf(Color.RED), result)
+        assertEquals(listOf(COLOR_1), result)
     }
 
     @Test
     fun `Given attribute is of invalid type, when getColors, then return array containing default color`() {
         every { typedArray.getResourceId(COLORS_ATTR_INDEX, any()) } returns COLORS_RES_ID
-        every { context.resources.getIntArray(COLORS_RES_ID) } throws Resources.NotFoundException()
-        every { typedArray.getColor(COLORS_ATTR_INDEX, any()) } throws UnsupportedOperationException()
+        every { context.resources.obtainTypedArray(COLORS_RES_ID) } throws Resources.NotFoundException()
+        every { typedArray.getColorStateList(COLORS_ATTR_INDEX) } throws UnsupportedOperationException()
+        mockkStatic(ColorStateList::class)
+        every { ColorStateList.valueOf(Color.BLACK) } returns COLOR_3
 
         val result = typedArray.getColors(context, COLORS_ATTR_INDEX, Color.BLACK)
 
-        assertArrayEquals(intArrayOf(Color.BLACK), result)
+        assertEquals(listOf(COLOR_3), result)
     }
 
     @Test
     fun `Given attribute is not set, when getColors, then return array containing default color`() {
-        val defaultColorSlot = slot<Int>()
         every { typedArray.getResourceId(COLORS_ATTR_INDEX, any()) } returns 0
-        every {
-            typedArray.getColor(COLORS_ATTR_INDEX, capture(defaultColorSlot))
-        } answers { defaultColorSlot.captured }
+        every { typedArray.getColorStateList(COLORS_ATTR_INDEX) } returns null
+        mockkStatic(ColorStateList::class)
+        every { ColorStateList.valueOf(Color.BLACK) } returns COLOR_3
 
         val result = typedArray.getColors(context, COLORS_ATTR_INDEX, Color.BLACK)
 
-        assertArrayEquals(intArrayOf(Color.BLACK), result)
+        assertEquals(listOf(COLOR_3), result)
     }
 
     companion object {
@@ -196,12 +214,15 @@ class TypedArrayTest {
         const val INTERPOLATOR_ATTR_INDEX = 1
         const val INTERPOLATOR_RES_ID = 0x1234
 
-        const val FIRST_INDEX = 1
-        const val SECOND_INDEX = 2
-        const val THIRD_INDEX = 2
+        const val FIRST_INDEX = 21
+        const val SECOND_INDEX = 22
+        const val THIRD_INDEX = 23
 
         const val COLORS_ATTR_INDEX = 1
         const val COLORS_RES_ID = 0x1234
-        val COLORS_ARRAY = intArrayOf(Color.RED, Color.GREEN, Color.BLUE)
+        val COLORS_TYPED_ARRAY = mockk<TypedArray>(relaxUnitFun = true)
+        val COLOR_1 = mockk<ColorStateList>(name = "Color 1")
+        val COLOR_2 = mockk<ColorStateList>(name = "Color 2")
+        val COLOR_3 = mockk<ColorStateList>(name = "Color 3")
     }
 }

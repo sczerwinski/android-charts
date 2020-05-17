@@ -44,7 +44,6 @@
 
     <style name="PieChart.DonutPieChart.UI" parent="AndroidCharts.Material.PieChart.DonutUI">
         <item name="donutPieChartUI_colors">@array/chartColors</item>
-        <item name="donutPieChartUI_selectionColors">@array/chartColorsSelected</item>
     </style>
 
     <style name="PieChart.DonutPieChart.LabelsUI" parent="AndroidCharts.SimplePieChartLabelsUI.Outside.Dark">

@@ -90,22 +90,18 @@
 
     <style name="AndroidCharts.SimplePieChartUI.LightTheme" parent="Base.AndroidCharts.SimplePieChartUI">
         <item name="simplePieChartUI_colors">@color/charts_black</item>
-        <item name="simplePieChartUI_selectionColors">@color/charts_black</item>
     </style>
 
     <style name="AndroidCharts.SimplePieChartUI.DarkTheme" parent="Base.AndroidCharts.SimplePieChartUI">
         <item name="simplePieChartUI_colors">@color/charts_white</item>
-        <item name="simplePieChartUI_selectionColors">@color/charts_white</item>
     </style>
 
     <style name="AndroidCharts.DonutPieChartUI.LightTheme" parent="Base.AndroidCharts.DonutPieChartUI">
         <item name="donutPieChartUI_colors">@color/charts_black</item>
-        <item name="donutPieChartUI_selectionColors">@color/charts_black</item>
     </style>
 
     <style name="AndroidCharts.DonutPieChartUI.DarkTheme" parent="Base.AndroidCharts.DonutPieChartUI">
         <item name="donutPieChartUI_colors">@color/charts_white</item>
-        <item name="donutPieChartUI_selectionColors">@color/charts_white</item>
     </style>
 
     <!-- Styles for pie charts -->

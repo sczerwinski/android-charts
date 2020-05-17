@@ -12,16 +12,10 @@
 
     <color name="ic_launcher_background">@color/colorPrimary</color>
 
-    <integer-array name="chartColors">
-        <item>@color/colorPrimary</item>
-        <item>@color/colorSecondary</item>
-        <item>@color/colorTernary</item>
-    </integer-array>
-
-    <integer-array name="chartColorsSelected">
-        <item>@color/colorPrimaryLight</item>
-        <item>@color/colorSecondaryLight</item>
-        <item>@color/colorTernaryLight</item>
-    </integer-array>
+    <array name="chartColors">
+        <item>@color/chart_color_primary</item>
+        <item>@color/chart_color_secondary</item>
+        <item>@color/chart_color_ternary</item>
+    </array>
 
 </resources>
