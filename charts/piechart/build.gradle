@@ -11,5 +11,7 @@ dependencies {
     implementation project(':charts:core')
 }
 
+apply from: '../common-tests.gradle'
+
 apply from: '../common-dokka.gradle'
 apply from: '../common-publish.gradle'
