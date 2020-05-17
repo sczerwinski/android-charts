@@ -6,6 +6,7 @@ For more details, visit [project website](https://czerwinski.it/projects/android
 
 ---
 
+[![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android/charts-core.svg)](https://repo1.maven.org/maven2/it/czerwinski/android/charts-core/)
 [![Sonatype Snapshot](https://img.shields.io/nexus/s/https/oss.sonatype.org/it.czerwinski.android/charts-core.svg)](https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/charts-core/)
 
 ## Core
@@ -23,6 +24,7 @@ dependencies {
 
 ---
 
+[![Maven Central](https://img.shields.io/maven-central/v/it.czerwinski.android/charts-piechart.svg)](https://repo1.maven.org/maven2/it/czerwinski/android/charts-piechart/)
 [![Sonatype Snapshot](https://img.shields.io/nexus/s/https/oss.sonatype.org/it.czerwinski.android/charts-piechart.svg)](https://oss.sonatype.org/content/repositories/snapshots/it/czerwinski/android/charts-piechart/)
 
 ## Pie Charts
